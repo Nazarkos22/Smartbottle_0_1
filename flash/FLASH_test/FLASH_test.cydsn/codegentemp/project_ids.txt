@@ -1,0 +1,7 @@
+C:\Users\kotli\Documents\PSoC Creator\FLASH_test\FLASH_test.cydsn\FLASH_test.cyprj|345fb390-c366-447e-9d33-8057689ca999
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|435c9514-9846-4ce8-aa59-5d0b245f4335
+C:\Users\kotli\Documents\PSoC Creator\4.3\Downloads ( 4.3).cylib\Downloads ( 4.3).cyprj|b9d7f3fd-f79a-4bb8-8cf7-f497287bbf50
+C:\Users\kotli\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|dad8f055-8119-4830-8e95-200d97417ded
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|4e01f13f-d997-4d97-b44d-19dde3a0bb81
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|e6c7c426-0d71-402a-9950-eb62027ce8ec
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|20acafaa-c1ed-488c-af1d-1617b7779f92

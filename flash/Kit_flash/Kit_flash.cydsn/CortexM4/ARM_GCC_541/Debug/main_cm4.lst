@@ -1,0 +1,882 @@
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"main_cm4.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.main,"ax",%progbits
+  21              		.align	2
+  22              		.global	main
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	main, %function
+  26              	main:
+  27              	.LFB315:
+  28              		.file 1 "main_cm4.c"
+   1:main_cm4.c    **** /* ========================================
+   2:main_cm4.c    ****  *
+   3:main_cm4.c    ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main_cm4.c    ****  * All Rights Reserved
+   5:main_cm4.c    ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main_cm4.c    ****  *
+   7:main_cm4.c    ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main_cm4.c    ****  * WHICH IS THE PROPERTY OF your company.
+   9:main_cm4.c    ****  *
+  10:main_cm4.c    ****  * ========================================
+  11:main_cm4.c    **** */
+  12:main_cm4.c    **** #include "project.h"
+  13:main_cm4.c    **** #include <stdlib.h>
+  14:main_cm4.c    **** #include <string.h>
+  15:main_cm4.c    **** #include "flash_config_u.h"
+  16:main_cm4.c    **** #include "Config_u.h"
+  17:main_cm4.c    **** 
+  18:main_cm4.c    ****  const uint32_t *Flash = (uint32_t *)CY_EM_EEPROM_BASE;
+  19:main_cm4.c    ****  uint32_t Data[CY_FLASH_SIZEOF_ROW] = {ZERO};
+  20:main_cm4.c    **** uint8 len=0x40;
+  21:main_cm4.c    **** int main(void)
+  22:main_cm4.c    **** {
+  29              		.loc 1 22 0
+  30              		.cfi_startproc
+  31              		@ Volatile: function does not return.
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  35              	.LBB4:
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 2
+
+
+  36              	.LBB5:
+  37              		.file 2 "Generated_Source\\PSoC6\\pdl\\cmsis/include/cmsis_gcc.h"
+   1:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @version  V5.0.1
+   5:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @date     02. February 2017
+   6:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /*
+   8:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+   9:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  10:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  12:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  16:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  18:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * limitations under the License.
+  23:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  24:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  25:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  28:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  29:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  34:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  35:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ASM
+  36:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __ASM                     __asm
+  37:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  38:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __INLINE
+  39:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __INLINE                  inline
+  40:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  41:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  42:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __STATIC_INLINE           static inline
+  43:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  44:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  45:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __NO_RETURN               __attribute__((noreturn))
+  46:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  47:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __USED
+  48:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __USED                    __attribute__((used))
+  49:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  50:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __WEAK
+  51:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __WEAK                    __attribute__((weak))
+  52:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  53:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32
+  54:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  55:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wpacked"
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 3
+
+
+  56:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wattributes"
+  57:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  58:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic pop
+  59:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  60:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  61:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ALIGNED
+  62:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __ALIGNED(x)              __attribute__((aligned(x)))
+  63:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  64:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __PACKED
+  65:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __PACKED                  __attribute__((packed, aligned(1)))
+  66:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  67:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  68:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __PACKED_STRUCT           struct __attribute__((packed, aligned(1)))
+  69:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  70:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  71:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  72:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  73:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  74:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  75:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   @{
+  76:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  77:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  78:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**
+  79:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  80:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  81:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  82:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  83:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_irq(void)
+  84:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** {
+  85:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  38              		.loc 2 85 0
+  39              		.syntax unified
+  40              	@ 85 "Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h" 1
+  41 0000 62B6     		cpsie i
+  42              	@ 0 "" 2
+  43              		.thumb
+  44              		.syntax unified
+  45              	.L2:
+  46 0002 FEE7     		b	.L2
+  47              	.LBE5:
+  48              	.LBE4:
+  49              		.cfi_endproc
+  50              	.LFE315:
+  51              		.size	main, .-main
+  52              		.global	len
+  53              		.global	Data
+  54              		.global	Flash
+  55              		.data
+  56              		.align	2
+  57              		.type	len, %object
+  58              		.size	len, 1
+  59              	len:
+  60 0000 40       		.byte	64
+  61 0001 000000   		.space	3
+  62              		.type	Flash, %object
+  63              		.size	Flash, 4
+  64              	Flash:
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 4
+
+
+  65 0004 00000014 		.word	335544320
+  66              		.bss
+  67              		.align	2
+  68              		.type	Data, %object
+  69              		.size	Data, 2048
+  70              	Data:
+  71 0000 00000000 		.space	2048
+  71      00000000 
+  71      00000000 
+  71      00000000 
+  71      00000000 
+  72              		.text
+  73              	.Letext0:
+  74              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+  75              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+  76              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/syslib/cy_syslib.h"
+  77              		.file 6 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm4.h"
+  78              		.section	.debug_info,"",%progbits
+  79              	.Ldebug_info0:
+  80 0000 C0010000 		.4byte	0x1c0
+  81 0004 0400     		.2byte	0x4
+  82 0006 00000000 		.4byte	.Ldebug_abbrev0
+  83 000a 04       		.byte	0x4
+  84 000b 01       		.uleb128 0x1
+  85 000c 37010000 		.4byte	.LASF28
+  86 0010 0C       		.byte	0xc
+  87 0011 2D000000 		.4byte	.LASF29
+  88 0015 65000000 		.4byte	.LASF30
+  89 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  90 001d 00000000 		.4byte	0
+  91 0021 00000000 		.4byte	.Ldebug_line0
+  92 0025 02       		.uleb128 0x2
+  93 0026 02       		.byte	0x2
+  94 0027 05       		.byte	0x5
+  95 0028 0E020000 		.4byte	.LASF0
+  96 002c 02       		.uleb128 0x2
+  97 002d 01       		.byte	0x1
+  98 002e 06       		.byte	0x6
+  99 002f 36020000 		.4byte	.LASF1
+ 100 0033 03       		.uleb128 0x3
+ 101 0034 06000000 		.4byte	.LASF4
+ 102 0038 03       		.byte	0x3
+ 103 0039 1D       		.byte	0x1d
+ 104 003a 3E000000 		.4byte	0x3e
+ 105 003e 02       		.uleb128 0x2
+ 106 003f 01       		.byte	0x1
+ 107 0040 08       		.byte	0x8
+ 108 0041 A5000000 		.4byte	.LASF2
+ 109 0045 02       		.uleb128 0x2
+ 110 0046 02       		.byte	0x2
+ 111 0047 07       		.byte	0x7
+ 112 0048 1A000000 		.4byte	.LASF3
+ 113 004c 03       		.uleb128 0x3
+ 114 004d 10000000 		.4byte	.LASF5
+ 115 0051 03       		.byte	0x3
+ 116 0052 3F       		.byte	0x3f
+ 117 0053 57000000 		.4byte	0x57
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 5
+
+
+ 118 0057 02       		.uleb128 0x2
+ 119 0058 04       		.byte	0x4
+ 120 0059 05       		.byte	0x5
+ 121 005a 21020000 		.4byte	.LASF6
+ 122 005e 03       		.uleb128 0x3
+ 123 005f CB000000 		.4byte	.LASF7
+ 124 0063 03       		.byte	0x3
+ 125 0064 41       		.byte	0x41
+ 126 0065 69000000 		.4byte	0x69
+ 127 0069 02       		.uleb128 0x2
+ 128 006a 04       		.byte	0x4
+ 129 006b 07       		.byte	0x7
+ 130 006c B3000000 		.4byte	.LASF8
+ 131 0070 02       		.uleb128 0x2
+ 132 0071 08       		.byte	0x8
+ 133 0072 05       		.byte	0x5
+ 134 0073 FB010000 		.4byte	.LASF9
+ 135 0077 02       		.uleb128 0x2
+ 136 0078 08       		.byte	0x8
+ 137 0079 07       		.byte	0x7
+ 138 007a 18010000 		.4byte	.LASF10
+ 139 007e 04       		.uleb128 0x4
+ 140 007f 04       		.byte	0x4
+ 141 0080 05       		.byte	0x5
+ 142 0081 696E7400 		.ascii	"int\000"
+ 143 0085 02       		.uleb128 0x2
+ 144 0086 04       		.byte	0x4
+ 145 0087 07       		.byte	0x7
+ 146 0088 01010000 		.4byte	.LASF11
+ 147 008c 03       		.uleb128 0x3
+ 148 008d 2F010000 		.4byte	.LASF12
+ 149 0091 04       		.byte	0x4
+ 150 0092 18       		.byte	0x18
+ 151 0093 33000000 		.4byte	0x33
+ 152 0097 03       		.uleb128 0x3
+ 153 0098 EA010000 		.4byte	.LASF13
+ 154 009c 04       		.byte	0x4
+ 155 009d 2C       		.byte	0x2c
+ 156 009e 4C000000 		.4byte	0x4c
+ 157 00a2 03       		.uleb128 0x3
+ 158 00a3 18020000 		.4byte	.LASF14
+ 159 00a7 04       		.byte	0x4
+ 160 00a8 30       		.byte	0x30
+ 161 00a9 5E000000 		.4byte	0x5e
+ 162 00ad 02       		.uleb128 0x2
+ 163 00ae 04       		.byte	0x4
+ 164 00af 07       		.byte	0x7
+ 165 00b0 F2010000 		.4byte	.LASF15
+ 166 00b4 02       		.uleb128 0x2
+ 167 00b5 08       		.byte	0x8
+ 168 00b6 04       		.byte	0x4
+ 169 00b7 2A020000 		.4byte	.LASF16
+ 170 00bb 02       		.uleb128 0x2
+ 171 00bc 01       		.byte	0x1
+ 172 00bd 08       		.byte	0x8
+ 173 00be 09020000 		.4byte	.LASF17
+ 174 00c2 02       		.uleb128 0x2
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 6
+
+
+ 175 00c3 04       		.byte	0x4
+ 176 00c4 04       		.byte	0x4
+ 177 00c5 4C000000 		.4byte	.LASF18
+ 178 00c9 02       		.uleb128 0x2
+ 179 00ca 08       		.byte	0x8
+ 180 00cb 04       		.byte	0x4
+ 181 00cc D6000000 		.4byte	.LASF19
+ 182 00d0 05       		.uleb128 0x5
+ 183 00d1 C5000000 		.4byte	.LASF20
+ 184 00d5 05       		.byte	0x5
+ 185 00d6 8503     		.2byte	0x385
+ 186 00d8 8C000000 		.4byte	0x8c
+ 187 00dc 06       		.uleb128 0x6
+ 188 00dd 04       		.byte	0x4
+ 189 00de A2000000 		.4byte	0xa2
+ 190 00e2 02       		.uleb128 0x2
+ 191 00e3 01       		.byte	0x1
+ 192 00e4 02       		.byte	0x2
+ 193 00e5 42020000 		.4byte	.LASF21
+ 194 00e9 07       		.uleb128 0x7
+ 195 00ea F4000000 		.4byte	.LASF31
+ 196 00ee 02       		.byte	0x2
+ 197 00ef 53       		.byte	0x53
+ 198 00f0 03       		.byte	0x3
+ 199 00f1 08       		.uleb128 0x8
+ 200 00f2 E2000000 		.4byte	.LASF32
+ 201 00f6 01       		.byte	0x1
+ 202 00f7 15       		.byte	0x15
+ 203 00f8 7E000000 		.4byte	0x7e
+ 204 00fc 00000000 		.4byte	.LFB315
+ 205 0100 04000000 		.4byte	.LFE315-.LFB315
+ 206 0104 01       		.uleb128 0x1
+ 207 0105 9C       		.byte	0x9c
+ 208 0106 63010000 		.4byte	0x163
+ 209 010a 09       		.uleb128 0x9
+ 210 010b 38000000 		.4byte	.LASF22
+ 211 010f 01       		.byte	0x1
+ 212 0110 1B       		.byte	0x1b
+ 213 0111 DC000000 		.4byte	0xdc
+ 214 0115 24010000 		.4byte	0x124
+ 215 0119 0A       		.uleb128 0xa
+ 216 011a DC000000 		.4byte	0xdc
+ 217 011e 0A       		.uleb128 0xa
+ 218 011f D0000000 		.4byte	0xd0
+ 219 0123 00       		.byte	0
+ 220 0124 09       		.uleb128 0x9
+ 221 0125 52000000 		.4byte	.LASF23
+ 222 0129 01       		.byte	0x1
+ 223 012a 1C       		.byte	0x1c
+ 224 012b DC000000 		.4byte	0xdc
+ 225 012f 3E010000 		.4byte	0x13e
+ 226 0133 0A       		.uleb128 0xa
+ 227 0134 DC000000 		.4byte	0xdc
+ 228 0138 0A       		.uleb128 0xa
+ 229 0139 DC000000 		.4byte	0xdc
+ 230 013d 00       		.byte	0
+ 231 013e 09       		.uleb128 0x9
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 7
+
+
+ 232 013f 0E010000 		.4byte	.LASF24
+ 233 0143 01       		.byte	0x1
+ 234 0144 1D       		.byte	0x1d
+ 235 0145 DC000000 		.4byte	0xdc
+ 236 0149 53010000 		.4byte	0x153
+ 237 014d 0A       		.uleb128 0xa
+ 238 014e DC000000 		.4byte	0xdc
+ 239 0152 00       		.byte	0
+ 240 0153 0B       		.uleb128 0xb
+ 241 0154 E9000000 		.4byte	0xe9
+ 242 0158 00000000 		.4byte	.LBB4
+ 243 015c 04000000 		.4byte	.LBE4-.LBB4
+ 244 0160 01       		.byte	0x1
+ 245 0161 17       		.byte	0x17
+ 246 0162 00       		.byte	0
+ 247 0163 0C       		.uleb128 0xc
+ 248 0164 E7000000 		.4byte	.LASF25
+ 249 0168 06       		.byte	0x6
+ 250 0169 EA07     		.2byte	0x7ea
+ 251 016b 6F010000 		.4byte	0x16f
+ 252 016f 0D       		.uleb128 0xd
+ 253 0170 97000000 		.4byte	0x97
+ 254 0174 0E       		.uleb128 0xe
+ 255 0175 00000000 		.4byte	.LASF26
+ 256 0179 01       		.byte	0x1
+ 257 017a 12       		.byte	0x12
+ 258 017b 85010000 		.4byte	0x185
+ 259 017f 05       		.uleb128 0x5
+ 260 0180 03       		.byte	0x3
+ 261 0181 00000000 		.4byte	Flash
+ 262 0185 06       		.uleb128 0x6
+ 263 0186 04       		.byte	0x4
+ 264 0187 8B010000 		.4byte	0x18b
+ 265 018b 0F       		.uleb128 0xf
+ 266 018c A2000000 		.4byte	0xa2
+ 267 0190 10       		.uleb128 0x10
+ 268 0191 A2000000 		.4byte	0xa2
+ 269 0195 A1010000 		.4byte	0x1a1
+ 270 0199 11       		.uleb128 0x11
+ 271 019a AD000000 		.4byte	0xad
+ 272 019e FF01     		.2byte	0x1ff
+ 273 01a0 00       		.byte	0
+ 274 01a1 0E       		.uleb128 0xe
+ 275 01a2 DD000000 		.4byte	.LASF27
+ 276 01a6 01       		.byte	0x1
+ 277 01a7 13       		.byte	0x13
+ 278 01a8 90010000 		.4byte	0x190
+ 279 01ac 05       		.uleb128 0x5
+ 280 01ad 03       		.byte	0x3
+ 281 01ae 00000000 		.4byte	Data
+ 282 01b2 12       		.uleb128 0x12
+ 283 01b3 6C656E00 		.ascii	"len\000"
+ 284 01b7 01       		.byte	0x1
+ 285 01b8 14       		.byte	0x14
+ 286 01b9 D0000000 		.4byte	0xd0
+ 287 01bd 05       		.uleb128 0x5
+ 288 01be 03       		.byte	0x3
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 8
+
+
+ 289 01bf 00000000 		.4byte	len
+ 290 01c3 00       		.byte	0
+ 291              		.section	.debug_abbrev,"",%progbits
+ 292              	.Ldebug_abbrev0:
+ 293 0000 01       		.uleb128 0x1
+ 294 0001 11       		.uleb128 0x11
+ 295 0002 01       		.byte	0x1
+ 296 0003 25       		.uleb128 0x25
+ 297 0004 0E       		.uleb128 0xe
+ 298 0005 13       		.uleb128 0x13
+ 299 0006 0B       		.uleb128 0xb
+ 300 0007 03       		.uleb128 0x3
+ 301 0008 0E       		.uleb128 0xe
+ 302 0009 1B       		.uleb128 0x1b
+ 303 000a 0E       		.uleb128 0xe
+ 304 000b 55       		.uleb128 0x55
+ 305 000c 17       		.uleb128 0x17
+ 306 000d 11       		.uleb128 0x11
+ 307 000e 01       		.uleb128 0x1
+ 308 000f 10       		.uleb128 0x10
+ 309 0010 17       		.uleb128 0x17
+ 310 0011 00       		.byte	0
+ 311 0012 00       		.byte	0
+ 312 0013 02       		.uleb128 0x2
+ 313 0014 24       		.uleb128 0x24
+ 314 0015 00       		.byte	0
+ 315 0016 0B       		.uleb128 0xb
+ 316 0017 0B       		.uleb128 0xb
+ 317 0018 3E       		.uleb128 0x3e
+ 318 0019 0B       		.uleb128 0xb
+ 319 001a 03       		.uleb128 0x3
+ 320 001b 0E       		.uleb128 0xe
+ 321 001c 00       		.byte	0
+ 322 001d 00       		.byte	0
+ 323 001e 03       		.uleb128 0x3
+ 324 001f 16       		.uleb128 0x16
+ 325 0020 00       		.byte	0
+ 326 0021 03       		.uleb128 0x3
+ 327 0022 0E       		.uleb128 0xe
+ 328 0023 3A       		.uleb128 0x3a
+ 329 0024 0B       		.uleb128 0xb
+ 330 0025 3B       		.uleb128 0x3b
+ 331 0026 0B       		.uleb128 0xb
+ 332 0027 49       		.uleb128 0x49
+ 333 0028 13       		.uleb128 0x13
+ 334 0029 00       		.byte	0
+ 335 002a 00       		.byte	0
+ 336 002b 04       		.uleb128 0x4
+ 337 002c 24       		.uleb128 0x24
+ 338 002d 00       		.byte	0
+ 339 002e 0B       		.uleb128 0xb
+ 340 002f 0B       		.uleb128 0xb
+ 341 0030 3E       		.uleb128 0x3e
+ 342 0031 0B       		.uleb128 0xb
+ 343 0032 03       		.uleb128 0x3
+ 344 0033 08       		.uleb128 0x8
+ 345 0034 00       		.byte	0
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 9
+
+
+ 346 0035 00       		.byte	0
+ 347 0036 05       		.uleb128 0x5
+ 348 0037 16       		.uleb128 0x16
+ 349 0038 00       		.byte	0
+ 350 0039 03       		.uleb128 0x3
+ 351 003a 0E       		.uleb128 0xe
+ 352 003b 3A       		.uleb128 0x3a
+ 353 003c 0B       		.uleb128 0xb
+ 354 003d 3B       		.uleb128 0x3b
+ 355 003e 05       		.uleb128 0x5
+ 356 003f 49       		.uleb128 0x49
+ 357 0040 13       		.uleb128 0x13
+ 358 0041 00       		.byte	0
+ 359 0042 00       		.byte	0
+ 360 0043 06       		.uleb128 0x6
+ 361 0044 0F       		.uleb128 0xf
+ 362 0045 00       		.byte	0
+ 363 0046 0B       		.uleb128 0xb
+ 364 0047 0B       		.uleb128 0xb
+ 365 0048 49       		.uleb128 0x49
+ 366 0049 13       		.uleb128 0x13
+ 367 004a 00       		.byte	0
+ 368 004b 00       		.byte	0
+ 369 004c 07       		.uleb128 0x7
+ 370 004d 2E       		.uleb128 0x2e
+ 371 004e 00       		.byte	0
+ 372 004f 03       		.uleb128 0x3
+ 373 0050 0E       		.uleb128 0xe
+ 374 0051 3A       		.uleb128 0x3a
+ 375 0052 0B       		.uleb128 0xb
+ 376 0053 3B       		.uleb128 0x3b
+ 377 0054 0B       		.uleb128 0xb
+ 378 0055 27       		.uleb128 0x27
+ 379 0056 19       		.uleb128 0x19
+ 380 0057 20       		.uleb128 0x20
+ 381 0058 0B       		.uleb128 0xb
+ 382 0059 00       		.byte	0
+ 383 005a 00       		.byte	0
+ 384 005b 08       		.uleb128 0x8
+ 385 005c 2E       		.uleb128 0x2e
+ 386 005d 01       		.byte	0x1
+ 387 005e 3F       		.uleb128 0x3f
+ 388 005f 19       		.uleb128 0x19
+ 389 0060 03       		.uleb128 0x3
+ 390 0061 0E       		.uleb128 0xe
+ 391 0062 3A       		.uleb128 0x3a
+ 392 0063 0B       		.uleb128 0xb
+ 393 0064 3B       		.uleb128 0x3b
+ 394 0065 0B       		.uleb128 0xb
+ 395 0066 27       		.uleb128 0x27
+ 396 0067 19       		.uleb128 0x19
+ 397 0068 49       		.uleb128 0x49
+ 398 0069 13       		.uleb128 0x13
+ 399 006a 8701     		.uleb128 0x87
+ 400 006c 19       		.uleb128 0x19
+ 401 006d 11       		.uleb128 0x11
+ 402 006e 01       		.uleb128 0x1
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 10
+
+
+ 403 006f 12       		.uleb128 0x12
+ 404 0070 06       		.uleb128 0x6
+ 405 0071 40       		.uleb128 0x40
+ 406 0072 18       		.uleb128 0x18
+ 407 0073 9742     		.uleb128 0x2117
+ 408 0075 19       		.uleb128 0x19
+ 409 0076 01       		.uleb128 0x1
+ 410 0077 13       		.uleb128 0x13
+ 411 0078 00       		.byte	0
+ 412 0079 00       		.byte	0
+ 413 007a 09       		.uleb128 0x9
+ 414 007b 2E       		.uleb128 0x2e
+ 415 007c 01       		.byte	0x1
+ 416 007d 3F       		.uleb128 0x3f
+ 417 007e 19       		.uleb128 0x19
+ 418 007f 03       		.uleb128 0x3
+ 419 0080 0E       		.uleb128 0xe
+ 420 0081 3A       		.uleb128 0x3a
+ 421 0082 0B       		.uleb128 0xb
+ 422 0083 3B       		.uleb128 0x3b
+ 423 0084 0B       		.uleb128 0xb
+ 424 0085 27       		.uleb128 0x27
+ 425 0086 19       		.uleb128 0x19
+ 426 0087 49       		.uleb128 0x49
+ 427 0088 13       		.uleb128 0x13
+ 428 0089 3C       		.uleb128 0x3c
+ 429 008a 19       		.uleb128 0x19
+ 430 008b 01       		.uleb128 0x1
+ 431 008c 13       		.uleb128 0x13
+ 432 008d 00       		.byte	0
+ 433 008e 00       		.byte	0
+ 434 008f 0A       		.uleb128 0xa
+ 435 0090 05       		.uleb128 0x5
+ 436 0091 00       		.byte	0
+ 437 0092 49       		.uleb128 0x49
+ 438 0093 13       		.uleb128 0x13
+ 439 0094 00       		.byte	0
+ 440 0095 00       		.byte	0
+ 441 0096 0B       		.uleb128 0xb
+ 442 0097 1D       		.uleb128 0x1d
+ 443 0098 00       		.byte	0
+ 444 0099 31       		.uleb128 0x31
+ 445 009a 13       		.uleb128 0x13
+ 446 009b 11       		.uleb128 0x11
+ 447 009c 01       		.uleb128 0x1
+ 448 009d 12       		.uleb128 0x12
+ 449 009e 06       		.uleb128 0x6
+ 450 009f 58       		.uleb128 0x58
+ 451 00a0 0B       		.uleb128 0xb
+ 452 00a1 59       		.uleb128 0x59
+ 453 00a2 0B       		.uleb128 0xb
+ 454 00a3 00       		.byte	0
+ 455 00a4 00       		.byte	0
+ 456 00a5 0C       		.uleb128 0xc
+ 457 00a6 34       		.uleb128 0x34
+ 458 00a7 00       		.byte	0
+ 459 00a8 03       		.uleb128 0x3
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 11
+
+
+ 460 00a9 0E       		.uleb128 0xe
+ 461 00aa 3A       		.uleb128 0x3a
+ 462 00ab 0B       		.uleb128 0xb
+ 463 00ac 3B       		.uleb128 0x3b
+ 464 00ad 05       		.uleb128 0x5
+ 465 00ae 49       		.uleb128 0x49
+ 466 00af 13       		.uleb128 0x13
+ 467 00b0 3F       		.uleb128 0x3f
+ 468 00b1 19       		.uleb128 0x19
+ 469 00b2 3C       		.uleb128 0x3c
+ 470 00b3 19       		.uleb128 0x19
+ 471 00b4 00       		.byte	0
+ 472 00b5 00       		.byte	0
+ 473 00b6 0D       		.uleb128 0xd
+ 474 00b7 35       		.uleb128 0x35
+ 475 00b8 00       		.byte	0
+ 476 00b9 49       		.uleb128 0x49
+ 477 00ba 13       		.uleb128 0x13
+ 478 00bb 00       		.byte	0
+ 479 00bc 00       		.byte	0
+ 480 00bd 0E       		.uleb128 0xe
+ 481 00be 34       		.uleb128 0x34
+ 482 00bf 00       		.byte	0
+ 483 00c0 03       		.uleb128 0x3
+ 484 00c1 0E       		.uleb128 0xe
+ 485 00c2 3A       		.uleb128 0x3a
+ 486 00c3 0B       		.uleb128 0xb
+ 487 00c4 3B       		.uleb128 0x3b
+ 488 00c5 0B       		.uleb128 0xb
+ 489 00c6 49       		.uleb128 0x49
+ 490 00c7 13       		.uleb128 0x13
+ 491 00c8 3F       		.uleb128 0x3f
+ 492 00c9 19       		.uleb128 0x19
+ 493 00ca 02       		.uleb128 0x2
+ 494 00cb 18       		.uleb128 0x18
+ 495 00cc 00       		.byte	0
+ 496 00cd 00       		.byte	0
+ 497 00ce 0F       		.uleb128 0xf
+ 498 00cf 26       		.uleb128 0x26
+ 499 00d0 00       		.byte	0
+ 500 00d1 49       		.uleb128 0x49
+ 501 00d2 13       		.uleb128 0x13
+ 502 00d3 00       		.byte	0
+ 503 00d4 00       		.byte	0
+ 504 00d5 10       		.uleb128 0x10
+ 505 00d6 01       		.uleb128 0x1
+ 506 00d7 01       		.byte	0x1
+ 507 00d8 49       		.uleb128 0x49
+ 508 00d9 13       		.uleb128 0x13
+ 509 00da 01       		.uleb128 0x1
+ 510 00db 13       		.uleb128 0x13
+ 511 00dc 00       		.byte	0
+ 512 00dd 00       		.byte	0
+ 513 00de 11       		.uleb128 0x11
+ 514 00df 21       		.uleb128 0x21
+ 515 00e0 00       		.byte	0
+ 516 00e1 49       		.uleb128 0x49
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 12
+
+
+ 517 00e2 13       		.uleb128 0x13
+ 518 00e3 2F       		.uleb128 0x2f
+ 519 00e4 05       		.uleb128 0x5
+ 520 00e5 00       		.byte	0
+ 521 00e6 00       		.byte	0
+ 522 00e7 12       		.uleb128 0x12
+ 523 00e8 34       		.uleb128 0x34
+ 524 00e9 00       		.byte	0
+ 525 00ea 03       		.uleb128 0x3
+ 526 00eb 08       		.uleb128 0x8
+ 527 00ec 3A       		.uleb128 0x3a
+ 528 00ed 0B       		.uleb128 0xb
+ 529 00ee 3B       		.uleb128 0x3b
+ 530 00ef 0B       		.uleb128 0xb
+ 531 00f0 49       		.uleb128 0x49
+ 532 00f1 13       		.uleb128 0x13
+ 533 00f2 3F       		.uleb128 0x3f
+ 534 00f3 19       		.uleb128 0x19
+ 535 00f4 02       		.uleb128 0x2
+ 536 00f5 18       		.uleb128 0x18
+ 537 00f6 00       		.byte	0
+ 538 00f7 00       		.byte	0
+ 539 00f8 00       		.byte	0
+ 540              		.section	.debug_aranges,"",%progbits
+ 541 0000 1C000000 		.4byte	0x1c
+ 542 0004 0200     		.2byte	0x2
+ 543 0006 00000000 		.4byte	.Ldebug_info0
+ 544 000a 04       		.byte	0x4
+ 545 000b 00       		.byte	0
+ 546 000c 0000     		.2byte	0
+ 547 000e 0000     		.2byte	0
+ 548 0010 00000000 		.4byte	.LFB315
+ 549 0014 04000000 		.4byte	.LFE315-.LFB315
+ 550 0018 00000000 		.4byte	0
+ 551 001c 00000000 		.4byte	0
+ 552              		.section	.debug_ranges,"",%progbits
+ 553              	.Ldebug_ranges0:
+ 554 0000 00000000 		.4byte	.LFB315
+ 555 0004 04000000 		.4byte	.LFE315
+ 556 0008 00000000 		.4byte	0
+ 557 000c 00000000 		.4byte	0
+ 558              		.section	.debug_line,"",%progbits
+ 559              	.Ldebug_line0:
+ 560 0000 C2010000 		.section	.debug_str,"MS",%progbits,1
+ 560      0200A801 
+ 560      00000201 
+ 560      FB0E0D00 
+ 560      01010101 
+ 561              	.LASF26:
+ 562 0000 466C6173 		.ascii	"Flash\000"
+ 562      6800
+ 563              	.LASF4:
+ 564 0006 5F5F7569 		.ascii	"__uint8_t\000"
+ 564      6E74385F 
+ 564      7400
+ 565              	.LASF5:
+ 566 0010 5F5F696E 		.ascii	"__int32_t\000"
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 13
+
+
+ 566      7433325F 
+ 566      7400
+ 567              	.LASF3:
+ 568 001a 73686F72 		.ascii	"short unsigned int\000"
+ 568      7420756E 
+ 568      7369676E 
+ 568      65642069 
+ 568      6E7400
+ 569              	.LASF29:
+ 570 002d 6D61696E 		.ascii	"main_cm4.c\000"
+ 570      5F636D34 
+ 570      2E6300
+ 571              	.LASF22:
+ 572 0038 6D616B65 		.ascii	"make_data_for_flash\000"
+ 572      5F646174 
+ 572      615F666F 
+ 572      725F666C 
+ 572      61736800 
+ 573              	.LASF18:
+ 574 004c 666C6F61 		.ascii	"float\000"
+ 574      7400
+ 575              	.LASF23:
+ 576 0052 77726974 		.ascii	"write_flash_data_u\000"
+ 576      655F666C 
+ 576      6173685F 
+ 576      64617461 
+ 576      5F7500
+ 577              	.LASF30:
+ 578 0065 433A5C55 		.ascii	"C:\\Users\\kotli\\Documents\\PSoC Creator\\Kit_flas"
+ 578      73657273 
+ 578      5C6B6F74 
+ 578      6C695C44 
+ 578      6F63756D 
+ 579 0093 685C4B69 		.ascii	"h\\Kit_flash.cydsn\000"
+ 579      745F666C 
+ 579      6173682E 
+ 579      63796473 
+ 579      6E00
+ 580              	.LASF2:
+ 581 00a5 756E7369 		.ascii	"unsigned char\000"
+ 581      676E6564 
+ 581      20636861 
+ 581      7200
+ 582              	.LASF8:
+ 583 00b3 6C6F6E67 		.ascii	"long unsigned int\000"
+ 583      20756E73 
+ 583      69676E65 
+ 583      6420696E 
+ 583      7400
+ 584              	.LASF20:
+ 585 00c5 75696E74 		.ascii	"uint8\000"
+ 585      3800
+ 586              	.LASF7:
+ 587 00cb 5F5F7569 		.ascii	"__uint32_t\000"
+ 587      6E743332 
+ 587      5F7400
+ 588              	.LASF19:
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 14
+
+
+ 589 00d6 646F7562 		.ascii	"double\000"
+ 589      6C6500
+ 590              	.LASF27:
+ 591 00dd 44617461 		.ascii	"Data\000"
+ 591      00
+ 592              	.LASF32:
+ 593 00e2 6D61696E 		.ascii	"main\000"
+ 593      00
+ 594              	.LASF25:
+ 595 00e7 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 595      52784275 
+ 595      66666572 
+ 595      00
+ 596              	.LASF31:
+ 597 00f4 5F5F656E 		.ascii	"__enable_irq\000"
+ 597      61626C65 
+ 597      5F697271 
+ 597      00
+ 598              	.LASF11:
+ 599 0101 756E7369 		.ascii	"unsigned int\000"
+ 599      676E6564 
+ 599      20696E74 
+ 599      00
+ 600              	.LASF24:
+ 601 010e 66726565 		.ascii	"free_data\000"
+ 601      5F646174 
+ 601      6100
+ 602              	.LASF10:
+ 603 0118 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 603      206C6F6E 
+ 603      6720756E 
+ 603      7369676E 
+ 603      65642069 
+ 604              	.LASF12:
+ 605 012f 75696E74 		.ascii	"uint8_t\000"
+ 605      385F7400 
+ 606              	.LASF28:
+ 607 0137 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 607      43313120 
+ 607      352E342E 
+ 607      31203230 
+ 607      31363036 
+ 608 016a 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 608      20726576 
+ 608      6973696F 
+ 608      6E203233 
+ 608      37373135 
+ 609 019d 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -Og -ffunction-s"
+ 609      70202D6D 
+ 609      6670753D 
+ 609      66707634 
+ 609      2D73702D 
+ 610 01d0 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 610      6F6E7320 
+ 610      2D666661 
+ 610      742D6C74 
+ 610      6F2D6F62 
+ARM GAS  C:\Users\kotli\AppData\Local\Temp\cc03ksfe.s 			page 15
+
+
+ 611              	.LASF13:
+ 612 01ea 696E7433 		.ascii	"int32_t\000"
+ 612      325F7400 
+ 613              	.LASF15:
+ 614 01f2 73697A65 		.ascii	"sizetype\000"
+ 614      74797065 
+ 614      00
+ 615              	.LASF9:
+ 616 01fb 6C6F6E67 		.ascii	"long long int\000"
+ 616      206C6F6E 
+ 616      6720696E 
+ 616      7400
+ 617              	.LASF17:
+ 618 0209 63686172 		.ascii	"char\000"
+ 618      00
+ 619              	.LASF0:
+ 620 020e 73686F72 		.ascii	"short int\000"
+ 620      7420696E 
+ 620      7400
+ 621              	.LASF14:
+ 622 0218 75696E74 		.ascii	"uint32_t\000"
+ 622      33325F74 
+ 622      00
+ 623              	.LASF6:
+ 624 0221 6C6F6E67 		.ascii	"long int\000"
+ 624      20696E74 
+ 624      00
+ 625              	.LASF16:
+ 626 022a 6C6F6E67 		.ascii	"long double\000"
+ 626      20646F75 
+ 626      626C6500 
+ 627              	.LASF1:
+ 628 0236 7369676E 		.ascii	"signed char\000"
+ 628      65642063 
+ 628      68617200 
+ 629              	.LASF21:
+ 630 0242 5F426F6F 		.ascii	"_Bool\000"
+ 630      6C00
+ 631              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
