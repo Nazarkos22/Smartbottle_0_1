@@ -1,4 +1,4 @@
-C:\Users\kotli\Documents\PSoC Creator\FLASH_test\FLASH_test.cydsn\TopDesign\TopDesign.cysch
+C:\Users\tester\Documents\GitHub\Smartbottle_0_1\flash\FLASH_test\FLASH_test.cydsn\TopDesign\TopDesign.cysch
 C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\CapSense_v3_0\CapSense_v3_0.cysym
 C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\CapSense_v3_0\tuner.dll
 C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\CapSense_v3_0\CapSense_v3_0.dll
@@ -117,4 +117,4 @@ C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\CyPrim
 C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\SysInt_PDL_v1_0\SysInt_PDL_v1_0.cystate
 C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\SysInt_PDL_v1_0\version.cypatch
 C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\SysInt_PDL_v1_0\Custom\custom.cs
-C:\Users\kotli\Documents\PSoC Creator\FLASH_test\FLASH_test.cydsn\FLASH_test.cydwr
+C:\Users\tester\Documents\GitHub\Smartbottle_0_1\flash\FLASH_test\FLASH_test.cydsn\FLASH_test.cydwr
