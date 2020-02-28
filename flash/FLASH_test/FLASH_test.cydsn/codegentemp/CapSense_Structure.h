@@ -198,18 +198,6 @@ typedef struct
      *  Register for internal use
      */
     uint8  snsClkSource;
-
-    /**
-     *  Widget Finger capacitance parameter. Available only if the 
-     *  SmartSense is enabled.
-     *  Not used for the CSX Widgets.
-     */
-    uint16 fingerCap;
-
-    /**
-     *  The 75% of signal per user-defined finger capacitance
-     */
-    uint16 sigPFC;
 } CapSense_RAM_WD_BASE_STRUCT;
 
 /***************************************************************************//**
@@ -276,18 +264,6 @@ typedef struct
      *  Register for internal use
      */
     uint8  snsClkSource;
-
-    /**
-     *  Widget Finger capacitance parameter. Available only if the 
-     *  SmartSense is enabled.
-     *  Not used for the CSX Widgets.
-     */
-    uint16 fingerCap;
-
-    /**
-     *  The 75% of signal per user-defined finger capacitance
-     */
-    uint16 sigPFC;
 } CapSense_RAM_WD_BUTTON_STRUCT;
 
 
@@ -300,6 +276,51 @@ typedef struct
      *  Button0 widget RAM structure
      */
     CapSense_RAM_WD_BUTTON_STRUCT button0;
+
+    /**
+     *  Button1 widget RAM structure
+     */
+    CapSense_RAM_WD_BUTTON_STRUCT button1;
+
+    /**
+     *  Button2 widget RAM structure
+     */
+    CapSense_RAM_WD_BUTTON_STRUCT button2;
+
+    /**
+     *  Button3 widget RAM structure
+     */
+    CapSense_RAM_WD_BUTTON_STRUCT button3;
+
+    /**
+     *  Button4 widget RAM structure
+     */
+    CapSense_RAM_WD_BUTTON_STRUCT button4;
+
+    /**
+     *  Button5 widget RAM structure
+     */
+    CapSense_RAM_WD_BUTTON_STRUCT button5;
+
+    /**
+     *  Button6 widget RAM structure
+     */
+    CapSense_RAM_WD_BUTTON_STRUCT button6;
+
+    /**
+     *  Button7 widget RAM structure
+     */
+    CapSense_RAM_WD_BUTTON_STRUCT button7;
+
+    /**
+     *  Button8 widget RAM structure
+     */
+    CapSense_RAM_WD_BUTTON_STRUCT button8;
+
+    /**
+     *  Button9 widget RAM structure
+     */
+    CapSense_RAM_WD_BUTTON_STRUCT button9;
 } CapSense_RAM_WD_LIST_STRUCT;
 
 
@@ -351,6 +372,51 @@ typedef struct
      *  Button0 sensors RAM structures array
      */
     CapSense_RAM_SNS_STRUCT button0 [CapSense_BUTTON0_NUM_SENSORS];
+
+    /**
+     *  Button1 sensors RAM structures array
+     */
+    CapSense_RAM_SNS_STRUCT button1 [CapSense_BUTTON1_NUM_SENSORS];
+
+    /**
+     *  Button2 sensors RAM structures array
+     */
+    CapSense_RAM_SNS_STRUCT button2 [CapSense_BUTTON2_NUM_SENSORS];
+
+    /**
+     *  Button3 sensors RAM structures array
+     */
+    CapSense_RAM_SNS_STRUCT button3 [CapSense_BUTTON3_NUM_SENSORS];
+
+    /**
+     *  Button4 sensors RAM structures array
+     */
+    CapSense_RAM_SNS_STRUCT button4 [CapSense_BUTTON4_NUM_SENSORS];
+
+    /**
+     *  Button5 sensors RAM structures array
+     */
+    CapSense_RAM_SNS_STRUCT button5 [CapSense_BUTTON5_NUM_SENSORS];
+
+    /**
+     *  Button6 sensors RAM structures array
+     */
+    CapSense_RAM_SNS_STRUCT button6 [CapSense_BUTTON6_NUM_SENSORS];
+
+    /**
+     *  Button7 sensors RAM structures array
+     */
+    CapSense_RAM_SNS_STRUCT button7 [CapSense_BUTTON7_NUM_SENSORS];
+
+    /**
+     *  Button8 sensors RAM structures array
+     */
+    CapSense_RAM_SNS_STRUCT button8 [CapSense_BUTTON8_NUM_SENSORS];
+
+    /**
+     *  Button9 sensors RAM structures array
+     */
+    CapSense_RAM_SNS_STRUCT button9 [CapSense_BUTTON9_NUM_SENSORS];
 } CapSense_RAM_SNS_LIST_STRUCT;
 
 
@@ -590,14 +656,6 @@ typedef struct
      *  For CSX Button, Touchpad and Matrix Button, the number of the Rx electrodes.
      */
     uint8  numCols;
-
-    /**
-     *  The pointer to the array with the sensor noise envelope data.
-     *  Set to the valid value only for the CSD widgets.
-     *  For the CSX widgets, this pointer is set to NULL.
-     *  The pointed array is not part of the data structure.
-     */
-    SMARTSENSE_CSD_NOISE_ENVELOPE_STRUCT * ptr2NoiseEnvlp;
 } CapSense_FLASH_WD_STRUCT;
 
 

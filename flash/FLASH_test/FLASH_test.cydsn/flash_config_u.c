@@ -14,7 +14,7 @@
 #include "flash_config_u.h"
 #include <stdlib.h>
 #include <string.h>
-static bool is_memory_empty(uint32_t addr)
+ bool is_memory_empty(uint32_t addr)
 {
     bool ret = true;
     uint32_t* data =(uint32_t*) addr;
@@ -30,35 +30,6 @@ static bool is_memory_empty(uint32_t addr)
 
 return ret;
 }
-
-
-uint32_t* make_data_for_flash(uint32_t* data, uint8 len)
-{
-  uint32_t idx;
-  
-for(idx=ZERO; idx<len; idx++)
-{
- data[idx]=0x2b * idx;
-
-}
-return data;
-}
-uint32_t* write_flash_data_u(uint32_t addr,uint32_t* data)
-{
-     Cy_Flash_WriteRow(addr, data);
-     return data;
-}
-uint32_t* write_flash_data(uint32_t* Data)
-{
-    uint8 idx;
-    for(idx=0;idx<10u;idx++)
-    {
-       Data[idx]=0x2b;
-    }
-  
-     Cy_Flash_WriteRow(FLASH_ADDR, Data);
-    return Data;
-}
 uint32_t get_checksum(uint32_t* msg)
 {
   uint32_t idx;
@@ -69,6 +40,46 @@ uint32_t get_checksum(uint32_t* msg)
     }
   return checksum;
 }
+bool is_writen_config(void)
+{
+    bool result, ret;
+    result = is_memory_empty(FLASH_ADDR);
+   
+    uint32_t* ptr = (uint32_t*) malloc(sizeof(U_cfg_t));
+    memcpy(ptr,(uint32_t*) FLASH_ADDR, sizeof(U_cfg_t));
+    if((get_checksum(ptr)== ptr[ARR_CHECKSUM])&&(result == false))
+    {
+        ret = false;
+    }
+    else if(result == true)
+    {
+     ret = false;
+    }
+    else
+    {
+        ret = true;
+    }
+    free(ptr);
+    return ret;
+}
+
+ uint32_t* make_data_for_flash(uint32_t* data)
+{
+  uint8 idx;
+  
+    for(idx=ZERO; idx<MAX_SENSOR_VALUE; idx++)
+    {
+      flash[idx] = data[idx];
+    }
+      flash[ARR_CHECKSUM] = get_checksum(data);
+      return flash;
+    }
+void write_flash_data(uint32_t* data)
+{
+     Cy_Flash_WriteRow(FLASH_ADDR, data);
+}
+
+
 void eraze_flash_data(void)
 {
   uint32_t* ptr = (uint32_t*) malloc(sizeof(U_cfg_t));    
