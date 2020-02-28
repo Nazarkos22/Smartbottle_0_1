@@ -25,12 +25,12 @@ typedef struct
     uint32_t checksum;
     
 }U_cfg_t;
-uint32_t flash[FLASH_DATA];
+
 bool is_writen_config(void);
 void eraze_flash_data(void);
 uint32_t* free_data(uint32_t data[MAX_SENSOR_VALUE]);
  uint32_t* make_data_for_flash(uint32_t* data);
 uint32_t* write_flash_data_u(uint32_t addr, uint32_t* data);
-static bool is_memory_empty(uint32_t addr);
+ bool is_memory_empty(uint32_t addr);
 /* [] END OF FILE */
   #endif 

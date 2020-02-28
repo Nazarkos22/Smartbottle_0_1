@@ -34,7 +34,7 @@ uint32_t get_checksum(uint32_t* msg)
 {
   uint32_t idx;
   uint32_t checksum = 1;
-    for(idx = ZERO; idx < CY_FLASH_SIZEOF_ROW; idx++)
+    for(idx = ZERO; idx < sizeof(U_config_t); idx++)
     {
      checksum ^= msg[idx];   
     }
@@ -47,14 +47,12 @@ bool is_writen_config(void)
    
     uint32_t* ptr = (uint32_t*) malloc(sizeof(U_cfg_t));
     memcpy(ptr,(uint32_t*) FLASH_ADDR, sizeof(U_cfg_t));
-    if((get_checksum(ptr)== ptr[ARR_CHECKSUM])&&(result == false))
+    uint32_t data = get_checksum(ptr);
+    if((data == ptr[ARR_CHECKSUM])&&(result == false))
     {
         ret = false;
     }
-    else if(result == true)
-    {
-     ret = false;
-    }
+
     else
     {
         ret = true;
@@ -66,7 +64,7 @@ bool is_writen_config(void)
  uint32_t* make_data_for_flash(uint32_t* data)
 {
   uint8 idx;
-  
+  uint32_t flash[FLASH_DATA];
     for(idx=ZERO; idx<MAX_SENSOR_VALUE; idx++)
     {
       flash[idx] = data[idx];

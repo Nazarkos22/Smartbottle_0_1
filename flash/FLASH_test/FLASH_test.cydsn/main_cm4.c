@@ -18,7 +18,11 @@
 int main(void)
 {
 
-    Start_Interrapts();
+   __enable_irq(); /* Enable global interrupts. */
+
+
+  CapSense_Start();
+  CapSense_ScanAllWidgets();   
         
 
         
