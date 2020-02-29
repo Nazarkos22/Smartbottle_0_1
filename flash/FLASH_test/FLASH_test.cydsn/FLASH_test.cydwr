@@ -8,6 +8,8 @@
     <Group key="Pin">
       <Data key="b8cef78d-de18-450e-a218-ad24dc3b79e7/4db2e9d3-9f70-4f4e-a919-7eefada41863" value="CapSense_Cmod" />
       <Data key="b8cef78d-de18-450e-a218-ad24dc3b79e7/0113321b-4a37-46f6-8407-2f8646c68756" value="CapSense_Sns" />
+      <Data key="b8cef78d-de18-450e-a218-ad24dc3b79e7/e155f268-b320-4e19-9071-66bb52788381" value="CapSense_Shield" />
+      <Data key="b8cef78d-de18-450e-a218-ad24dc3b79e7/fb7b9f5c-a9cf-4c78-855d-55c7d6997230" value="CapSense_Csh" />
     </Group>
   </Group>
   <Group key="M0S8Clock">
@@ -629,6 +631,16 @@
       </Group>
       <Group key="9">
         <Data key="Port Format" value="10,3" />
+      </Group>
+    </Group>
+    <Group key="b8cef78d-de18-450e-a218-ad24dc3b79e7/e155f268-b320-4e19-9071-66bb52788381">
+      <Group key="0">
+        <Data key="Port Format" value="7,7" />
+      </Group>
+    </Group>
+    <Group key="b8cef78d-de18-450e-a218-ad24dc3b79e7/fb7b9f5c-a9cf-4c78-855d-55c7d6997230">
+      <Group key="0">
+        <Data key="Port Format" value="7,2" />
       </Group>
     </Group>
   </Group>

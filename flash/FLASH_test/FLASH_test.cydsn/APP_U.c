@@ -27,16 +27,20 @@ void Start_Interrapts(void)
 
 void CSD_Config(void)
 {
-    CapSense_ScanAllWidgets(); /* Start next scan */
+    bool ret = true;
+    
+    do{
+  CapSense_ScanAllWidgets(); /* Start next scan */
     /* Do this only when a scan is done */
  if(CapSense_NOT_BUSY == CapSense_IsBusy())
- {
- CapSense_ProcessAllWidgets(); /* Process all widgets */
-  make_sensors_data();
- Level = Find_Liquid_Level(Sensors, FLASH_ADDR);
-
+   {
+     CapSense_ProcessAllWidgets(); /* Process all widgets */
+     make_sensors_data();
+     Level = Find_Liquid_Level(Sensors, FLASH_ADDR);
+     ret = false;
+    }
  
- }
+     }while(ret == true);
 }
 void FLASH_Config(void)
 {  

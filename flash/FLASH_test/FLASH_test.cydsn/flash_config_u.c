@@ -33,10 +33,10 @@ return ret;
 uint32_t get_checksum(uint32_t* msg)
 {
   uint32_t idx;
-  uint32_t checksum = 1;
-    for(idx = ZERO; idx < sizeof(U_config_t); idx++)
+  uint32_t checksum = 15u;
+    for(idx = ZERO; idx < MAX_SENSOR_VALUE; idx++)
     {
-     checksum ^= msg[idx];   
+     checksum |= msg[idx];   
     }
   return checksum;
 }
