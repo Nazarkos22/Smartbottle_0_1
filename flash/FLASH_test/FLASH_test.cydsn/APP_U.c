@@ -22,11 +22,12 @@ void Start_Interrapts(void)
 
 
   CapSense_Start();
-  CapSense_ScanAllWidgets();   
+ 
 }
 
 void CSD_Config(void)
 {
+    CapSense_ScanAllWidgets(); /* Start next scan */
     /* Do this only when a scan is done */
  if(CapSense_NOT_BUSY == CapSense_IsBusy())
  {
@@ -34,7 +35,7 @@ void CSD_Config(void)
   make_sensors_data();
  Level = Find_Liquid_Level(Sensors, FLASH_ADDR);
 
- CapSense_ScanAllWidgets(); /* Start next scan */
+ 
  }
 }
 void FLASH_Config(void)
@@ -42,12 +43,12 @@ void FLASH_Config(void)
    
     bool Status_u;
     Status_u = is_writen_config();
-   if(Status_u == true)
+   if(Status_u == false)
 {
    eraze_flash_data();
-   uint32_t* result = make_data_for_flash(Sensors);
-   write_flash_data(result);
-   free((uint32_t*)result);
+    make_data_for_flash(Sensors);
+   write_flash_data(flash);
+   
 }
 else
 {

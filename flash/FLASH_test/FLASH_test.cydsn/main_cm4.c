@@ -12,25 +12,13 @@
 #include "project.h"
 #include "APP.h"
 
-
-
-
 int main(void)
 {
-
-   __enable_irq(); /* Enable global interrupts. */
-
-
-  CapSense_Start();
-  CapSense_ScanAllWidgets();   
-        
-
-        
+    Start_Interrapts();
     for(;;)
     {
       CSD_Config();
       FLASH_Config();
-
     }
 }
 

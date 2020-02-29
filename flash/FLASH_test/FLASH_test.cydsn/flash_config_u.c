@@ -46,31 +46,33 @@ bool is_writen_config(void)
     result = is_memory_empty(FLASH_ADDR);
    
     uint32_t* ptr = (uint32_t*) malloc(sizeof(U_cfg_t));
+    
     memcpy(ptr,(uint32_t*) FLASH_ADDR, sizeof(U_cfg_t));
+    
     uint32_t data = get_checksum(ptr);
     if((data == ptr[ARR_CHECKSUM])&&(result == false))
     {
-        ret = false;
+        ret = true;
     }
 
     else
     {
-        ret = true;
+        ret = false;
     }
     free(ptr);
     return ret;
 }
 
- uint32_t* make_data_for_flash(uint32_t* data)
+void make_data_for_flash(uint32_t* data)
 {
   uint8 idx;
-  uint32_t flash[FLASH_DATA];
+
     for(idx=ZERO; idx<MAX_SENSOR_VALUE; idx++)
     {
       flash[idx] = data[idx];
     }
       flash[ARR_CHECKSUM] = get_checksum(data);
-      return flash;
+    
     }
 void write_flash_data(uint32_t* data)
 {

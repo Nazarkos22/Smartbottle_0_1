@@ -33,7 +33,7 @@ uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR)
     uint32_t DIFF[MAX_SENSOR_VALUE];
     uint32_t* array = (uint32_t*)ADDR;
     uint8 idx;
-    for(idx = ZERO; idx<MAX_SENSOR_VALUE; idx++)
+    for(idx = SECOND_lvl; idx< MAX_LEVEL; idx++)
     {
        DIFF[idx] = data[idx]-array[idx];
       
@@ -48,7 +48,7 @@ uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR)
     }
     
     }
-    free(array);
+  
     return Level;
 }
 /* [] END OF FILE */
