@@ -21,6 +21,6 @@ typedef struct
     uint32_t Data[MAX_SENSOR_VALUE];
 }U_config_t;
     uint32_t Sensors[MAX_SENSOR_VALUE];// array from sensors data
-    uint32_t Level;// variable, which 
+    uint32_t Level;// variable, which recieves returned data from fuction "uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR)"
   #endif 
 /* [] END OF FILE */

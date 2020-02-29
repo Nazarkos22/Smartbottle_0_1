@@ -45,9 +45,9 @@ void FLASH_Config(void)
     Status_u = is_writen_config();
    if(Status_u == false)
 {
-   eraze_flash_data();
+    eraze_flash_data();
     make_data_for_flash(Sensors);
-   write_flash_data(flash);
+    Cy_Flash_WriteRow(FLASH_ADDR, flash);
    
 }
 else

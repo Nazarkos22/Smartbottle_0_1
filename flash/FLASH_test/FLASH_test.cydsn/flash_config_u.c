@@ -74,10 +74,10 @@ void make_data_for_flash(uint32_t* data)
       flash[ARR_CHECKSUM] = get_checksum(data);
     
     }
-void write_flash_data(uint32_t* data)
-{
-     Cy_Flash_WriteRow(FLASH_ADDR, data);
-}
+
+
+     
+
 
 
 void eraze_flash_data(void)
