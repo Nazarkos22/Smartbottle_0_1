@@ -27,6 +27,7 @@
     #define TENTH_lvl (9u)
     #define MAX_LEVEL (11u)
     #define TRESHOLD (4000u)// A change of CapSense count raws, which activates sensor
+    bool is_any_sensor_data_empty(uint32_t* data);//function checks is senors data equal NULL(true) or NOT(false)
     void make_sensors_data(void);//function save data(raw counts) from CapSense widgets to array "Sensors"
     uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR);// function checks which of sensors are activated and return Level(0-250u)
  #endif

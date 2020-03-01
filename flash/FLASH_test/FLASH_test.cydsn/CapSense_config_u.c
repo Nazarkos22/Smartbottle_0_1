@@ -27,9 +27,29 @@ void make_sensors_data(void)
     Sensors[NINETH_lvl]= CapSense_BUTTON8_SNS0_RAW0_VALUE;
     Sensors[TENTH_lvl]= CapSense_BUTTON9_SNS0_RAW0_VALUE;
 }
+
+
+bool is_any_sensor_data_empty(uint32_t* data)
+{
+   bool ret = false;
+   uint8 idx;
+    for(idx = ZERO; idx < MAX_SENSOR_VALUE; idx++)
+    {
+     if(data[idx] == ZERO)
+    {
+     ret = true;   
+    }
+    }
+    return ret;
+}
+
+
 uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR)
 {
-    uint32_t Level = ZERO;
+    uint32_t level_local = ZERO;
+    if (is_any_sensor_data_empty(data) == false)
+    {
+    
     uint32_t DIFF[MAX_SENSOR_VALUE];
     uint32_t* array = (uint32_t*)ADDR;
     uint8 idx;
@@ -39,7 +59,7 @@ uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR)
       
        if((DIFF[idx] > TRESHOLD)|| (DIFF[idx] == TRESHOLD))
     {
-        Level = idx * 25u;
+        level_local = idx * 25u;
         continue;
     }
     else
@@ -48,7 +68,8 @@ uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR)
     }
     
     }
-  
-    return Level;
+    free(array);
+    }
+    return level_local;
 }
 /* [] END OF FILE */

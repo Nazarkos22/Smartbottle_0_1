@@ -27,9 +27,29 @@
             break;
         }
     }
-
 return ret;
 }
+
+
+
+
+
+bool is_calibration_data_empty(uint32_t addr)
+{
+   bool ret = true;
+     uint32_t* data =(uint32_t*) addr;
+    uint8 idx;
+    for (idx = ZERO; idx < (sizeof(U_config_t)); idx++)
+    {
+     if(data[idx] !=0)
+    {
+        ret = false;
+    }
+    }
+    return ret;
+}
+
+
 uint32_t get_checksum(uint32_t* msg)
 {
   uint32_t idx;
@@ -40,9 +60,13 @@ uint32_t get_checksum(uint32_t* msg)
     }
   return checksum;
 }
+
+
 bool is_writen_config(void)
 {
-    bool result, ret;
+    bool result, ret = false;
+    if(is_calibration_data_empty(FLASH_ADDR) == false)
+    {
     result = is_memory_empty(FLASH_ADDR);
    
     uint32_t* ptr = (uint32_t*) malloc(sizeof(U_cfg_t));
@@ -60,8 +84,11 @@ bool is_writen_config(void)
         ret = false;
     }
     free(ptr);
+    }
+    
     return ret;
 }
+
 
 void make_data_for_flash(uint32_t* data)
 {
@@ -73,11 +100,7 @@ void make_data_for_flash(uint32_t* data)
     }
       flash[ARR_CHECKSUM] = get_checksum(data);
     
-    }
-
-
-     
-
+}
 
 
 void eraze_flash_data(void)

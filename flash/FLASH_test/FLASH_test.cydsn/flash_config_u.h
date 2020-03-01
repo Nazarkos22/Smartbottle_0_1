@@ -26,6 +26,8 @@ typedef struct
     
 }U_cfg_t;
   uint32_t flash[FLASH_DATA];// data, which will be prepared for write on flash
+
+bool is_writen_data_empty(uint32_t addr);//function checks, is calibration data memory(return true) or not (return false)
 bool is_writen_config(void);//function check if data is on FLASH memory  ( all is good - function = true, not = false)
 void eraze_flash_data(void);// function write on FLASH "0" sise of "U_cfg_t"
 
