@@ -1,0 +1,2 @@
+C:\Users\tester\Documents\GitHub\Smartbottle_0_1\flash\Kit_flash\Kit_flash.cydsn\TopDesign\TopDesign.cysch
+C:\Users\tester\Documents\GitHub\Smartbottle_0_1\flash\Kit_flash\Kit_flash.cydsn\Kit_flash.cydwr

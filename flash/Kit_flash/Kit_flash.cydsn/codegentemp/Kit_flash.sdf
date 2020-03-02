@@ -1,0 +1,20 @@
+(DELAYFILE
+ (SDFVERSION "IEEE 1497 4.0")
+ (DATE "2020-02-20T10:21:52Z")
+ (DESIGN "Kit_flash")
+ (VENDOR "Cypress Semiconductor")
+ (PROGRAM "PSoC Creator")
+ (VERSION " 4.3 Early Access")
+ (DIVIDER .)
+ (TIMESCALE 1 ns)
+ (CELL
+  (CELLTYPE "Kit_flash")
+  (INSTANCE *)
+  (DELAY
+   (ABSOLUTE
+    (INTERCONNECT CY_CPUSS_SWJ_SWCLK_TCLK\(0\).fb CPUSS.swj_swclk_tclk (0.000:0.000:0.000))
+    (INTERCONNECT CY_CPUSS_SWJ_SWDIO_TMS\(0\).fb CPUSS.swj_swdio_tms (0.000:0.000:0.000))
+   )
+  )
+ )
+)
