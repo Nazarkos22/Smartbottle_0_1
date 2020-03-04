@@ -43,7 +43,7 @@ bool is_writen_data_empty(uint32_t addr);//function checks, is calibration data 
 bool is_writen_config(void);//function check if data is on FLASH memory  ( all is good - function = true, not = false)
 
 
-void eraze_flash_data(void);// function write on FLASH "0" sise of "U_cfg_t"
+void eraze_flash_data(uint32_t ADDR);// function write on FLASH "0" sise of "U_cfg_t"
 
 
 void make_data_for_flash(uint32_t* data);// prepare data from sensors and checksum to array "flash[FLASH_DATA]"

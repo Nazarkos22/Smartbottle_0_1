@@ -16,10 +16,10 @@
 int main(void)
 {
    __enable_irq(); /* Enable global interrupts. */
+     CapSense_Start();//Initialisation of CSD block and widgets
+    Flash_Processing();//
 
-   Read_Flash();
-
-  CapSense_Start();
+ 
  
     for(;;)
     {

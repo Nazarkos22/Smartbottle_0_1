@@ -66,11 +66,11 @@ uint8_t make_Baseline_Data(uint32_t* buffer, uint32_t* data, uint8 len)
     return status;
 }
 
-void eraze_flash_data(void)
+void eraze_flash_data(uint32_t ADDR)
 {
-  uint32_t* ptr = (uint32_t*) malloc(sizeof(U_cfg_t));    
+   uint32_t* ptr = (uint32_t*) malloc(sizeof(U_cfg_t));    
     memset(ptr, ZERO, sizeof(U_cfg_t));
-    Cy_Flash_WriteRow(FLASH_ADDR, ptr);
+    Cy_Flash_WriteRow(ADDR, ptr);
     free(ptr);
 }
 

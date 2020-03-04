@@ -28,9 +28,12 @@
     #define MAX_LEVEL (11u)
     #define TRESHOLD (4000u)// A change of CapSense count raws, which activates sensor
     uint32_t Sensor_data[MAX_SENSOR_VALUE];
-    uint32_t Calibration[MAX_SENSOR_VALUE][MAX_SENSOR_VALUE];// array from sensors data
+    typedef struct
+    {
+    uint32_t Calibration[MAX_SENSOR_VALUE];// array from sensors data
+    }U_csd_config_t;
     bool is_any_sensor_data_empty(uint32_t* data, uint8 len);//function checks is senors data equal NULL(true) or NOT(false)
-    void make_sensors_data(void);//function save data(raw counts) from CapSense widgets to array "Sensors"
+    uint8_t make_sensors_data(uint32_t* data, uint8 len);//function save data(raw counts) from CapSense widgets to array "Sensors"
     uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR);// function checks which of sensors are activated and return Level(0-250u)
  #endif
 /* [] END OF FILE */

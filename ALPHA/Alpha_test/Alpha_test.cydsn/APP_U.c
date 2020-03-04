@@ -16,6 +16,9 @@
 #include "flash_config_u.h"
 #include <stdlib.h>
 #include <string.h>
+
+app_t app;
+
 void Start_Interrapts(void)
 {
    __enable_irq(); /* Enable global interrupts. */
@@ -40,11 +43,18 @@ void CSD_Config(void)
  
      }while(ret == true);
 }
-void READ_FLASH(void)
+void Flash_Processing(void)
 {  
+    
    
-    Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, Baseline, MAX_SENSOR_VALUE);
-  
+    app.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, app.baseline, MAX_SENSOR_VALUE);
+     if(app.Baseline_Read_Status == false)
+    {    
+      memcpy(app.baseline, Craete_Baseline_data_from_Sensors(MAX_SENSOR_VALUE), sizeof(app.baseline));//copy
+      eraze_flash_data(FLASH_ADDR);
+      make_data_for_flash(app.baseline);
+      Cy_Flash_WriteRow(FLASH_ADDR, app.baseline);
+    }
 }
 
 /* [] END OF FILE */
