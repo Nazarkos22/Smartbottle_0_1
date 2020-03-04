@@ -10,7 +10,7 @@
  * ========================================
 */
 #include "project.h"
-#include "APP.h"
+#include "Core.h"
 
 
 int main(void)
@@ -18,9 +18,8 @@ int main(void)
    __enable_irq(); /* Enable global interrupts. */
      CapSense_Start();//Initialisation of CSD block and widgets
     Flash_Processing();//
-
- 
- 
+    
+    
     for(;;)
     {
 

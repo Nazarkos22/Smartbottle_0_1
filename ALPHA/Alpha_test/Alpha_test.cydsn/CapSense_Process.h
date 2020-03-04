@@ -10,8 +10,8 @@
  * ========================================
 */
 
-#ifndef __CAPSENSE_CONFIG_U_H_
-#define __CAPSENSE_CONFIG_U_H_
+#ifndef __CAPSENSE_PROCESS_H_
+#define __CAPSENSE_PROCESS_H_
 #include "project.h"
 #include "Config_u.h"
     
@@ -32,6 +32,7 @@
     {
     uint32_t Calibration[MAX_SENSOR_VALUE];// array from sensors data
     }U_csd_config_t;
+    uint32_t* Craete_Baseline_data_from_Sensors(uint8_t len);
     bool is_any_sensor_data_empty(uint32_t* data, uint8 len);//function checks is senors data equal NULL(true) or NOT(false)
     uint8_t make_sensors_data(uint32_t* data, uint8 len);//function save data(raw counts) from CapSense widgets to array "Sensors"
     uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR);// function checks which of sensors are activated and return Level(0-250u)

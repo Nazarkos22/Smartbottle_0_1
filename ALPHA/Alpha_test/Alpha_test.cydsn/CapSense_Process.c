@@ -11,7 +11,7 @@
 */
 #include "project.h"
 #include "Config_u.h"
-#include "CapSense_config_u.h"
+#include "CapSense_Process.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -49,9 +49,9 @@ uint8_t make_sensors_data(uint32_t* data, uint8 len)
 }
 uint32_t* Craete_Baseline_data_from_Sensors(uint8_t len)
 {
-    uint8_t Status = ZERO;
+ 
     
-        uint32_t Average[len];
+        uint32_t* Average;
          uint8 idx;
         //**********************************************************
         uint32_t* ptr = (uint32_t*)malloc(sizeof(U_csd_config_t)); // create data array
@@ -68,7 +68,7 @@ uint32_t* Craete_Baseline_data_from_Sensors(uint8_t len)
                       if(CapSense_NOT_BUSY == CapSense_IsBusy()) /* Do this only when a scan is done */
                        {
                          CapSense_ProcessAllWidgets(); /* Process all widgets */
-                        result = make_sensors_data(ptr, MAX_SENSOR_VALUE);
+                        result = make_sensors_data(ptr, len);
                         if(result == GOOD)
                         {
                             uint8 arr;

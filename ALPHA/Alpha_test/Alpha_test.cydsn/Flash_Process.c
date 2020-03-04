@@ -11,7 +11,7 @@
 */
 #include "project.h"
 #include "Config_u.h"
-#include "flash_config_u.h"
+#include "Flash_Process.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -73,7 +73,17 @@ void eraze_flash_data(uint32_t ADDR)
     Cy_Flash_WriteRow(ADDR, ptr);
     free(ptr);
 }
-
+uint32_t* make_data_for_flash(uint32_t* data, uint8_t len)
+{
+    uint32_t* Flash_Data;
+    uint8 idx;
+    for(idx = ZERO; idx < len; idx ++)
+    {
+       Flash_Data[idx] = data[idx]; 
+    }
+    Flash_Data[len] = get_checksum(data, len);
+    return Flash_Data;
+}
 
 //Function read sensor baseline data from flash memory(true if success)
 bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* data, uint8 len)
@@ -81,7 +91,7 @@ bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* data, uint8 len)
  bool ret = false ;
     uint32_t* buffer = (uint32_t*) malloc(sizeof(U_cfg_t));
     //copy flash data to buffer
-    memcpy(&buffer,(uint32_t*) ADDR, sizeof(U_cfg_t));
+    memcpy(buffer,(uint32_t*) ADDR, sizeof(U_cfg_t));
     if(is_any_data_empty(buffer, len)==false)
     {
         if(get_checksum(buffer, len) == buffer[ARR_CHECKSUM])

@@ -11,9 +11,9 @@
 */
 #include "project.h"
 #include "Config_u.h"
-#include "APP.h"
-#include "CapSense_config_u.h"
-#include "flash_config_u.h"
+#include "Core.h"
+#include "CapSense_Process.h"
+#include "Flash_Process.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -47,13 +47,13 @@ void Flash_Processing(void)
 {  
     
    
-    app.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, app.baseline, MAX_SENSOR_VALUE);
+     app.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, app.baseline, MAX_SENSOR_VALUE);
      if(app.Baseline_Read_Status == false)
     {    
       memcpy(app.baseline, Craete_Baseline_data_from_Sensors(MAX_SENSOR_VALUE), sizeof(app.baseline));//copy
       eraze_flash_data(FLASH_ADDR);
-      make_data_for_flash(app.baseline);
-      Cy_Flash_WriteRow(FLASH_ADDR, app.baseline);
+      Cy_Flash_WriteRow(FLASH_ADDR, make_data_for_flash(app.baseline, MAX_SENSOR_VALUE));
+     // Cy_SysResetCM4();
     }
 }
 

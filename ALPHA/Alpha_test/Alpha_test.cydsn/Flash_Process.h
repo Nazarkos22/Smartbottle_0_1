@@ -10,9 +10,10 @@
  * ========================================
 */
 
-#ifndef _FLASH_CONFIG_U_H_   
-#define _FLASH_CONFIG_U_H_    
+#ifndef __FLASH_PROCESS_H_   
+#define __FLASH_PROCESS_H_    
 #include "project.h"
+#include "Flash_Process.h"
 #include "Config_u.h"
 #include <stdlib.h>
 #include <string.h>
@@ -46,7 +47,7 @@ bool is_writen_config(void);//function check if data is on FLASH memory  ( all i
 void eraze_flash_data(uint32_t ADDR);// function write on FLASH "0" sise of "U_cfg_t"
 
 
-void make_data_for_flash(uint32_t* data);// prepare data from sensors and checksum to array "flash[FLASH_DATA]"
+uint32_t* make_data_for_flash(uint32_t* data, uint8_t len);// prepare data from sensors and checksum for write on FLASH memory
 
 
  bool is_memory_empty(uint32_t addr);// function check, is FLASH memory  with address "addr" sise of "U_cfg_t" is empty (true if empty)

@@ -9,8 +9,8 @@
  *
  * ========================================
 */
-#ifndef __APP_H_
-    #define __APP_H_
+#ifndef __CORE_H_
+    #define __CORE_H_
 #include "project.h"
 #include "Config_u.h"
     
