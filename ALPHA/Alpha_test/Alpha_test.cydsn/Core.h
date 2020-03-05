@@ -24,9 +24,7 @@ typedef struct
     
 }app_t;
     
-    void READ_FLASH(void);
-    void Start_Interrapts(void);
-    void CSD_Config(void);// make all processes with CapSense
-    void FLASH_Config(void);
+void CapSense_Processing(void);
+void Flash_Processing(void);
 /* [] END OF FILE */
  #endif

@@ -22,7 +22,6 @@ typedef struct
 }U_config_t;
    
     
-    uint32_t Baseline[MAX_SENSOR_VALUE];//array of baseline data
-    uint32_t Level;// variable, which recieves returned data from fuction "uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR)"
+
   #endif 
 /* [] END OF FILE */
