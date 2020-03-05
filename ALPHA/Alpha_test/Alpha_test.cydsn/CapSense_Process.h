@@ -26,8 +26,10 @@
     #define NINETH_lvl (8u)
     #define TENTH_lvl (9u)
     #define MAX_LEVEL (11u)
-    #define TRESHOLD (4000u)// A change of CapSense count raws, which activates sensor
-    
+    #define TRESHOLD (1000u)// A change of CapSense count raws, which activates sensor
+    #define LEVEL_CHANGE_VALUE (25u)
+    #define BASELINE_DELAY (1000u)
+    #define RAW_DELAY (100u)
     typedef struct
     {
        uint32_t Raws[MAX_SENSOR_VALUE];// array of sensors data
@@ -35,10 +37,11 @@
        uint32_t Baseline[MAX_SENSOR_VALUE];// array of Baseline data
        uint8_t Level;// liquid level
     }U_csd_data_t;
-    
-    void Craete_Baseline_data_from_Sensors(uint32_t* data, uint8_t len);
+    void Create_RAW_data_from_Sensors(uint32_t* data, uint8_t len);
+    void Create_Baseline_data_from_Sensors(uint32_t* data, uint8_t len);
+    uint8_t Find_Diff(uint32_t* sensor_data, uint32_t* baseline, uint32_t* receive_data, uint8_t len);
     bool is_any_sensor_data_empty(uint32_t* data, uint8 len);//function checks is senors data equal NULL(true) or NOT(false)
     uint8_t make_sensors_data(uint32_t* data, uint8 len);//function save data(raw counts) from CapSense widgets to array "Sensors"
-    uint32_t Find_Liquid_Level(uint32_t* data, uint32_t ADDR);// function checks which of sensors are activated and return Level(0-250u)
+    uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint8_t treshold);// function checks which of sensors are activated and return Level(0-250u)
  #endif
 /* [] END OF FILE */
