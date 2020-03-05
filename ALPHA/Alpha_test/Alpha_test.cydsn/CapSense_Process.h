@@ -32,10 +32,7 @@
     #define RAW_DELAY (100u)
     typedef struct
     {
-       uint32_t Raws[MAX_SENSOR_VALUE];// array of sensors data
-       uint32_t Diff[MAX_SENSOR_VALUE];// array of differance between Baseline and Raws
-       uint32_t Baseline[MAX_SENSOR_VALUE];// array of Baseline data
-       uint8_t Level;// liquid level
+
     }U_csd_data_t;
     void Create_RAW_data_from_Sensors(uint32_t* data, uint8_t len);
     void Create_Baseline_data_from_Sensors(uint32_t* data, uint8_t len);

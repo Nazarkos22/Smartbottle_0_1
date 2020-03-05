@@ -42,8 +42,6 @@ typedef struct
 }U_flash_data_t;
 
 
-  uint32_t flash[FLASH_DATA];// data, which will be prepared for write on flash
-
 
 bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* data, uint8 len);
 
