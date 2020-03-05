@@ -31,6 +31,16 @@ typedef struct
     
 }U_cfg_t;
 
+typedef struct
+{
+ bool Baseline_Read_Status;   
+}U_flash_flag_t;
+
+typedef struct
+{
+   uint32_t flash_data[FLASH_DATA]; 
+}U_flash_data_t;
+
 
   uint32_t flash[FLASH_DATA];// data, which will be prepared for write on flash
 
@@ -47,7 +57,7 @@ bool is_writen_config(void);//function check if data is on FLASH memory  ( all i
 void eraze_flash_data(uint32_t ADDR);// function write on FLASH "0" sise of "U_cfg_t"
 
 
-uint32_t* make_data_for_flash(uint32_t* data, uint8_t len);// prepare data from sensors and checksum for write on FLASH memory
+void make_data_for_flash(uint32_t* flash_data,uint32_t* baseline, uint8_t len);// prepare data from sensors and checksum for write on FLASH memory
 
 
  bool is_memory_empty(uint32_t addr);// function check, is FLASH memory  with address "addr" sise of "U_cfg_t" is empty (true if empty)

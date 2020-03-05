@@ -47,23 +47,24 @@ uint8_t make_sensors_data(uint32_t* data, uint8 len)
     }
     return Status;
 }
-uint32_t* Craete_Baseline_data_from_Sensors(uint8_t len)
+void Craete_Baseline_data_from_Sensors(uint32_t* data, uint8_t len)
 {
  
     
-        uint32_t* Average;
+        
          uint8 idx;
         //**********************************************************
-        uint32_t* ptr = (uint32_t*)malloc(sizeof(U_csd_config_t)); // create data array
-      
+        uint32_t* ptr = (uint32_t*)malloc(sizeof(U_config_t)); // create data array
+
         //**********************************************************
+        CapSense_ScanAllWidgets(); /* Start  scan */
         for(idx = ZERO; idx < len; idx++)
         {
             bool ret = true;
             uint8_t result = ZERO;
             do
                 {
-                      CapSense_ScanAllWidgets(); /* Start  scan */
+                      
                        
                       if(CapSense_NOT_BUSY == CapSense_IsBusy()) /* Do this only when a scan is done */
                        {
@@ -74,19 +75,24 @@ uint32_t* Craete_Baseline_data_from_Sensors(uint8_t len)
                             uint8 arr;
                             for(arr = ZERO; arr < len; arr++)
                             {
-                               Average[arr]+= (ptr[arr]/len); 
+                               data[arr] += (ptr[arr]/len); 
                             }
                              ret = false;
                         }
+                        if(idx == (len-GOOD))
+                        {
+                            continue;
+                        }
+                        CapSense_ScanAllWidgets();//start next scan
                        }
                      
              }
             while(ret == true);
             
-           // call delay(1000ms)
+// call delay(1000ms)
             
         }
-        
-     return Average;
+        free(ptr);
+     
     }
 /* [] END OF FILE */

@@ -17,42 +17,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-app_t app;
-
-void Start_Interrapts(void)
-{
-   __enable_irq(); /* Enable global interrupts. */
+U_flash_flag_t flag;
+U_csd_data_t CSD_data;
+U_flash_data_t FLASH_data;
 
 
-  CapSense_Start();
- 
-}
-
-void CSD_Config(void)
-{
-    bool ret = true;
-    
-    do{
-  CapSense_ScanAllWidgets(); /* Start next scan */
-    /* Do this only when a scan is done */
- if(CapSense_NOT_BUSY == CapSense_IsBusy())
-   {
-     CapSense_ProcessAllWidgets(); /* Process all widgets */
-    
-    }
- 
-     }while(ret == true);
-}
 void Flash_Processing(void)
 {  
     
    
-     app.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, app.baseline, MAX_SENSOR_VALUE);
-     if(app.Baseline_Read_Status == false)
+     flag.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, CSD_data.Baseline, MAX_SENSOR_VALUE);
+     if(flag.Baseline_Read_Status == false)
     {    
-      memcpy(app.baseline, Craete_Baseline_data_from_Sensors(MAX_SENSOR_VALUE), sizeof(app.baseline));//copy
+      Craete_Baseline_data_from_Sensors(CSD_data.Baseline, MAX_SENSOR_VALUE);
+      make_data_for_flash(FLASH_data.flash_data, CSD_data.Baseline, MAX_SENSOR_VALUE);
       eraze_flash_data(FLASH_ADDR);
-      Cy_Flash_WriteRow(FLASH_ADDR, make_data_for_flash(app.baseline, MAX_SENSOR_VALUE));
+      Cy_Flash_WriteRow(FLASH_ADDR, FLASH_data.flash_data);
      // Cy_SysResetCM4();
     }
 }

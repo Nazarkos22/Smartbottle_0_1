@@ -21,7 +21,7 @@ typedef struct
     uint32_t baseline[MAX_SENSOR_VALUE];
     uint32_t diff[MAX_SENSOR_VALUE];
     uint8_t err_flag;
-    bool Baseline_Read_Status;
+    
 }app_t;
     
     void READ_FLASH(void);

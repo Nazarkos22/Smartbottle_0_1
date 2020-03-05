@@ -73,16 +73,16 @@ void eraze_flash_data(uint32_t ADDR)
     Cy_Flash_WriteRow(ADDR, ptr);
     free(ptr);
 }
-uint32_t* make_data_for_flash(uint32_t* data, uint8_t len)
+void make_data_for_flash(uint32_t* flash_data,uint32_t* baseline, uint8_t len)
 {
-    uint32_t* Flash_Data;
+    
     uint8 idx;
     for(idx = ZERO; idx < len; idx ++)
     {
-       Flash_Data[idx] = data[idx]; 
+       flash_data[idx] = baseline[idx]; 
     }
-    Flash_Data[len] = get_checksum(data, len);
-    return Flash_Data;
+    flash_data[len] = get_checksum(baseline, len);
+    
 }
 
 //Function read sensor baseline data from flash memory(true if success)
@@ -104,6 +104,7 @@ bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* data, uint8 len)
             }
         }
     }
+    free(buffer);
     return ret;
 }
 /* [] END OF FILE */

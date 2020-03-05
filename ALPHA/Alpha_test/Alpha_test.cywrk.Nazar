@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\APP.h">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Alpha_test\Alpha_test\TopDesign">
 <ExpandedNodeIds>
 <v>Alpha_test</v>
 <v>Alpha_test\Alpha_test</v>
@@ -51,10 +51,7 @@
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\ARM MDK Generic</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\ARM MDK Generic\cy8c6xx7_cm4_dual.scat</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\APP.h</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\CapSense_config_u.h</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\Config_u.h</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\flash_config_u.h</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM GCC Generic</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM GCC Generic\startup_psoc6_01_cm4.S</v>
@@ -62,9 +59,6 @@
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM IAR Generic\startup_psoc6_01_cm4.s</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM MDK Generic</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM MDK Generic\startup_psoc6_01_cm4.s</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\APP_U.c</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\CapSense_config_u.c</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\flash_config_u.c</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\main_cm4.c</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\system_psoc6_cm4.c</v>
 <v>Alpha_test\Alpha_test\Shared Files</v>
@@ -74,6 +68,26 @@
 <v>Alpha_test\Alpha_test\Generated_Source\PSoC6</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
+<v>Alpha_test</v>
+<v>Alpha_test\Alpha_test</v>
+<v>Alpha_test\Alpha_test\TopDesign</v>
+<v>Alpha_test\Alpha_test\Alpha_test.cydwr</v>
+<v>Alpha_test\Alpha_test\Alpha_test.cydwr\Pins</v>
+<v>Alpha_test\Alpha_test\Alpha_test.cydwr\Analog</v>
+<v>Alpha_test\Alpha_test\Alpha_test.cydwr\DMA</v>
+<v>Alpha_test\Alpha_test\Alpha_test.cydwr\Clocks</v>
+<v>Alpha_test\Alpha_test\Alpha_test.cydwr\Interrupts</v>
+<v>Alpha_test\Alpha_test\Alpha_test.cydwr\System</v>
+<v>Alpha_test\Alpha_test\Alpha_test.cydwr\Directives</v>
+<v>Alpha_test\Alpha_test\CM0p (Core 0)</v>
+<v>Alpha_test\Alpha_test\CM0p (Core 0)\ARM GCC Generic</v>
+<v>Alpha_test\Alpha_test\CM0p (Core 0)\ARM GCC Generic\cy8c6xx7_cm0plus.ld</v>
+<v>Alpha_test\Alpha_test\CM0p (Core 0)\ARM IAR Generic</v>
+<v>Alpha_test\Alpha_test\CM0p (Core 0)\ARM IAR Generic\cy8c6xx7_cm0plus.icf</v>
+<v>Alpha_test\Alpha_test\CM0p (Core 0)\ARM MDK Generic</v>
+<v>Alpha_test\Alpha_test\CM0p (Core 0)\ARM MDK Generic\cy8c6xx7_cm0plus.scat</v>
+<v>Alpha_test\Alpha_test\CM0p (Core 0)\Header Files</v>
+<v>Alpha_test\Alpha_test\CM0p (Core 0)\Source Files</v>
 <v>Alpha_test\Alpha_test\CM0p (Core 0)\Source Files\ARM GCC Generic</v>
 <v>Alpha_test\Alpha_test\CM0p (Core 0)\Source Files\ARM GCC Generic\startup_psoc6_01_cm0plus.S</v>
 <v>Alpha_test\Alpha_test\CM0p (Core 0)\Source Files\ARM IAR Generic</v>
@@ -90,29 +104,8 @@
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\ARM MDK Generic</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\ARM MDK Generic\cy8c6xx7_cm4_dual.scat</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\APP.h</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\CapSense_config_u.h</v>
+<v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\CapSense_Process.h</v>
 <v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\Config_u.h</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Header Files\flash_config_u.h</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM GCC Generic</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM GCC Generic\startup_psoc6_01_cm4.S</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM IAR Generic</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM IAR Generic\startup_psoc6_01_cm4.s</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM MDK Generic</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\ARM MDK Generic\startup_psoc6_01_cm4.s</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\APP_U.c</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\CapSense_config_u.c</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\flash_config_u.c</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\main_cm4.c</v>
-<v>Alpha_test\Alpha_test\CM4 (Core 1)\Source Files\system_psoc6_cm4.c</v>
-<v>Alpha_test\Alpha_test\Shared Files</v>
-<v>Alpha_test\Alpha_test\Shared Files\cyapicallbacks.h</v>
-<v>Alpha_test\Alpha_test\Shared Files\system_psoc6.h</v>
-<v>Alpha_test\Alpha_test\Generated_Source</v>
-<v>Alpha_test\Alpha_test\Generated_Source\PSoC6</v>
-<v>Alpha_test\Alpha_test\Generated_Source\PSoC6\pdl</v>
-<v>Alpha_test\Alpha_test\Generated_Source\PSoC6\CapSense</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -179,16 +172,16 @@
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files</v>
-<v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\APP_U.lst</v>
-<v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_config_u.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_Control.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_Filter.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_INT.lst</v>
+<v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_Process.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_Processing.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_Sensing.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_SensingCSD_LL.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_Structure.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\CapSense_Tuner.lst</v>
+<v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\Core.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ble_clk.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_device.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_efuse.lst</v>
@@ -212,7 +205,7 @@
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\cyfitter_amux.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\cyfitter_sysint_cfg.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
-<v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\flash_config_u.lst</v>
+<v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\Flash_Process.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\main_cm4.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\startup_psoc6_01_cm4.lst</v>
 <v>Alpha_test\Alpha_test\CortexM4\ARM_GCC_541\Debug\Listing Files\system_psoc6_cm4.lst</v>
@@ -262,7 +255,6 @@
 <v>Alpha_test\Alpha_test\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
 <v>Alpha_test\Alpha_test\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_sysint_cfg.lst</v>
 <v>Alpha_test\Alpha_test\CortexM0p\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
-<v>Alpha_test\Alpha_test\CortexM0p\ARM_GCC_541\Debug\Listing Files\main_cm0p.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -298,14 +290,15 @@
 <Unloaded />
 <OpenDocs>
 <name v=".\Alpha_test.cydsn\main_cm4.c" />
-<name v=".\Alpha_test.cydsn\CapSense_config_u.c" />
-<name v=".\Alpha_test.cydsn\APP_U.c" />
-<name v=".\Alpha_test.cydsn\flash_config_u.c" />
-<name v=".\Alpha_test.cydsn\CapSense_config_u.h" />
 <name v=".\Alpha_test.cydsn\Config_u.h" />
-<name v=".\Alpha_test.cydsn\flash_config_u.h" />
-<name v=".\Alpha_test.cydsn\APP.h" />
-<name v="..\..\flash\FLASH_test\FLASH_test.cydsn\APP_U.c" />
+<name v=".\Alpha_test.cydsn\Core.c" />
+<name v=".\Alpha_test.cydsn\CapSense_Process.h" />
+<name v=".\Alpha_test.cydsn\Flash_Process.h" />
+<name v=".\Alpha_test.cydsn\Core.h" />
+<name v=".\Alpha_test.cydsn\Flash_Process.c" />
+<name v=".\Alpha_test.cydsn\CapSense_Process.c" />
+<name v=".\Alpha_test.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Alpha_test.cydsn\Generated_Source\PSoC6\CapSense_Sensing.c" />
 </OpenDocs>
 <OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
 
@@ -313,7 +306,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="889, 532" SelectedTabbedMdiWindow="00359282-8e27-4c08-b6b8-3ce74c53ef1d"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="89309faf-ca80-4619-a6b2-8bfe981b48c2" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\main_cm4.c" Guid="4a1e165c-3304-4c19-aa6f-6727acc785a7" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\CapSense_config_u.c" Guid="dff18d87-9681-4aee-aa16-429754b30eea" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\APP_U.c" Guid="00359282-8e27-4c08-b6b8-3ce74c53ef1d" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\flash_config_u.c" Guid="dd6df603-4b67-47a5-9c58-18bb35c35ac8" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\CapSense_config_u.h" Guid="ad23f5d2-d5b4-4e37-a216-e4500ceb0758" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\Config_u.h" Guid="000d2544-184e-4128-9d7c-d7dca4a03487" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\flash_config_u.h" Guid="510a380f-019f-4d1f-bf08-de02c9d4985d" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\APP.h" Guid="7a77c9f6-15cb-47d4-aa0e-b523d85c1f64" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\flash\FLASH_test\FLASH_test.cydsn\APP_U.c" Guid="e6a504f0-1d15-4ba2-81e3-e1c9c04464db" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="889, 532" SelectedTabbedMdiWindow="4a1e165c-3304-4c19-aa6f-6727acc785a7"><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\main_cm4.c" Guid="4a1e165c-3304-4c19-aa6f-6727acc785a7" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\Config_u.h" Guid="000d2544-184e-4128-9d7c-d7dca4a03487" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\Core.c" Guid="c95493ee-b244-4552-9319-2b67752c9707" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\CapSense_Process.h" Guid="f033d5c1-457e-4d24-9d52-f8a7a9a165d4" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\Flash_Process.h" Guid="2606eda8-39ba-45b2-b7c6-ccd6bde40d12" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\Core.h" Guid="b1f7fec2-21aa-4e5a-8b09-4af2ad1b22d0" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\Flash_Process.c" Guid="6a3ba1c5-404d-483b-ae75-37d3f054e7bf" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\CapSense_Process.c" Guid="e0c78616-9f57-4cd0-99b9-c994f9c541f8" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\TopDesign\TopDesign.cysch" Guid="7fe4c30f-1e25-4257-a209-716173ea8c73" /><DocumentWindow Key="C:\Users\Nazar\Documents\GitHub\Smartbottle_0_1\ALPHA\Alpha_test\Alpha_test.cydsn\Generated_Source\PSoC6\CapSense_Sensing.c" Guid="0ec3a541-9607-4e0a-8d6c-06ad96818098" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="89309faf-ca80-4619-a6b2-8bfe981b48c2" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
