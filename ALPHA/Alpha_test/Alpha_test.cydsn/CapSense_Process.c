@@ -137,7 +137,7 @@ void Create_RAW_data_from_Sensors(uint32_t* data, uint8_t len, uint8_t scan_time
                         if(result == GOOD)
                         {
                             uint8 arr; //loop variable
-                            for(arr = ZERO; arr < scan_times; arr++)
+                            for(arr = ZERO; arr < len; arr++)
                             {
                                data[arr] += (ptr[arr]/scan_times); 
                             }
@@ -192,7 +192,7 @@ void Create_Baseline_data_from_Sensors(uint32_t* data, uint8_t len, uint8_t scan
                         if(result == GOOD)
                         {
                             uint8 arr;//loop variable
-                            for(arr = ZERO; arr < scan_times; arr++)
+                            for(arr = ZERO; arr < len; arr++)
                             {
                                data[arr] += (ptr[arr]/scan_times); // Find average of each sensor
                             }
