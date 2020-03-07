@@ -1,11 +1,7 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+     Code is written by:
+           Kotliar Nazarii (NKOT)     
  *
  * ========================================
 */
@@ -21,7 +17,7 @@
     
 #define FLASH_ADDR CY_EM_EEPROM_BASE //FLASH memory address for config
 #define FLASH_DATA (11u)// Amount of array data, which will be written to FLASH memory 
-#define ARR_CHECKSUM (10u)// Number of array data, in which will be stored checksum 
+
     
     
 typedef struct
@@ -46,10 +42,12 @@ typedef struct
 bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* data, uint8 len);
 
 
-bool is_writen_data_empty(uint32_t addr);//function checks, is calibration data memory(return true) or not (return false)
+bool is_any_flash_data_empty(uint32_t* data, uint8 len);//function checks is senors data equal NULL(true) or NOT(false)
 
 
-bool is_writen_config(void);//function check if data is on FLASH memory  ( all is good - function = true, not = false)
+uint32_t get_checksum(uint32_t* msg, uint8_t len);//
+
+uint8_t make_Baseline_Data(uint32_t* buffer, uint32_t* data, uint8 len);//
 
 
 void eraze_flash_data(uint32_t ADDR);// function write on FLASH "0" sise of "U_cfg_t"
@@ -58,6 +56,6 @@ void eraze_flash_data(uint32_t ADDR);// function write on FLASH "0" sise of "U_c
 void make_data_for_flash(uint32_t* flash_data,uint32_t* baseline, uint8_t len);// prepare data from sensors and checksum for write on FLASH memory
 
 
- bool is_memory_empty(uint32_t addr);// function check, is FLASH memory  with address "addr" sise of "U_cfg_t" is empty (true if empty)
+ 
 /* [] END OF FILE */
   #endif 

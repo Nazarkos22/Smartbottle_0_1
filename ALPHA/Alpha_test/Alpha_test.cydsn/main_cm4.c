@@ -1,11 +1,7 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+     Code is written by:
+           Kotliar Nazarii (NKOT)     
  *
  * ========================================
 */
@@ -16,8 +12,8 @@
 int main(void)
 {
    __enable_irq(); /* Enable global interrupts. */
-     CapSense_Start();//Initialisation of CSD block and widgets
-
+     CapSense_Start();//Initialisation of CSD components
+//     Cy_BLE_Start(); //Initialisation of BLE components
      Flash_Processing();//
      
  /* Start  scan */

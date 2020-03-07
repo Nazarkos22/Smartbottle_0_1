@@ -1,11 +1,7 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+     Code is written by:
+           Kotliar Nazarii (NKOT)     
  *
  * ========================================
 */
@@ -15,7 +11,8 @@
 
 #define MAX_SENSOR_VALUE (10u)
 #define ZERO (0u)
-#define GOOD (1u)    
+#define GOOD (1u) 
+#define ONE  (1u)
 typedef struct
 {
     uint32_t Data[MAX_SENSOR_VALUE];

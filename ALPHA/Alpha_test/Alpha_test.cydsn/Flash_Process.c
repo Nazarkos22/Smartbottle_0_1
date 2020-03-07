@@ -1,11 +1,7 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+     Code is written by:
+           Kotliar Nazarii (NKOT)     
  *
  * ========================================
 */
@@ -15,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 
- bool is_any_data_empty(uint32_t* data, uint8 len)
+ bool is_any_flash_data_empty(uint32_t* data, uint8 len)
 {
     bool ret = false;
     
@@ -59,7 +55,7 @@ uint8_t make_Baseline_Data(uint32_t* buffer, uint32_t* data, uint8 len)
     {
       data[idx] = buffer[idx];  
     }
-    if(is_any_data_empty(data, len) == false)
+    if(is_any_flash_data_empty(data, len) == false)
     {
      status = GOOD;   
     }
@@ -92,9 +88,9 @@ bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* data, uint8 len)
     uint32_t* buffer = (uint32_t*) malloc(sizeof(U_cfg_t));
     //copy flash data to buffer
     memcpy(buffer,(uint32_t*) ADDR, sizeof(U_cfg_t));
-    if(is_any_data_empty(buffer, len)==false)
+    if(is_any_flash_data_empty(buffer, len)==false)
     {
-        if(get_checksum(buffer, len) == buffer[ARR_CHECKSUM])
+        if(get_checksum(buffer, len) == buffer[len])
         {   
             uint8 result = ZERO;
             result = make_Baseline_Data( buffer, data, len);

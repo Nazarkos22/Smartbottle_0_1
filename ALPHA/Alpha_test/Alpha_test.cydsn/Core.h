@@ -1,11 +1,7 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+     Code is written by:
+           Kotliar Nazarii (NKOT)     
  *
  * ========================================
 */
@@ -13,18 +9,10 @@
     #define __CORE_H_
 #include "project.h"
 #include "Config_u.h"
-    
-    
-typedef struct
-{
-    uint32_t raw[MAX_SENSOR_VALUE];
-    uint32_t baseline[MAX_SENSOR_VALUE];
-    uint32_t diff[MAX_SENSOR_VALUE];
-    uint8_t err_flag;
-    
-}app_t;
-    
+     
 void CapSense_Processing(void);
+
 void Flash_Processing(void);
+
 /* [] END OF FILE */
  #endif
