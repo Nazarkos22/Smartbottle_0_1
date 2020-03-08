@@ -40,9 +40,9 @@
     
     
     
-    void Create_RAW_data_from_Sensors(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay);
+
     
-    void Create_Baseline_data_from_Sensors(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay);
+    void Create_Baseline_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay);
     
     uint8_t Find_Diff(uint32_t* sensor_data, uint32_t* baseline, uint32_t* receive_data, uint8_t len);
     
@@ -50,6 +50,6 @@
     
     uint8_t make_sensors_data(uint32_t* data, uint8 len);//function save data(raw counts) from CapSense widgets to array of your data
     
-    uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint8_t treshold);// function checks which of sensors are activated and return Level(0-250u)
+    uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t treshold);// function checks which of sensors are activated and return Level(0-250u)
  #endif
 /* [] END OF FILE */

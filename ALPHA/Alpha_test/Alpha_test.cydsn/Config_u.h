@@ -13,6 +13,7 @@
 #define ZERO (0u)
 #define GOOD (1u) 
 #define ONE  (1u)
+    
 typedef struct
 {
     uint32_t Data[MAX_SENSOR_VALUE];

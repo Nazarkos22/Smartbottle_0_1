@@ -26,7 +26,7 @@ Execution: 1. Scan sensors
 ****************************************************************************/
 void CapSense_Processing(void)
 {
-   Create_RAW_data_from_Sensors(CSD_data.Raws, MAX_SENSOR_VALUE, RAW_SCAN_TIMES, RAW_DELAY);  // Form average sensor data in real time
+   Create_Baseline_data(CSD_data.Raws, MAX_SENSOR_VALUE, RAW_SCAN_TIMES, RAW_DELAY);  // Form average sensor data in real time
    if(Find_Diff(CSD_data.Raws, CSD_data.Baseline, CSD_data.Diff, MAX_SENSOR_VALUE) == GOOD)// Do only if there is not any NULL Diff
 {
     CSD_data.Level = Find_liquid_Level(CSD_data.Diff, MAX_SENSOR_VALUE, TRESHOLD); // Find level of active sensors
@@ -55,12 +55,12 @@ void Flash_Processing(void)
 {  
     
    
-     flag.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, CSD_data.Baseline, MAX_SENSOR_VALUE);// Scan Flah memory data
+     flag.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, CSD_data.Baseline, MAX_SENSOR_VALUE, sizeof(U_cfg_t));// Scan Flah memory data
      if(flag.Baseline_Read_Status == false) // When scanned Flash memory is "empty"
     {    
-      Create_Baseline_data_from_Sensors(CSD_data.Baseline, MAX_SENSOR_VALUE, BASELINE_SCAN_TIMES, BASELINE_DELAY); // Form baseline by scanning 10 times with delay
+      Create_Baseline_data(CSD_data.Baseline, MAX_SENSOR_VALUE, BASELINE_SCAN_TIMES, BASELINE_DELAY); // Form baseline by scanning 10 times with delay
       make_data_for_flash(FLASH_data.flash_data, CSD_data.Baseline, MAX_SENSOR_VALUE);// Form array data with Baseline data and checksum
-      eraze_flash_data(FLASH_ADDR); //Eraze Flash memory sizeof Baseline data plus checksum
+      eraze_flash_data(FLASH_ADDR, sizeof(U_cfg_t)); //Eraze Flash memory sizeof Baseline data plus checksum
       Cy_Flash_WriteRow(FLASH_ADDR, FLASH_data.flash_data); //Write on Flash memory Baseline and checksum
        //Cy_SysResetCM4();   //Reset(does not work yet)
     }

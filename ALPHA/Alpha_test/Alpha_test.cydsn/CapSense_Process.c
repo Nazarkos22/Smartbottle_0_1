@@ -13,11 +13,11 @@
 
 
 /***********************************************************************************************
-Fucntoin: is_any_data_empty
+Fucntoin: is_any_csd_data_empty
 Type: Bool
 Input: Poiner to array of data, lenth of array
 Execution: Function checks, is your array has at least one NULL data
-Return: If your array has at least one NULL data, function returns TRUE, Else - FALSE
+Return: If your array has at least one NULL data, function returns TRUE, else - FALSE
 ***********************************************************************************************/
 bool is_any_csd_data_empty(uint32_t* data, uint8 len)
 {
@@ -87,7 +87,7 @@ Input: Poiner to array of Differance data, amount of sensors, treshold;
 Execution: Find activated sensors and as a result find liquid level
 Return: Liquid Level
 ***********************************************************************************************/
-uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint8_t treshold)
+uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t treshold)
 {
  uint8_t Level = ZERO;//returned variable
     uint8 idx; //loop variable
@@ -106,74 +106,21 @@ uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint8_t tre
     }
     return Level;
 }
-/***********************************************************************************************
-Fucntoin: Create_RAW_data_from_Sensors;
-Type: void;
-Input: Poiner to array of Sensor RAW data, lenth of array, scan times, delay between scans;
-Execution: Assign average (10 scans with delay) RAW data from each sensor, to array of Sensor RAW data
-Return: ---------
-***********************************************************************************************/
-void Create_RAW_data_from_Sensors(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay)
-{
-         uint8 idx; //loop variable
-        /**********************************************************/
-    
-        uint32_t* ptr = (uint32_t*)malloc(sizeof(U_config_t));        // create data array
 
-        /**********************************************************/
-        CapSense_ScanAllWidgets(); /* Start  scan */
-        for(idx = ZERO; idx < scan_times; idx++)
-        {
-            bool ret = true;
-            uint8_t result = ZERO;
-            do
-                {
-                      
-                       
-                      if(CapSense_NOT_BUSY == CapSense_IsBusy()) /* Do this only when a scan is done */
-                       {
-                         CapSense_ProcessAllWidgets(); /* Process all widgets */
-                        result = make_sensors_data(ptr, len);
-                        if(result == GOOD)
-                        {
-                            uint8 arr; //loop variable
-                            for(arr = ZERO; arr < len; arr++)
-                            {
-                               data[arr] += (ptr[arr]/scan_times); 
-                            }
-                             ret = false;
-                        }
-                        if(idx == (scan_times-ONE))// When the last scan is done, we do not need next scan
-                        {
-                            continue;
-                        }
-                        CapSense_ScanAllWidgets();//start next scan
-                       }
-                     
-             }
-            while(ret == true);
-            
-Cy_SysLib_Delay(delay);//      call delay(100ms)
-            
-        }
-        free(ptr);
-     
-    }
 /***********************************************************************************************
 Fucntoin: Create_RAW_data_from_Sensors;
 Type: void;
-Input: Poiner to array of Baseline data, lenth of array, scan times, delay between scans;
+Input: Poiner to array of Baseline data, lenth of array, scan times, delay between scans(ms);
 Execution: Assign average (10 scans with delay) RAW data from each sensor, to array of Baseline data
 Return: ---------
 ***********************************************************************************************/
-void Create_Baseline_data_from_Sensors(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay)
+
+void Create_Baseline_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay)
 {
- 
-    
-        
+
          uint8 idx;//loop variable
         //**********************************************************
-        uint32_t* ptr = (uint32_t*)malloc(sizeof(U_config_t)); // create data array
+        uint32_t* ptr = (uint32_t*)malloc(sizeof(data)); // create data array
 
         //**********************************************************
         CapSense_ScanAllWidgets(); /* Start  scan */
@@ -183,7 +130,7 @@ void Create_Baseline_data_from_Sensors(uint32_t* data, uint8_t len, uint8_t scan
             uint8_t result = ZERO;
             do
                 {
-                      
+                      //start loop while ret equal TRUE
                        
                       if(CapSense_NOT_BUSY == CapSense_IsBusy()) /* Do this only when a scan is done */
                        {
@@ -208,7 +155,7 @@ void Create_Baseline_data_from_Sensors(uint32_t* data, uint8_t len, uint8_t scan
              }
             while(ret == true);
             
-        Cy_SysLib_Delay(delay);// call delay(1000ms)
+        Cy_SysLib_Delay(delay);// call delay(ms)
             
         }
         free(ptr);
