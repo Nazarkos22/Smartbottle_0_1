@@ -108,7 +108,7 @@ uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t tr
 }
 
 /***********************************************************************************************
-Fucntoin: Create_RAW_data_from_Sensors;
+Fucntoin: Create_Baseline_data;
 Type: void;
 Input: Poiner to array of Baseline data, lenth of array, scan times, delay between scans(ms);
 Execution: Assign average (10 scans with delay) RAW data from each sensor, to array of Baseline data
@@ -125,7 +125,7 @@ void Create_Baseline_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint1
         //**********************************************************
         CapSense_ScanAllWidgets(); /* Start  scan */
         for(idx = ZERO; idx < scan_times; idx++)
-        {
+        {   
             bool ret = true;
             uint8_t result = ZERO;
             do
@@ -161,7 +161,78 @@ void Create_Baseline_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint1
         free(ptr);
      
     }
+scan_t scan;
+middle_data_t middle_data;
+/***********************************************************************************************
+Fucntoin: Create_RAW_data;
+Type: void;
+Input: Poiner to array of Baseline data, lenth of array, scan times, delay between scans(ms);
+Execution: Assign average (10 scans with delay) RAW data from each sensor, to array of Baseline data
+Return: ---------
+***********************************************************************************************/
 
+void Create_RAW_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay)
+{       
+     scan.raw_success = false;
+
+         uint8 idx;//loop variable
+        //**********************************************************
+        uint32_t* ptr = (uint32_t*)malloc(sizeof(data)); // create data array
+
+        //**********************************************************
+        CapSense_ScanAllWidgets(); /* Start  scan */
+ 
+         
+            uint8_t result = ZERO;
+
+                      //start loop while ret equal TRUE
+                       
+                      if(CapSense_NOT_BUSY == CapSense_IsBusy()) /* Do this only when a scan is done */
+                       {
+                         CapSense_ProcessAllWidgets(); /* Process all widgets */
+                        result = make_sensors_data(ptr, len);
+                        if(result == GOOD)
+                        {      
+                            for(idx = ZERO; idx < len; idx++)
+                            {
+                               middle_data.temporary_baseline[idx] += (ptr[idx]/scan_times); // Find average of each sensor
+                            }
+                          scan.counter += 1; //count how many times we scanned
+                          if(scan.counter == scan_times)
+                          {
+                            scan.raw_success = true; // if we scan all times we wanted
+                          }
+                          if(scan.raw_success == true)
+                        {
+                         for(idx = ZERO; idx < len;idx++)
+                         {
+                            data[idx] = middle_data.temporary_baseline[idx]; //save raw data to our data
+                         }
+                        }
+                        }
+                        if((scan.counter == scan_times)||(scan.counter > scan_times))
+                        {
+                             scan.counter = ZERO;  //when all times is scanned - reload counter 
+                            free(ptr);
+                         for(idx = ZERO; idx < len;idx++)
+                         {
+                             middle_data.temporary_baseline[idx] = ZERO; //reload temporary baseline
+                         }
+                        }
+                        if(scan.counter < scan_times)// When the last scan is done, we do not need next scan
+                        {
+                            CapSense_ScanAllWidgets();//start next scan
+                        }
+                        
+                       }
+                     
+
+            
+        Cy_SysLib_Delay(delay);// call delay(ms)
+
+        
+     
+    }
 
 /*******************************************************************************
 * Function Name: bool IsCapSenseReadyForLowPowerMode(void)

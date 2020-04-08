@@ -21,11 +21,11 @@
     #define EIGHTH_lvl (7u)
     #define NINETH_lvl (8u)
     #define TENTH_lvl (9u)
-    #define MAX_LEVEL_VALUE (250u)
+    #define MAX_LEVEL_VALUE (255u)
     #define TRESHOLD (1000u)// A change of CapSense count raws, which activates sensor
     #define LEVEL_CHANGE_VALUE (25u)
     #define BASELINE_DELAY (1000u)
-    #define RAW_DELAY (100u)
+    #define RAW_DELAY (10u)
     #define RAW_SCAN_TIMES (7u)
     #define BASELINE_SCAN_TIMES (10u)
     
@@ -37,6 +37,17 @@
        uint32_t Baseline[MAX_SENSOR_VALUE];// array of Baseline data
        uint8_t Level;// liquid level
     }U_csd_data_t;
+    
+    typedef struct
+    {
+        uint8_t counter;
+        bool raw_success;
+    }scan_t;
+    
+    typedef struct
+    {
+        uint32_t temporary_baseline[MAX_SENSOR_VALUE];
+    }middle_data_t;
     /* Data length of CapSense proximity */
 #define CAPSENSE_PROXIMITY_DATA_LEN    (uint8_t) (0x01u)
 
@@ -63,7 +74,7 @@ bool  IsCapSenseReadyForLowPowerMode(void);
     
     
 
-    
+    void Create_RAW_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay);
     void Create_Baseline_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay);
     
     uint8_t Find_Diff(uint32_t* sensor_data, uint32_t* baseline, uint32_t* receive_data, uint8_t len);

@@ -26,7 +26,7 @@ Execution: 1. Scan sensors
 ****************************************************************************/
 void CapSense_Processing(void)
 {
-   Create_Baseline_data(CSD_data.Raws, MAX_SENSOR_VALUE, RAW_SCAN_TIMES, RAW_DELAY);  // Form average sensor data in real time
+   Create_RAW_data(CSD_data.Raws, MAX_SENSOR_VALUE, RAW_SCAN_TIMES, RAW_DELAY);  // Form average sensor data in real time
    if(Find_Diff(CSD_data.Raws, CSD_data.Baseline, CSD_data.Diff, MAX_SENSOR_VALUE) == GOOD)// Do only if there is not any NULL Diff
 {
     CSD_data.Level = Find_liquid_Level(CSD_data.Diff, MAX_SENSOR_VALUE, TRESHOLD); // Find level of active sensors
