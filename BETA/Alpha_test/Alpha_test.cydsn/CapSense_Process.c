@@ -163,4 +163,42 @@ void Create_Baseline_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint1
     }
 
 
+/*******************************************************************************
+* Function Name: bool IsCapSenseReadyForLowPowerMode(void)
+********************************************************************************
+*
+* Summary:
+*  Function to check if CapSense is ready to enter low power mode
+*
+* Parameters:
+*  None
+*
+* Return:
+*  bool     : true if ready to enter low power mode, false otherwise
+*
+* Side Effects:
+*  None
+*
+*******************************************************************************/
+bool  IsCapSenseReadyForLowPowerMode(void)
+{
+    /* Variable that stores the return flag */
+    bool lowPowerModeReady;
+    
+    /* Don't enter low power mode if CapSense is busy with a scan */
+    if(CapSense_IsBusy() != CapSense_NOT_BUSY)
+    {
+        lowPowerModeReady=false;
+    }
+    else
+    {
+        lowPowerModeReady=true;
+    }
+    
+    /* Return  the low power mode entry readiness */
+    return lowPowerModeReady;
+}
+
+
+
 /* [] END OF FILE */

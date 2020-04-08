@@ -37,7 +37,27 @@
        uint32_t Baseline[MAX_SENSOR_VALUE];// array of Baseline data
        uint8_t Level;// liquid level
     }U_csd_data_t;
+    /* Data length of CapSense proximity */
+#define CAPSENSE_PROXIMITY_DATA_LEN    (uint8_t) (0x01u)
 
+/* Data-type for storing CapSense proximity information */    
+typedef struct
+{
+    /* Flags that track changes to CapSense data */
+    bool proximityDataUpdated;
+    /* Proximity and button data field */
+    uint8_t  proximityData;
+}   proximity_data_t;
+
+/* Function that initializes the CapSense */    
+void InitCapSense(void);
+
+/* Function that scans CapSense proximity sensor, processes information and then
+   returns the data */
+proximity_data_t* GetProximityData(void);
+
+/* Function to check if CapSense is ready to enter low power mode */
+bool  IsCapSenseReadyForLowPowerMode(void);
 
 
     

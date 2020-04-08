@@ -1,13 +1,15 @@
 /******************************************************************************
-* File Name: main_cm0p.c
+* File Name: ble_application.h
 *
 * Version: 1.00
 *
-* Description: This file contains the Cortex-M0+ BLE controller code
+* Description: This file contains macros and the declaration of functions provided 
+*              by the ble_application.c file 
 *
 * Related Document: CE218135_BLE_Proximity.pdf
 *
 * Hardware Dependency: CY8CKIT-062-BLE PSoC 6 BLE Pioneer Kit
+*                      CY8CKIT-028-EPD E-INK Display Shield
 *
 ******************************************************************************
 * Copyright (2017), Cypress Semiconductor Corporation.
@@ -39,54 +41,32 @@
 * liability. Use of this Software may be limited by and subject to the applicable
 * Cypress software license agreement.
 *****************************************************************************/
-/******************************************************************************
-* Cortex-M0+ handles the controller portion of BLE. For the host functions, 
-* see main_cm4.c
-*******************************************************************************/
+/********************************************************************************
+* This file contains macros and the declaration of functions provided by the
+* ble_application.c file 
+********************************************************************************/
+
+/* Include guard */
+#ifndef BLE_APPLICATION_H
+#define BLE_APPLICATION_H
 
 /* Header file includes */
 #include <project.h>
+/** BLE state machine type */
 
-/*******************************************************************************
-* Function Name: main
-********************************************************************************
-* Summary:
-*  System entrance point. This function enables the Cortex-M4 and continuously 
-*  processes BLE controller events
-*
-* Parameters:
-*  void
-*
-* Return:
-*  int
-*
-*******************************************************************************/
-int main(void)
-{
-    /* Enable global interrupts */
-    __enable_irq();
-    
-    /* Start the Controller portion of BLE. Host runs on the CM4 */
-    if(Cy_BLE_Start(NULL) == CY_BLE_SUCCESS)
-    {
-        /* Enable CM4 only if BLE Controller started successfully. 
-           CY_CORTEX_M4_APPL_ADDR must be updated if CM4 memory layout 
-           is changed. */
-        Cy_SysEnableCM4(CY_CORTEX_M4_APPL_ADDR); 
-    }
-    else
-    {
-        /* Halt the CPU if the BLE initialization failed */
-        CY_ASSERT(0u != 0u);
-    }
-    
-    for (;;)
-    {
-        /* Cy_Ble_ProcessEvents() allows the BLE stack to process pending events */
-        Cy_BLE_ProcessEvents();
-        
-        /* Put CM0p to Deep-Sleep mode. The BLE Controller automatically wakes up 
-           the CPU if processing is required */
-        Cy_SysPm_DeepSleep(CY_SYSPM_WAIT_FOR_INTERRUPT);
-    }
-}
+/* Function that initializes the BLE component  */    
+void InitBle(void);  
+
+/* Function that continuously process the BLE events and handles custom 
+   BLE services */
+void ProcessBleEvents(void);
+
+/* Function to check if the BLE is ready to enter low power mode */
+bool IsBleReadyForLowPowerMode(void);
+
+/* Function that restarts BLE advertisement after a timeout or a disconnect
+   event */
+void RestartBleAdvertisement (void);
+
+#endif /* BLE_APPLICATION_H */
+/* [] END OF FILE */

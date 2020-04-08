@@ -16,6 +16,8 @@ int main(void)
 {
    __enable_irq(); /* Enable global interrupts. */
      CapSense_Start();//Initialisation of CSD components
+    InitBle();
+    InitLowPower();
 //     Cy_BLE_Start(); //Initialisation of BLE components
      Flash_Processing();//
 
@@ -23,7 +25,7 @@ int main(void)
     for(;;)
     {
         CapSense_Processing();
-       
+        ProcessBleEvents();     
     }
 }
 

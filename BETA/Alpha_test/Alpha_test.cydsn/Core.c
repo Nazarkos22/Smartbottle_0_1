@@ -65,3 +65,57 @@ void Flash_Processing(void)
        //Cy_SysResetCM4();   //Reset(does not work yet)
     }
 }
+/*******************************************************************************
+* Function Name: proximity_data_t* proximity_data_t* GetProximityData(void)
+********************************************************************************
+* Summary:
+*  Function that scans CapSense proximity sensor, processes information and then
+*  returns the data
+*
+* Parameters:
+*  None
+*
+* Return:
+*  proximity_data_t*  : address of the data-structure that stores proximity 
+*                       information
+*
+*******************************************************************************/
+proximity_data_t* GetProximityData(void)
+{
+    /* Structure that stores the current CapSense proximity information */
+    proximity_data_t  static currentProximityData = 
+    {    
+        /* Initialize the flag that track updates to proximity information */
+        .proximityDataUpdated = false,
+        /* Initialize the proximity information */
+        .proximityData = 0u,
+    };
+        
+    /* Variables used to store the instantaneous proximity information */
+    uint8_t  static proximity  = 0u;
+
+    /* Do this only when the CapSense isn't busy with a previous operation */
+    if (CapSense_IsBusy() == CapSense_NOT_BUSY)
+    {
+
+         proximity = CSD_data.Level;
+         
+    }
+                      
+    /* Check if the proximity data has changed */
+    if (proximity != currentProximityData.proximityData)
+    {
+        /* Proximity proximity position */
+        currentProximityData.proximityData = proximity;
+        /* Proximity data updated */
+        currentProximityData.proximityDataUpdated = true;
+    }
+    else
+    {  
+       /* Proximity data not updated */
+       currentProximityData.proximityDataUpdated = false; 
+    }
+        
+    /* return the proximity information */
+    return &currentProximityData;
+}

@@ -1,9 +1,9 @@
 /******************************************************************************
-* File Name: main_cm0p.c
+* File Name: low_power.h
 *
 * Version: 1.00
 *
-* Description: This file contains the Cortex-M0+ BLE controller code
+* Description: This file is the public interface of low_power.c
 *
 * Related Document: CE218135_BLE_Proximity.pdf
 *
@@ -39,54 +39,20 @@
 * liability. Use of this Software may be limited by and subject to the applicable
 * Cypress software license agreement.
 *****************************************************************************/
-/******************************************************************************
-* Cortex-M0+ handles the controller portion of BLE. For the host functions, 
-* see main_cm4.c
-*******************************************************************************/
+/********************************************************************************
+* This file is the public interface of low_power.c
+********************************************************************************/
 
-/* Header file includes */
-#include <project.h>
+/* Include Guard */
+#ifndef LOW_POWER_H
+#define LOW_POWER_H
 
-/*******************************************************************************
-* Function Name: main
-********************************************************************************
-* Summary:
-*  System entrance point. This function enables the Cortex-M4 and continuously 
-*  processes BLE controller events
-*
-* Parameters:
-*  void
-*
-* Return:
-*  int
-*
-*******************************************************************************/
-int main(void)
-{
-    /* Enable global interrupts */
-    __enable_irq();
-    
-    /* Start the Controller portion of BLE. Host runs on the CM4 */
-    if(Cy_BLE_Start(NULL) == CY_BLE_SUCCESS)
-    {
-        /* Enable CM4 only if BLE Controller started successfully. 
-           CY_CORTEX_M4_APPL_ADDR must be updated if CM4 memory layout 
-           is changed. */
-        Cy_SysEnableCM4(CY_CORTEX_M4_APPL_ADDR); 
-    }
-    else
-    {
-        /* Halt the CPU if the BLE initialization failed */
-        CY_ASSERT(0u != 0u);
-    }
-    
-    for (;;)
-    {
-        /* Cy_Ble_ProcessEvents() allows the BLE stack to process pending events */
-        Cy_BLE_ProcessEvents();
-        
-        /* Put CM0p to Deep-Sleep mode. The BLE Controller automatically wakes up 
-           the CPU if processing is required */
-        Cy_SysPm_DeepSleep(CY_SYSPM_WAIT_FOR_INTERRUPT);
-    }
-}
+/* Function that initializes the components used for low power functions */   
+void    InitLowPower(void);
+
+/* Function that evaluates the status of the system and enters low power mode if 
+   the conditions permit */
+void    HandleLowPowerMode(void);
+
+#endif /* LOW_POWER_H */
+/* [] END OF FILE */

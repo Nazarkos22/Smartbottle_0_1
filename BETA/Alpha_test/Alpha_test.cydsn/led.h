@@ -1,9 +1,9 @@
 /******************************************************************************
-* File Name: main_cm0p.c
+* File Name: led.h
 *
 * Version: 1.00
 *
-* Description: This file contains the Cortex-M0+ BLE controller code
+* Description: This file is the public interface of led.c source file 
 *
 * Related Document: CE218135_BLE_Proximity.pdf
 *
@@ -39,54 +39,35 @@
 * liability. Use of this Software may be limited by and subject to the applicable
 * Cypress software license agreement.
 *****************************************************************************/
-/******************************************************************************
-* Cortex-M0+ handles the controller portion of BLE. For the host functions, 
-* see main_cm4.c
-*******************************************************************************/
+/********************************************************************************
+* This file contains the declaration of functions provided by the
+* led.c file 
+********************************************************************************/
+
+/* Include guard */
+#ifndef LED_H
+#define LED_H
 
 /* Header file includes */
 #include <project.h>
 
-/*******************************************************************************
-* Function Name: main
-********************************************************************************
-* Summary:
-*  System entrance point. This function enables the Cortex-M4 and continuously 
-*  processes BLE controller events
-*
-* Parameters:
-*  void
-*
-* Return:
-*  int
-*
-*******************************************************************************/
-int main(void)
-{
-    /* Enable global interrupts */
-    __enable_irq();
-    
-    /* Start the Controller portion of BLE. Host runs on the CM4 */
-    if(Cy_BLE_Start(NULL) == CY_BLE_SUCCESS)
-    {
-        /* Enable CM4 only if BLE Controller started successfully. 
-           CY_CORTEX_M4_APPL_ADDR must be updated if CM4 memory layout 
-           is changed. */
-        Cy_SysEnableCM4(CY_CORTEX_M4_APPL_ADDR); 
-    }
-    else
-    {
-        /* Halt the CPU if the BLE initialization failed */
-        CY_ASSERT(0u != 0u);
-    }
-    
-    for (;;)
-    {
-        /* Cy_Ble_ProcessEvents() allows the BLE stack to process pending events */
-        Cy_BLE_ProcessEvents();
-        
-        /* Put CM0p to Deep-Sleep mode. The BLE Controller automatically wakes up 
-           the CPU if processing is required */
-        Cy_SysPm_DeepSleep(CY_SYSPM_WAIT_FOR_INTERRUPT);
-    }
-}
+/* Data-type of status LED indications */
+typedef enum
+{   
+    NO_INDICATION,
+    INDICATE_ADVERTISEMENT,
+    INDICATE_CONNECTION,
+    INDICATE_DISCONNECTION,
+}   status_led_indication_t;
+
+/* Function that updates the status LEDs to indicate the BLE state */
+void UpdateStatusLEDs(status_led_indication_t indication);
+
+/* Function that services the toggling / timeout of the status LEDs */
+void ServiceStatusLEDs (void);
+
+/* Function to check if any of the status LEDs require periodic toggle */
+bool IsLEDperiodicToggleActive(void);
+
+#endif /* LED_H */
+/* [] END OF FILE */

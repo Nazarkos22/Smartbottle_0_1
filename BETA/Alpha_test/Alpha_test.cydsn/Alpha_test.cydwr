@@ -14,6 +14,7 @@
       <Data key="818dab76-364e-4157-b9b0-82180f3dccb3" value="isr_gpio" />
       <Data key="014443b0-ec1a-4568-a8b1-c9fc93a5d083/5e509665-5bd3-4115-bbc0-fb65a49def9a" value="BLE_bless_isr" />
       <Data key="b8cef78d-de18-450e-a218-ad24dc3b79e7/6304fa96-b46f-4dfd-b13d-801be146d8ff" value="CapSense_ISR" />
+      <Data key="f76ac571-92d7-49a7-a0b3-63b58298016d/6304fa96-b46f-4dfd-b13d-801be146d8ff" value="CapSense_ISR" />
       <Data key="f77212cf-e55f-415f-acc8-255a1ea5a8cc" value="isr_MCWDT" />
     </Group>
     <Group key="Pin">
@@ -34,9 +35,20 @@
       <Data key="b8cef78d-de18-450e-a218-ad24dc3b79e7/fb7b9f5c-a9cf-4c78-855d-55c7d6997230" value="CapSense_Csh" />
       <Data key="c3ebdaf0-2922-44d8-bb3e-57ebf7663a2a" value="CY_EINK_DispRst" />
       <Data key="c932a304-7fee-45e3-92f6-c51270dee3cf" value="CY_EINK_DispIoEn" />
+      <Data key="f76ac571-92d7-49a7-a0b3-63b58298016d/4db2e9d3-9f70-4f4e-a919-7eefada41863" value="CapSense_Cmod" />
+      <Data key="f76ac571-92d7-49a7-a0b3-63b58298016d/0113321b-4a37-46f6-8407-2f8646c68756" value="CapSense_Sns" />
+      <Data key="f76ac571-92d7-49a7-a0b3-63b58298016d/e155f268-b320-4e19-9071-66bb52788381" value="CapSense_Shield" />
+      <Data key="f76ac571-92d7-49a7-a0b3-63b58298016d/fb7b9f5c-a9cf-4c78-855d-55c7d6997230" value="CapSense_Csh" />
     </Group>
   </Group>
   <Group key="Interrupt">
+    <Group key="818dab76-364e-4157-b9b0-82180f3dccb3">
+      <Group key="CortexM4">
+        <Data key="Assigned" value="True" />
+        <Data key="Priority" value="4" />
+        <Data key="Vector" value="-1" />
+      </Group>
+    </Group>
     <Group key="014443b0-ec1a-4568-a8b1-c9fc93a5d083/5e509665-5bd3-4115-bbc0-fb65a49def9a">
       <Group key="CortexM0p">
         <Data key="Assigned" value="True" />
@@ -46,6 +58,13 @@
       <Group key="CortexM4">
         <Data key="Assigned" value="False" />
         <Data key="Priority" value="Default" />
+        <Data key="Vector" value="-1" />
+      </Group>
+    </Group>
+    <Group key="f77212cf-e55f-415f-acc8-255a1ea5a8cc">
+      <Group key="CortexM4">
+        <Data key="Assigned" value="True" />
+        <Data key="Priority" value="5" />
         <Data key="Vector" value="-1" />
       </Group>
     </Group>
@@ -710,6 +729,11 @@
         <Data key="Port Format" value="13,7" />
       </Group>
     </Group>
+    <Group key="62f3fdc6-85e4-4465-8494-e4f3806cd924">
+      <Group key="0">
+        <Data key="Port Format" value="0,4" />
+      </Group>
+    </Group>
     <Group key="9452ee4b-2bf2-4f60-8a23-e449c8915f9b">
       <Group key="0">
         <Data key="Port Format" value="1,5" />
@@ -720,18 +744,58 @@
         <Data key="Port Format" value="7,7" />
       </Group>
     </Group>
+    <Group key="f76ac571-92d7-49a7-a0b3-63b58298016d/4db2e9d3-9f70-4f4e-a919-7eefada41863">
+      <Group key="0">
+        <Data key="Port Format" value="7,7" />
+      </Group>
+    </Group>
+    <Group key="f76ac571-92d7-49a7-a0b3-63b58298016d/0113321b-4a37-46f6-8407-2f8646c68756">
+      <Group key="0">
+        <Data key="Port Format" value="9,6" />
+      </Group>
+      <Group key="1">
+        <Data key="Port Format" value="10,4" />
+      </Group>
+      <Group key="2">
+        <Data key="Port Format" value="10,5" />
+      </Group>
+      <Group key="3">
+        <Data key="Port Format" value="10,6" />
+      </Group>
+      <Group key="4">
+        <Data key="Port Format" value="10,1" />
+      </Group>
+      <Group key="5">
+        <Data key="Port Format" value="9,3" />
+      </Group>
+      <Group key="6">
+        <Data key="Port Format" value="10,3" />
+      </Group>
+      <Group key="7">
+        <Data key="Port Format" value="9,2" />
+      </Group>
+      <Group key="8">
+        <Data key="Port Format" value="10,0" />
+      </Group>
+      <Group key="9">
+        <Data key="Port Format" value="10,2" />
+      </Group>
+    </Group>
+    <Group key="f76ac571-92d7-49a7-a0b3-63b58298016d/e155f268-b320-4e19-9071-66bb52788381">
+      <Group key="0">
+        <Data key="Port Format" value="7,3" />
+      </Group>
+    </Group>
+    <Group key="f76ac571-92d7-49a7-a0b3-63b58298016d/fb7b9f5c-a9cf-4c78-855d-55c7d6997230">
+      <Group key="0">
+        <Data key="Port Format" value="7,2" />
+      </Group>
+    </Group>
     <Group key="Unlocked Pins">
       <Group key="4cca878b-77b5-471d-8aeb-ad6925202455">
         <Group key="0">
           <Group key="132301477579608485">
             <Data key="Port Format" value="5,3" />
-          </Group>
-        </Group>
-      </Group>
-      <Group key="62f3fdc6-85e4-4465-8494-e4f3806cd924">
-        <Group key="0">
-          <Group key="132301477695844387">
-            <Data key="Port Format" value="0,4" />
           </Group>
         </Group>
       </Group>
