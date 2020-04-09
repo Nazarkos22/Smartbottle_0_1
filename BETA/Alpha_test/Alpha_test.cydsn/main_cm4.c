@@ -18,8 +18,9 @@ int main(void)
      CapSense_Start();//Initialisation of CSD components
     InitBle();
     InitLowPower();
-//     Cy_BLE_Start(); //Initialisation of BLE components
+
      Flash_Processing();//
+     CapSense_ScanAllWidgets(); /* Start  scan */
 
  /* Start  scan */
     for(;;)

@@ -149,6 +149,7 @@ void Create_Baseline_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint1
                         {
                             continue;
                         }
+                        
                         CapSense_ScanAllWidgets();//start next scan
                        }
                      
@@ -180,7 +181,7 @@ void Create_RAW_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t d
         uint32_t* ptr = (uint32_t*)malloc(sizeof(data)); // create data array
 
         //**********************************************************
-        CapSense_ScanAllWidgets(); /* Start  scan */
+ 
  
          
             uint8_t result = ZERO;
@@ -202,7 +203,7 @@ void Create_RAW_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t d
                           {
                             scan.raw_success = true; // if we scan all times we wanted
                           }
-                          if(scan.raw_success == true)
+                        if(scan.raw_success == true)
                         {
                          for(idx = ZERO; idx < len;idx++)
                          {
@@ -219,11 +220,10 @@ void Create_RAW_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t d
                              middle_data.temporary_baseline[idx] = ZERO; //reload temporary baseline
                          }
                         }
-                        if(scan.counter < scan_times)// When the last scan is done, we do not need next scan
-                        {
-                            CapSense_ScanAllWidgets();//start next scan
-                        }
+                       
                         
+                            CapSense_ScanAllWidgets();//start next scan
+                                                
                        }
                      
 

@@ -51,7 +51,7 @@
 #include <project.h>
 #include "low_power.h"
 #include "ble_application.h"
-#include "proximity.h"
+#include "CapSense_Process.h"
 #include "led.h"
 
 /*******************************************************************************
