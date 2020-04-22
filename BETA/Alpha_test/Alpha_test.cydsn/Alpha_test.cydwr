@@ -40,6 +40,8 @@
       <Data key="b8cef78d-de18-450e-a218-ad24dc3b79e7/fb7b9f5c-a9cf-4c78-855d-55c7d6997230" value="CapSense_Csh" />
       <Data key="c3ebdaf0-2922-44d8-bb3e-57ebf7663a2a" value="CY_EINK_DispRst" />
       <Data key="c932a304-7fee-45e3-92f6-c51270dee3cf" value="CY_EINK_DispIoEn" />
+      <Data key="d3a84822-b6b9-4700-8413-fc4533c194a4/2aab8a93-e7dd-4bd4-8210-42652cd079c5" value="EZI2C_sda" />
+      <Data key="d3a84822-b6b9-4700-8413-fc4533c194a4/69c3b5e8-b094-4d65-b96b-9f4f3a9a8641" value="EZI2C_scl" />
       <Data key="f76ac571-92d7-49a7-a0b3-63b58298016d/4db2e9d3-9f70-4f4e-a919-7eefada41863" value="CapSense_Cmod" />
       <Data key="f76ac571-92d7-49a7-a0b3-63b58298016d/0113321b-4a37-46f6-8407-2f8646c68756" value="CapSense_Sns" />
       <Data key="f76ac571-92d7-49a7-a0b3-63b58298016d/e155f268-b320-4e19-9071-66bb52788381" value="CapSense_Shield" />
@@ -794,6 +796,16 @@
     <Group key="b8cef78d-de18-450e-a218-ad24dc3b79e7/4db2e9d3-9f70-4f4e-a919-7eefada41863">
       <Group key="0">
         <Data key="Port Format" value="7,7" />
+      </Group>
+    </Group>
+    <Group key="d3a84822-b6b9-4700-8413-fc4533c194a4/2aab8a93-e7dd-4bd4-8210-42652cd079c5">
+      <Group key="0">
+        <Data key="Port Format" value="6,1" />
+      </Group>
+    </Group>
+    <Group key="d3a84822-b6b9-4700-8413-fc4533c194a4/69c3b5e8-b094-4d65-b96b-9f4f3a9a8641">
+      <Group key="0">
+        <Data key="Port Format" value="6,4" />
       </Group>
     </Group>
     <Group key="f76ac571-92d7-49a7-a0b3-63b58298016d/4db2e9d3-9f70-4f4e-a919-7eefada41863">

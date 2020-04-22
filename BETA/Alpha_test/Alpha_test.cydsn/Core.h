@@ -10,9 +10,12 @@
 #include "project.h"
 #include "Config_u.h"
      
-void CapSense_Processing(void);
+void CapSense_Processing(uint8_t scan_times);
+void Timer_Int_Init(void);
+void TimerInterruptHandler(void);
+void Set_Flags(void);
 
-void Flash_Processing(void);
+void Flash_Scan(void);
 
 /* [] END OF FILE */
  #endif

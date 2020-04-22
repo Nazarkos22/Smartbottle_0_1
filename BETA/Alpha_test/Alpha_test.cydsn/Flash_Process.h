@@ -27,14 +27,11 @@ typedef struct
     
 }U_cfg_t;
 
-typedef struct
-{
- bool Baseline_Read_Status;   
-}U_flash_flag_t;
 
 typedef struct
 {
    uint32_t flash_data[FLASH_DATA]; 
+   bool Baseline_Read_Status;
 }U_flash_data_t;
 
 

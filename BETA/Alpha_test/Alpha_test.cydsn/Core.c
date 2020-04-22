@@ -13,10 +13,33 @@
 #include <stdlib.h>
 #include <string.h>
 
-U_flash_flag_t flag; //initialization of structure with Baseline_Read_Status flag
+
 U_csd_data_t CSD_data;  //initialization of structure with all sensor and baseline data
 U_flash_data_t FLASH_data; //initialization of structure with data, which will be write on flash
 
+void Set_Flags(void)
+{
+    CSD_data.ReadyForNewScan_flag = true ;
+    CSD_data.TimerIntFlag = true;
+}
+
+void TimerInterruptHandler(void)
+{
+    CSD_data.TimerIntFlag = true;
+    Timer_ClearInterrupt(CY_TCPWM_INT_ON_TC);
+}
+
+void Timer_Int_Init(void)
+{
+    
+     /* Initialize the interrupt vector table with the timer interrupt handler
+     * address and assign priority.
+     */
+    Cy_SysInt_Init(&Timer_Int_cfg, TimerInterruptHandler);
+    /* Enable the core interrupt */ 
+    NVIC_EnableIRQ(Timer_Int_cfg.intrSrc);  
+    
+}
 /***************************************************************************
 Function: void CapSense_Processing(void)
 Execution: 1. Scan sensors
@@ -24,14 +47,84 @@ Execution: 1. Scan sensors
            3. Find differance between each sensor data and its baseline data
            4. Find what sensors are active and as a result find liquid level
 ****************************************************************************/
-void CapSense_Processing(void)
+void CapSense_Processing(uint8_t scan_times)
 {
-   Create_RAW_data(CSD_data.Raws, MAX_SENSOR_VALUE, RAW_SCAN_TIMES, RAW_DELAY);  // Form average sensor data in real time
-   if(Find_Diff(CSD_data.Raws, CSD_data.Baseline, CSD_data.Diff, MAX_SENSOR_VALUE) == GOOD)// Do only if there is not any NULL Diff
-{
-    CSD_data.Level = Find_liquid_Level(CSD_data.Diff, MAX_SENSOR_VALUE, TRESHOLD); // Find level of active sensors
-}
-   
+    if((CSD_data.ReadyForNewScan_flag == true) && (CSD_data.TimerIntFlag == true))
+    {
+        
+        /* Start next scan */
+        CapSense_ScanAllWidgets();
+        /* Reset flag */
+        CSD_data.ReadyForNewScan_flag = false;
+        /* Reset flag */
+        CSD_data.TimerIntFlag = false;
+        /* Reset flag */
+        CSD_data.HaveScanResult = false;
+        /* Reset counter */
+        CSD_data.counter = ZERO;
+        /* Write ZERO in Raw data */
+        clean_data(CSD_data.Raws, MAX_SENSOR_VALUE);
+        
+    }
+    /* Do only if we do not have scan result */
+    if(CSD_data.HaveScanResult == false)
+    {
+        
+        /* Do this only when a scan is done */
+        if(CapSense_NOT_BUSY == CapSense_IsBusy()) 
+        {
+            /* Create variable flag */
+            bool Create_RAW_data_Status = false;
+            /* Process all widgets */
+            CapSense_ProcessAllWidgets();
+            /* Form average sensor data in real time and return flag */
+            Create_RAW_data_Status = Create_RAW_data(CSD_data.Raws, MAX_SENSOR_VALUE, scan_times);
+            /* Do only if Raw data is formed*/
+            if(Create_RAW_data_Status == true)
+            {
+                
+                /* Count scan times */
+                CSD_data.counter++;
+                
+            }
+            /*Do only if last scan is in process*/
+            if(CSD_data.counter == scan_times)
+            {   
+                
+                /* Status variable */
+                bool Diff_Status = false;
+                /* Find differance between RAWs and Baseline and return status */
+                Diff_Status = Find_Diff(CSD_data.Diff, CSD_data.Baseline, CSD_data.Raws, MAX_SENSOR_VALUE);
+                /* Do only if any diff data is not ZERO */
+                if(Diff_Status == true)
+                {
+                    
+                    /* Find level of active sensors */
+                    CSD_data.Level = Find_liquid_Level(CSD_data.Diff, MAX_SENSOR_VALUE, TRESHOLD);
+                    /* Allow to start next cycle of scans(will reset from timer/counter in next iterations) */
+                    CSD_data.ReadyForNewScan_flag = true;
+                    /* Set flag */
+                    CSD_data.HaveScanResult = true;
+                    /* Write ZERO in Temporary Baseline */
+                    clean_data(CSD_data.Raws, MAX_SENSOR_VALUE);
+                    /* Start timer */
+                     Timer_Start();
+                }
+                
+            }
+            /* Do not start next scan if last scan is done */
+            if(CSD_data.counter < scan_times)
+            {
+                
+                /* Start next scan */
+                CapSense_ScanAllWidgets();
+                
+            }
+            
+        }
+        
+    }
+    
 }
 
 
@@ -51,20 +144,31 @@ Execution: 1. Check Flash Memory with some address, is it "empty" or not
            5. Write Baseline data and checksum on Flash memory with that address
            6. Reset
 ****************************************************************************/
-void Flash_Processing(void)
+void Flash_Scan(void)
 {  
     
-   
-     flag.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, CSD_data.Baseline, MAX_SENSOR_VALUE, sizeof(U_cfg_t));// Scan Flah memory data
-     if(flag.Baseline_Read_Status == false) // When scanned Flash memory is "empty"
-    {    
-      Create_Baseline_data(CSD_data.Baseline, MAX_SENSOR_VALUE, BASELINE_SCAN_TIMES, BASELINE_DELAY); // Form baseline by scanning 10 times with delay
-      make_data_for_flash(FLASH_data.flash_data, CSD_data.Baseline, MAX_SENSOR_VALUE);// Form array data with Baseline data and checksum
-      eraze_flash_data(FLASH_ADDR, sizeof(U_cfg_t)); //Eraze Flash memory sizeof Baseline data plus checksum
-      Cy_Flash_WriteRow(FLASH_ADDR, FLASH_data.flash_data); //Write on Flash memory Baseline and checksum
-       //Cy_SysResetCM4();   //Reset(does not work yet)
+    /* Scan Flah memory data and return status flag */
+    FLASH_data.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, CSD_data.Baseline, MAX_SENSOR_VALUE, sizeof(U_cfg_t)); 
+    /* Do only if scanned Flash memory is "empty" */
+    if(FLASH_data.Baseline_Read_Status == false)
+    {
+        
+        /* Form baseline by scanning some amount of times with delay */
+        Create_Baseline_data(CSD_data.Baseline, MAX_SENSOR_VALUE, BASELINE_SCAN_TIMES); 
+        /* Form array data with Baseline data and checksum */
+        make_data_for_flash(FLASH_data.flash_data, CSD_data.Baseline, MAX_SENSOR_VALUE);
+        /* Eraze Flash memory size of Baseline data plus checksum */
+        eraze_flash_data(FLASH_ADDR, sizeof(U_cfg_t));
+        /* Write on Flash memory Baseline and checksum */
+        Cy_Flash_WriteRow(FLASH_ADDR, FLASH_data.flash_data); 
+        /* RESET function*/
+        __NVIC_SystemReset() ;   
+        
     }
+    
 }
+
+
 /*******************************************************************************
 * Function Name: proximity_data_t* proximity_data_t* GetProximityData(void)
 ********************************************************************************
@@ -82,40 +186,42 @@ void Flash_Processing(void)
 *******************************************************************************/
 proximity_data_t* GetProximityData(void)
 {
+    
     /* Structure that stores the current CapSense proximity information */
     proximity_data_t  static currentProximityData = 
     {    
+        
         /* Initialize the flag that track updates to proximity information */
         .proximityDataUpdated = false,
         /* Initialize the proximity information */
         .proximityData = 0u,
+        
     };
         
     /* Variables used to store the instantaneous proximity information */
-    uint8_t  static proximity  = 0u;
-
-    /* Do this only when the CapSense isn't busy with a previous operation */
-    if (CapSense_IsBusy() == CapSense_NOT_BUSY)
-    {
-
-         proximity = CSD_data.Level;
-         
-    }
-                      
+    uint8_t  static proximity;
+    /**/
+    proximity = CSD_data.Level;
+                        
     /* Check if the proximity data has changed */
     if (proximity != currentProximityData.proximityData)
     {
+        
         /* Proximity proximity position */
         currentProximityData.proximityData = proximity;
         /* Proximity data updated */
         currentProximityData.proximityDataUpdated = true;
+        
     }
     else
-    {  
+    { 
+        
        /* Proximity data not updated */
        currentProximityData.proximityDataUpdated = false; 
+        
     }
         
     /* return the proximity information */
     return &currentProximityData;
+    
 }

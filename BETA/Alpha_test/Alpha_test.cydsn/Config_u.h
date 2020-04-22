@@ -13,6 +13,13 @@
 #define ZERO (0u)
 #define GOOD (1u) 
 #define ONE  (1u)
+#define RAW_SCAN_TIMES (3u)
+#define BASELINE_DELAY (1000u)
+#define RAW_DELAY (10u)   
+#define BASELINE_SCAN_TIMES (20u)
+#define CHECKSUM_VARIABLE   (1u)
+#define BYTE_CONST (4u)
+    
     
 typedef struct
 {

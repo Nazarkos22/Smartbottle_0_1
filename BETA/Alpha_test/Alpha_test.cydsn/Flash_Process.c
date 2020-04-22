@@ -44,10 +44,10 @@ Return: Checksum
 uint32_t get_checksum(uint32_t* msg, uint8_t len)
 {
   uint8_t idx;
-  uint32_t checksum = 15u;
+  uint32_t checksum = CHECKSUM_VARIABLE;
     for(idx = ZERO; idx < len; idx++)
     {
-     checksum |= msg[idx];   
+     checksum ^= msg[idx];   
     }
   return checksum;
 }
@@ -121,22 +121,42 @@ Return: If Baseline data array has not any NULL data, returns TRUE, else - FALSE
 
 bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* baseline, uint8 len, size_t size)
 {
- bool ret = false ;
-    uint32_t* buffer = (uint32_t*) malloc(size); //create buffer
-    memcpy(buffer,(uint32_t*) ADDR, size); //copy flash data to buffer
-    if(is_any_flash_data_empty(buffer, len)==false) //if all data is not NULL
+    
+    /*Function status flag*/
+    bool ret = false ;
+    /*Create buffer*/
+    uint32_t* buffer = (uint32_t*) malloc(size);
+    /*Copy flash data to buffer*/
+    memcpy(buffer,(uint32_t*) ADDR, size);
+    /*Do only if all data is not NULL*/
+    if(is_any_flash_data_empty(buffer, len)==false) 
     {
-        if(get_checksum(buffer, len) == buffer[len]) //if data is verified
+        
+        /*Do only if data is verified by checksum*/
+        if(get_checksum(buffer, len) == buffer[len]) 
         {   
-            uint8 result = ZERO;
-            result = copy_data(buffer, baseline, len);//copy buffer to baseline
-            if(result == GOOD) //if baseline data has not any NULL data
+            
+            /*Status variable*/
+            bool result = true;
+            /*Copy buffer to baseline*/
+            memcpy(baseline, buffer, size);
+            /*Check for NULL data and return to status variable*/
+            result = is_any_flash_data_empty(buffer, len);
+            /*Do only if baseline data has not any NULL data*/
+            if(result == false) 
             {
-             ret = true;   
+                
+                /*Set function status variable*/
+                ret = true;
+                
             }
+            
         }
+        
     }
-    free(buffer); // free buffer
+    /*Free buffer*/
+    free(buffer);
+    /*Return function status*/
     return ret;
 }
 /* [] END OF FILE */

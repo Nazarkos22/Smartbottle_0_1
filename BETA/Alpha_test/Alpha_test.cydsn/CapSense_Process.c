@@ -27,10 +27,26 @@ bool is_any_csd_data_empty(uint32_t* data, uint8 len)
     {
       if(data[idx] == ZERO)
     {
-        ret = true;
+        return true;
     }
     }
     return ret;
+}
+
+
+bool clean_data(uint32_t* data, uint8 len)
+{
+    bool ret = true;
+    uint8 idx;
+    memset(data, ZERO, len * BYTE_CONST);
+    for(idx = ZERO; idx < len; idx++)
+    {
+        if(data[idx] != ZERO)
+        {
+            return false;
+        }
+    }
+    return ret;    
 }
 /***********************************************************************************************
 Fucntoin: make_sensors_data
@@ -39,9 +55,9 @@ Input: Poiner to array of data, lenth of array
 Execution: Assigns sensor raw counts to array data
 Return: 0u if any of sensor data is NULL, 1u if all sensor data has some value
 ***********************************************************************************************/
-uint8_t make_sensors_data(uint32_t* data, uint8 len)
+bool make_sensors_data(uint32_t* data, uint8 len)
 {
-    uint8_t Status = ZERO;
+    bool Status = false;
     data[FIRST_lvl] = CapSense_BUTTON0_SNS0_RAW0_VALUE;
     data[SECOND_lvl] = CapSense_BUTTON1_SNS0_RAW0_VALUE;
     data[THIRD_lvl] = CapSense_BUTTON2_SNS0_RAW0_VALUE;
@@ -54,29 +70,30 @@ uint8_t make_sensors_data(uint32_t* data, uint8 len)
     data[TENTH_lvl] = CapSense_BUTTON9_SNS0_RAW0_VALUE;
     if(is_any_csd_data_empty(data, len) == false)
     {
-        Status = GOOD;
+        return true;
     }
     return Status;
 }
 /***********************************************************************************************
 Fucntoin: Find_Diff;
-Type: uint8_t;
+Type: bool;
 Input: Poiner to array of sensor data, poiner to array of sensor Baseline, poiner to array for 
        output data, lenth of array;
 Execution: Find differance between sensor data and Baseline for each sensor and assigns result to
            array of output data
 Return: 0u if any of output data is NULL, 1u if all output data has some value
 ***********************************************************************************************/
-uint8_t Find_Diff(uint32_t* diff, uint32_t* baseline, uint32_t* sensor_data, uint8_t len)
+bool Find_Diff(uint32_t* diff, uint32_t* baseline, uint32_t* sensor_data, uint8_t len)
 {
- uint8 idx, Status = ZERO;
+    uint8 idx;
+    bool Status = false;
     for(idx = ZERO; idx < len; idx++)
     {
      diff[idx] = sensor_data[idx] - baseline[idx];  
     }
     if(is_any_csd_data_empty(diff, len) == false)
     {
-     Status = GOOD;   
+     return true;   
     }
    return Status;  
 }
@@ -90,20 +107,68 @@ Return: Liquid Level
 uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t treshold)
 {
  uint8_t Level = ZERO;//returned variable
-    uint8 idx; //loop variable
-    
-    for(idx = ZERO; idx < amount_of_sensors; idx++)
+    if(Diff[FIRST_lvl] > treshold)
     {
-        if (Diff[idx] < treshold)
+        Level = 26u;
+        if(Diff[SECOND_lvl] > treshold)
         {
-         Level = (idx)*LEVEL_CHANGE_VALUE;
-         break;
-        }
-        if((idx + ONE) == (amount_of_sensors))
-        {
-         Level = MAX_LEVEL_VALUE;   
+            Level = 51u;
+            if(Diff[THIRD_lvl] > treshold)
+            {
+                Level = 77u;
+                if(Diff[FOURTH_lvl] > treshold)
+                {
+                    Level = 102u;
+                    if(Diff[FIFTH_lvl] > treshold)
+                    {
+                        Level = 128u;
+                        if(Diff[SIXTH_lvl] > treshold)
+                        {
+                            Level = 153u;
+                            if(Diff[SEVENTH_lvl] > treshold)
+                            {
+                                Level = 179u;
+                                if(Diff[EIGHTH_lvl] > treshold)
+                                {
+                                    Level = 204u;
+                                    if(Diff[NINETH_lvl] > treshold)
+                                    {
+                                        Level = 230u;
+                                        if(Diff[TENTH_lvl] > treshold)
+                                        {
+                                            Level = 255u;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
+//    uint8 idx; //loop variable
+//    
+//    for(idx = ZERO; idx < amount_of_sensors; idx++)
+//    {
+//        if (Diff[idx] > treshold)
+//        {
+//            if(idx == TENTH_lvl)
+//            {
+//             Level = MAX_LEVEL_VALUE;   
+//            }
+//            continue;
+//        }
+//        else
+//        {
+//            Level = idx*LEVEL_CHANGE_VALUE; 
+//            break;
+//        }
+//        if((idx + ONE) == (amount_of_sensors))
+//        {
+//         Level = MAX_LEVEL_VALUE;   
+//        }
+//    }
     return Level;
 }
 
@@ -115,123 +180,113 @@ Execution: Assign average (10 scans with delay) RAW data from each sensor, to ar
 Return: ---------
 ***********************************************************************************************/
 
-void Create_Baseline_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay)
+void Create_Baseline_data(uint32_t* data, uint8_t len, uint8_t scan_times)
 {
-
-         uint8 idx;//loop variable
-        //**********************************************************
-        uint32_t* ptr = (uint32_t*)malloc(sizeof(data)); // create data array
-
-        //**********************************************************
-        CapSense_ScanAllWidgets(); /* Start  scan */
-        for(idx = ZERO; idx < scan_times; idx++)
-        {   
-            bool ret = true;
-            uint8_t result = ZERO;
-            do
+    
+    /*loop variable*/
+    uint8 idx;
+    /* Start  scan */
+    CapSense_ScanAllWidgets();
+    /*Start loop with "scan_times" execution*/
+    for(idx = ZERO; idx < scan_times; idx++)
+    {   
+        
+        /*"do-while" loop variable*/
+        bool ret = true;
+        /*Status variable*/
+        bool result = false;
+        /*Do untill scanning will be finished*/
+        do
+            {
+                  
+                /* Do this only when a scan is done */   
+                if(CapSense_NOT_BUSY == CapSense_IsBusy()) 
                 {
-                      //start loop while ret equal TRUE
-                       
-                      if(CapSense_NOT_BUSY == CapSense_IsBusy()) /* Do this only when a scan is done */
-                       {
-                         CapSense_ProcessAllWidgets(); /* Process all widgets */
-                        result = make_sensors_data(ptr, len);
-                        if(result == GOOD)
-                        {
-                            uint8 arr;//loop variable
-                            for(arr = ZERO; arr < len; arr++)
-                            {
-                               data[arr] += (ptr[arr]/scan_times); // Find average of each sensor
-                            }
-                             ret = false;
-                        }
-                        if(idx == (scan_times-ONE))// When the last scan is done, we do not need next scan
-                        {
-                            continue;
-                        }
+                    
+                    /*create data array, sizeof input data array*/
+                    uint32_t* ptr = (uint32_t*)malloc(sizeof(data)); // create data array
+                    /* Process all widgets */
+                    CapSense_ProcessAllWidgets();
+                    /*Copy sensor data to created array and returns success status to variable*/
+                    result = make_sensors_data(ptr, len);
+                    /*Do only if sensor data is not empty*/
+                    if(result == true)
+                    {
                         
-                        CapSense_ScanAllWidgets();//start next scan
-                       }
-                     
-             }
-            while(ret == true);
-            
-        Cy_SysLib_Delay(delay);// call delay(ms)
-            
-        }
-        free(ptr);
-     
+                        /*loop variable*/
+                        uint8 arr;
+                        /*Copy average sensor data to input data*/
+                        for(arr = ZERO; arr < len; arr++)
+                        {
+                            
+                            /*Find average of each sensor*/
+                            data[arr] += (ptr[arr]/scan_times); 
+                            
+                        }
+                        /*Reset "do-while" loop variable to permiss for exit from loop*/
+                         ret = false;
+                        /*free created array*/
+                         free(ptr);
+                        
+                    }
+                    /*When the last scan is done, we do not need next scan*/
+                    if(idx == (scan_times-ONE)) 
+                    {
+                        
+                        continue;
+                        
+                    }
+                    /*start next scan*/
+                    CapSense_ScanAllWidgets();
+                    
+                }
+                 
+            }
+        while(ret == true);
+          
     }
-scan_t scan;
-middle_data_t middle_data;
+            
+}
+
 /***********************************************************************************************
 Fucntoin: Create_RAW_data;
-Type: void;
+Type: bool;
 Input: Poiner to array of Baseline data, lenth of array, scan times, delay between scans(ms);
-Execution: Assign average (10 scans with delay) RAW data from each sensor, to array of Baseline data
+Execution: Assign average  RAW data from each sensor, to array of Baseline data
 Return: ---------
 ***********************************************************************************************/
 
-void Create_RAW_data(uint32_t* data, uint8_t len, uint8_t scan_times, uint16_t delay)
-{       
-     scan.raw_success = false;
-
-         uint8 idx;//loop variable
-        //**********************************************************
-        uint32_t* ptr = (uint32_t*)malloc(sizeof(data)); // create data array
-
-        //**********************************************************
- 
- 
-         
-            uint8_t result = ZERO;
-
-                      //start loop while ret equal TRUE
-                       
-                      if(CapSense_NOT_BUSY == CapSense_IsBusy()) /* Do this only when a scan is done */
-                       {
-                         CapSense_ProcessAllWidgets(); /* Process all widgets */
-                        result = make_sensors_data(ptr, len);
-                        if(result == GOOD)
-                        {      
-                            for(idx = ZERO; idx < len; idx++)
-                            {
-                               middle_data.temporary_baseline[idx] += (ptr[idx]/scan_times); // Find average of each sensor
-                            }
-                          scan.counter += 1; //count how many times we scanned
-                          if(scan.counter == scan_times)
-                          {
-                            scan.raw_success = true; // if we scan all times we wanted
-                          }
-                        if(scan.raw_success == true)
-                        {
-                         for(idx = ZERO; idx < len;idx++)
-                         {
-                            data[idx] = middle_data.temporary_baseline[idx]; //save raw data to our data
-                         }
-                        }
-                        }
-                        if((scan.counter == scan_times)||(scan.counter > scan_times))
-                        {
-                             scan.counter = ZERO;  //when all times is scanned - reload counter 
-                            free(ptr);
-                         for(idx = ZERO; idx < len;idx++)
-                         {
-                             middle_data.temporary_baseline[idx] = ZERO; //reload temporary baseline
-                         }
-                        }
-                       
-                        
-                            CapSense_ScanAllWidgets();//start next scan
-                                                
-                       }
-                     
-
-            
-        Cy_SysLib_Delay(delay);// call delay(ms)
-
+bool Create_RAW_data(uint32_t* temporary_data, uint8_t len, uint8_t scan_times)
+{   
+    
+    /*function return variable*/   
+     bool Status = false;
+    /*Raw success variable*/
+     bool result = false;
+    /*create data array*/
+    uint32_t* ptr = (uint32_t*)malloc(sizeof(temporary_data));  
+    /*copy current sensor Raw data to ptr and return result*/
+    result = make_sensors_data(ptr, len);
+    
+    if(result == true)/*do only if any ptr data is not empty*/
+    {    
         
-     
+        /*loop variable*/
+        uint8 idx;
+        /*Calculate average RAW value of each sensor and copy to input data*/
+        for(idx = ZERO; idx < len; idx++)
+        {
+            
+           temporary_data[idx] += (ptr[idx]/scan_times); 
+        
+        }
+        Status = true;
+        
+    }
+    /*free memory*/
+    free(ptr);                                  
+    return Status;
+    
     }
 
 /*******************************************************************************
