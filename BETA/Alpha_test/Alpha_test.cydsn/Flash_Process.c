@@ -20,18 +20,25 @@ Return: If your array has at least one NULL data, function returns TRUE, else - 
 ***********************************************************************************************/
  bool is_any_flash_data_empty(uint32_t* data, uint8 len)
 {
-    bool ret = false;
     
+    bool ret = false;
     uint8 idx;
+    
     for(idx = 0; idx < len ;idx ++)
     {
+        
         if (data[idx] == ZERO)
         {
+            
             ret = true; 
             break;
+            
         }
+        
     }
+    
 return ret;
+    
 }
 
 /***********************************************************************************************
@@ -43,36 +50,22 @@ Return: Checksum
 ***********************************************************************************************/
 uint32_t get_checksum(uint32_t* msg, uint8_t len)
 {
+    
   uint8_t idx;
   uint32_t checksum = CHECKSUM_VARIABLE;
+    
     for(idx = ZERO; idx < len; idx++)
     {
-     checksum ^= msg[idx];   
+        
+        checksum ^= msg[idx]; 
+        
     }
+    
   return checksum;
+    
 }
 
-/***********************************************************************************************
-Fucntoin: copy_data
-Type: uint8_t
-Input: Poiner to array of buffer data, pointer to array of Baseline data, lenth of array
-Execution: Function copies from buffer to baseline
-Return: If baseline data has at least one NULL data, function returns 0u, else - 1u
-***********************************************************************************************/
 
-uint8_t copy_data(uint32_t* buffer, uint32_t* baseline, uint8 len)
-{
- uint8 idx, status = ZERO;
-    for(idx = ZERO; idx < len; idx ++)
-    {
-      baseline[idx] = buffer[idx];  
-    }
-    if(is_any_flash_data_empty(baseline, len) == false)
-    {
-     status = GOOD;   
-    }
-    return status;
-}
 
 /***********************************************************************************************
 Fucntoin: eraze_flash_data
@@ -84,10 +77,16 @@ Return: -----------
 
 void eraze_flash_data(uint32_t ADDR, size_t size)
 {
-   uint32_t* ptr = (uint32_t*) malloc(size);    
+    
+    /* Create memory space with pointer on it */
+    uint32_t* ptr = (uint32_t*) malloc(size);   
+    /* Write ZERO in each byte of memory space */
     memset(ptr, ZERO, size);
+    /* Write array of ZERO on FLASH */
     Cy_Flash_WriteRow(ADDR, ptr);
+    /* Free memory space */
     free(ptr);
+    
 }
 /***********************************************************************************************
 Fucntoin: make_data_for_flash
@@ -102,10 +101,14 @@ void make_data_for_flash(uint32_t* flash_data,uint32_t* baseline, uint8_t len)
 {
     
     uint8 idx;
+    
     for(idx = ZERO; idx < len; idx ++)
     {
-       flash_data[idx] = baseline[idx]; 
+        
+        flash_data[idx] = baseline[idx]; 
+        
     }
+    
     flash_data[len] = get_checksum(baseline, len);
     
 }
@@ -113,7 +116,7 @@ void make_data_for_flash(uint32_t* flash_data,uint32_t* baseline, uint8_t len)
 /***********************************************************************************************
 Fucntoin: Read_Flash_Baseline
 Type: bool
-Input: Flash memory address, pointer to array of Baseline data, lenth of Baseline array, size of 
+Input: Flash memory address, pointer to array of Baseline data, size of 
        flash data array
 Execution: Function read Flash memory and copies baseline data to Baseline array
 Return: If Baseline data array has not any NULL data, returns TRUE, else - FALSE
@@ -141,7 +144,7 @@ bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* baseline, uint8 len, size_t si
             /*Copy buffer to baseline*/
             memcpy(baseline, buffer, size);
             /*Check for NULL data and return to status variable*/
-            result = is_any_flash_data_empty(buffer, len);
+            result = is_any_flash_data_empty(baseline, len);
             /*Do only if baseline data has not any NULL data*/
             if(result == false) 
             {

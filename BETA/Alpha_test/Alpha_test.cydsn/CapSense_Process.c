@@ -20,33 +20,49 @@ Execution: Function checks, is your array has at least one NULL data
 Return: If your array has at least one NULL data, function returns TRUE, else - FALSE
 ***********************************************************************************************/
 bool is_any_csd_data_empty(uint32_t* data, uint8 len)
-{
+{ 
+    
     bool ret = false;
- uint8 idx;
+    uint8 idx;
+    
     for(idx = ZERO; idx < len; idx++)
     {
-      if(data[idx] == ZERO)
-    {
-        return true;
+        
+        if(data[idx] == ZERO)
+        {
+            
+            return true;
+            
+        }
+        
     }
-    }
+    
     return ret;
+    
 }
 
 
-bool clean_data(uint32_t* data, uint8 len)
+bool clean_data(uint32_t* data, size_t size, uint8 len)
 {
     bool ret = true;
     uint8 idx;
-    memset(data, ZERO, len * BYTE_CONST);
+    /* Write ZERO in each byte of data */
+    memset(data, ZERO, size);
+    
     for(idx = ZERO; idx < len; idx++)
     {
+        
         if(data[idx] != ZERO)
         {
+            
             return false;
+            
         }
+        
     }
-    return ret;    
+    
+    return ret; 
+    
 }
 /***********************************************************************************************
 Fucntoin: make_sensors_data
@@ -56,8 +72,10 @@ Execution: Assigns sensor raw counts to array data
 Return: 0u if any of sensor data is NULL, 1u if all sensor data has some value
 ***********************************************************************************************/
 bool make_sensors_data(uint32_t* data, uint8 len)
-{
+{ 
+    
     bool Status = false;
+    
     data[FIRST_lvl] = CapSense_BUTTON0_SNS0_RAW0_VALUE;
     data[SECOND_lvl] = CapSense_BUTTON1_SNS0_RAW0_VALUE;
     data[THIRD_lvl] = CapSense_BUTTON2_SNS0_RAW0_VALUE;
@@ -68,11 +86,16 @@ bool make_sensors_data(uint32_t* data, uint8 len)
     data[EIGHTH_lvl] = CapSense_BUTTON7_SNS0_RAW0_VALUE;
     data[NINETH_lvl] = CapSense_BUTTON8_SNS0_RAW0_VALUE;
     data[TENTH_lvl] = CapSense_BUTTON9_SNS0_RAW0_VALUE;
+    
     if(is_any_csd_data_empty(data, len) == false)
     {
+        
         return true;
+        
     }
+    
     return Status;
+    
 }
 /***********************************************************************************************
 Fucntoin: Find_Diff;
@@ -85,17 +108,26 @@ Return: 0u if any of output data is NULL, 1u if all output data has some value
 ***********************************************************************************************/
 bool Find_Diff(uint32_t* diff, uint32_t* baseline, uint32_t* sensor_data, uint8_t len)
 {
+    
     uint8 idx;
     bool Status = false;
+    
     for(idx = ZERO; idx < len; idx++)
     {
-     diff[idx] = sensor_data[idx] - baseline[idx];  
+        
+        diff[idx] = sensor_data[idx] - baseline[idx]; 
+        
     }
+    
     if(is_any_csd_data_empty(diff, len) == false)
     {
-     return true;   
+        
+        return true; 
+        
     }
+    
    return Status;  
+    
 }
 /***********************************************************************************************
 Fucntoin: Find_liquid_Level;
@@ -106,70 +138,120 @@ Return: Liquid Level
 ***********************************************************************************************/
 uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t treshold)
 {
- uint8_t Level = ZERO;//returned variable
+    
+    /* Returned variable */
+    uint8_t Level = ZERO;
+    
     if(Diff[FIRST_lvl] > treshold)
     {
+        
         Level = 26u;
+        
         if(Diff[SECOND_lvl] > treshold)
         {
+            
             Level = 51u;
+            
             if(Diff[THIRD_lvl] > treshold)
             {
+                
                 Level = 77u;
+                
                 if(Diff[FOURTH_lvl] > treshold)
                 {
+                    
                     Level = 102u;
+                    
                     if(Diff[FIFTH_lvl] > treshold)
                     {
+                        
                         Level = 128u;
+                        
                         if(Diff[SIXTH_lvl] > treshold)
                         {
+                            
                             Level = 153u;
+                            
                             if(Diff[SEVENTH_lvl] > treshold)
                             {
+                                
                                 Level = 179u;
+                                
                                 if(Diff[EIGHTH_lvl] > treshold)
                                 {
+                                    
                                     Level = 204u;
+                                    
                                     if(Diff[NINETH_lvl] > treshold)
                                     {
+                                        
                                         Level = 230u;
+                                        
                                         if(Diff[TENTH_lvl] > treshold)
                                         {
+                                            
                                             Level = 255u;
+                                            
                                         }
+                                        
                                     }
+                                    
                                 }
+                                
                             }
+                            
                         }
+                        
                     }
+                    
                 }
+                
             }
+            
         }
+        
     }
-//    uint8 idx; //loop variable
-//    
-//    for(idx = ZERO; idx < amount_of_sensors; idx++)
-//    {
-//        if (Diff[idx] > treshold)
-//        {
-//            if(idx == TENTH_lvl)
-//            {
-//             Level = MAX_LEVEL_VALUE;   
-//            }
-//            continue;
-//        }
-//        else
-//        {
-//            Level = idx*LEVEL_CHANGE_VALUE; 
-//            break;
-//        }
-//        if((idx + ONE) == (amount_of_sensors))
-//        {
-//         Level = MAX_LEVEL_VALUE;   
-//        }
-//    }
+    /* Another variant of algorithm **************
+    
+    uint8 idx; //loop variable
+    
+    for(idx = ZERO; idx < amount_of_sensors; idx++)
+    {
+    
+        if (Diff[idx] > treshold)
+        {
+    
+            if(idx == TENTH_lvl)
+            {
+    
+                Level = MAX_LEVEL_VALUE;  
+    
+            }
+    
+            continue;
+    
+        }
+    
+        else
+        {
+    
+            Level = idx*LEVEL_CHANGE_VALUE;
+    
+            break;
+    
+        }
+    
+        if((idx + ONE) == (amount_of_sensors))
+        {
+    
+            Level = MAX_LEVEL_VALUE; 
+    
+        }
+    
+    }
+    **********************************************/
     return Level;
+    
 }
 
 /***********************************************************************************************
@@ -256,7 +338,7 @@ Execution: Assign average  RAW data from each sensor, to array of Baseline data
 Return: ---------
 ***********************************************************************************************/
 
-bool Create_RAW_data(uint32_t* temporary_data, uint8_t len, uint8_t scan_times)
+bool Create_RAW_data(uint32_t* raw_data, uint8_t len, uint8_t scan_times)
 {   
     
     /*function return variable*/   
@@ -264,7 +346,7 @@ bool Create_RAW_data(uint32_t* temporary_data, uint8_t len, uint8_t scan_times)
     /*Raw success variable*/
      bool result = false;
     /*create data array*/
-    uint32_t* ptr = (uint32_t*)malloc(sizeof(temporary_data));  
+    uint32_t* ptr = (uint32_t*)malloc(sizeof(raw_data));  
     /*copy current sensor Raw data to ptr and return result*/
     result = make_sensors_data(ptr, len);
     
@@ -277,7 +359,7 @@ bool Create_RAW_data(uint32_t* temporary_data, uint8_t len, uint8_t scan_times)
         for(idx = ZERO; idx < len; idx++)
         {
             
-           temporary_data[idx] += (ptr[idx]/scan_times); 
+           raw_data[idx] += (ptr[idx]/scan_times); 
         
         }
         Status = true;
@@ -314,15 +396,21 @@ bool  IsCapSenseReadyForLowPowerMode(void)
     /* Don't enter low power mode if CapSense is busy with a scan */
     if(CapSense_IsBusy() != CapSense_NOT_BUSY)
     {
+        
         lowPowerModeReady=false;
+        
     }
+    
     else
     {
+        
         lowPowerModeReady=true;
+        
     }
     
     /* Return  the low power mode entry readiness */
     return lowPowerModeReady;
+    
 }
 
 

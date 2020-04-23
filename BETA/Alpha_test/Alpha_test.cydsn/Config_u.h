@@ -18,12 +18,14 @@
 #define RAW_DELAY (10u)   
 #define BASELINE_SCAN_TIMES (20u)
 #define CHECKSUM_VARIABLE   (1u)
-#define BYTE_CONST (4u)
+
     
-    
+/* Config data structure */    
 typedef struct
 {
+    
     uint32_t Data[MAX_SENSOR_VALUE];
+    
 }U_config_t;
    
     

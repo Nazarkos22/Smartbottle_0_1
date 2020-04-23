@@ -10,25 +10,37 @@
 #include "Core.h"
 #include "CapSense_Process.h"
 #include "Flash_Process.h"
+#include "ble_application.h"
 #include <stdlib.h>
 #include <string.h>
 
+/* Initialization of structure with all sensor and baseline data */
+U_csd_data_t CSD_data; 
+/* initialization of structure with all flash data */
+U_flash_data_t FLASH_data; 
 
-U_csd_data_t CSD_data;  //initialization of structure with all sensor and baseline data
-U_flash_data_t FLASH_data; //initialization of structure with data, which will be write on flash
-
+/* Set some flags for start scan */
 void Set_Flags(void)
 {
+    
     CSD_data.ReadyForNewScan_flag = true ;
+    
     CSD_data.TimerIntFlag = true;
+    
 }
 
+/*  */
 void TimerInterruptHandler(void)
 {
+    
+    /* Set timer flag */
     CSD_data.TimerIntFlag = true;
+    /* Clear timer interrupt */
     Timer_ClearInterrupt(CY_TCPWM_INT_ON_TC);
+    
 }
 
+/* Initialization of timer inetrrupts */
 void Timer_Int_Init(void)
 {
     
@@ -63,7 +75,7 @@ void CapSense_Processing(uint8_t scan_times)
         /* Reset counter */
         CSD_data.counter = ZERO;
         /* Write ZERO in Raw data */
-        clean_data(CSD_data.Raws, MAX_SENSOR_VALUE);
+        clean_data(CSD_data.Raws, sizeof(CSD_data.Raws),  MAX_SENSOR_VALUE);
         
     }
     /* Do only if we do not have scan result */
@@ -106,7 +118,7 @@ void CapSense_Processing(uint8_t scan_times)
                     /* Set flag */
                     CSD_data.HaveScanResult = true;
                     /* Write ZERO in Temporary Baseline */
-                    clean_data(CSD_data.Raws, MAX_SENSOR_VALUE);
+                    clean_data(CSD_data.Raws, sizeof(CSD_data.Raws),  MAX_SENSOR_VALUE);
                     /* Start timer */
                      Timer_Start();
                 }

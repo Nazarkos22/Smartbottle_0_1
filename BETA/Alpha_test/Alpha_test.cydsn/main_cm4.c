@@ -14,19 +14,22 @@
 
 int main(void)
 {
+    
+    /* Initialization of timer inetrrupts*/
     Timer_Int_Init();
-   __enable_irq(); /* Enable global interrupts. */
-
-     CapSense_Start();//Initialisation of CSD components
+    /* Enable global interrupts. */
+    __enable_irq(); 
+    /* Initialization of CSD components */
+     CapSense_Start();
+    /* Read or form Baseline */
     Flash_Scan();
-
+    /* Initialization of BLE components */
     InitBle();
+    /* Initialization of low power components */
     InitLowPower();
-
-
-//     CapSense_ScanAllWidgets(); /* Start  scan */
+    /* Set flags for start first CSD RAW scan */
     Set_Flags();
- /* Start  scan */
+
     for(;;)
     {
         CapSense_Processing(RAW_SCAN_TIMES);
