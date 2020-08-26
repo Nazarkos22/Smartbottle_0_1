@@ -266,6 +266,7 @@ void StackEventHandler(uint32_t event, void *eventParameter)
             
             /* Update attribute handle on GATT Connection */
             connectionHandle = *(cy_stc_ble_conn_handle_t *) eventParameter;
+            //CSD_START_CLBK_FUNC();
             break;
         
         /* This event is received when device is disconnected */
@@ -481,7 +482,7 @@ bool  IsBleReadyForLowPowerMode(void)
         }
         else
         {
-            lowPowerModeReady=true;
+            lowPowerModeReady=false;
         }
     }
     

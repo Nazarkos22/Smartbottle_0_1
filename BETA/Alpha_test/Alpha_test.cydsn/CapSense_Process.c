@@ -404,7 +404,7 @@ bool  IsCapSenseReadyForLowPowerMode(void)
     else
     {
         
-        lowPowerModeReady=true;
+        lowPowerModeReady=false;
         
     }
     

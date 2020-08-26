@@ -11,6 +11,7 @@
 #include "CapSense_Process.h"
 #include "Flash_Process.h"
 #include "ble_application.h"
+#include "timers_counters.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -18,6 +19,9 @@
 U_csd_data_t CSD_data; 
 /* initialization of structure with all flash data */
 U_flash_data_t FLASH_data; 
+/* Initialisation of structure with timer flags */
+Timer_parametr_t Timers_data[TIMER_MAX_NUMBER];
+
 
 /* Set some flags for start scan */
 void Set_Flags(void)
@@ -29,27 +33,80 @@ void Set_Flags(void)
     
 }
 
+
+
 /*  */
-void TimerInterruptHandler(void)
+void Timers_Interrupts_Init(void)
+{
+    
+    Tmr_Int_1_Init();
+    
+    Tmr_Int_2_Init();
+
+    Tmr_Int_3_Init();
+
+    Tmr_Int_4_Init();
+
+    Tmr_Int_5_Init();
+   
+}
+void Tmr_Int_1_Handler(void)
 {
     
     /* Set timer flag */
-    CSD_data.TimerIntFlag = true;
+    //CSD_data.TimerIntFlag = true;
+    Timers_data[0u].Timer_Status = Timer_free;
+    Timers_data[0u].Timer_Status_Changed_to_free = true;
     /* Clear timer interrupt */
-    Timer_ClearInterrupt(CY_TCPWM_INT_ON_TC);
+    Timer_1_ClearInterrupt(CY_TCPWM_INT_ON_TC);
     
 }
 
-/* Initialization of timer inetrrupts */
-void Timer_Int_Init(void)
+void Tmr_Int_2_Handler(void)
 {
     
-     /* Initialize the interrupt vector table with the timer interrupt handler
-     * address and assign priority.
-     */
-    Cy_SysInt_Init(&Timer_Int_cfg, TimerInterruptHandler);
-    /* Enable the core interrupt */ 
-    NVIC_EnableIRQ(Timer_Int_cfg.intrSrc);  
+    /* Set timer flag */
+    //CSD_data.TimerIntFlag = true;
+    Timers_data[1u].Timer_Status = Timer_free;
+    Timers_data[1u].Timer_Status_Changed_to_free = true;
+    /* Clear timer interrupt */
+    Timer_2_ClearInterrupt(CY_TCPWM_INT_ON_TC);
+    
+}
+
+void Tmr_Int_3_Handler(void)
+{
+    
+    /* Set timer flag */
+    //CSD_data.TimerIntFlag = true;
+    Timers_data[2u].Timer_Status = Timer_free;
+    Timers_data[2u].Timer_Status_Changed_to_free = true;
+    /* Clear timer interrupt */
+    Timer_3_ClearInterrupt(CY_TCPWM_INT_ON_TC);
+    
+}
+
+void Tmr_Int_4_Handler(void)
+{
+    
+    /* Set timer flag */
+    //CSD_data.TimerIntFlag = true;
+    Timers_data[3u].Timer_Status = Timer_free;
+    Timers_data[3u].Timer_Status_Changed_to_free = true;
+    /* Clear timer interrupt */
+    Timer_4_ClearInterrupt(CY_TCPWM_INT_ON_TC);
+    
+}
+
+void Tmr_Int_5_Handler(void)
+{
+    
+    /* Set timer flag */
+    //CSD_data.TimerIntFlag = true;
+    Timers_data[4u].Timer_Status = Timer_free;
+    Timers_data[4u].Timer_Status_Changed_to_free = true;
+    /* Clear timer interrupt */
+    Timer_5_ClearInterrupt(CY_TCPWM_INT_ON_TC);
     
 }
 /***************************************************************************
@@ -120,7 +177,8 @@ void CapSense_Processing(uint8_t scan_times)
                     /* Write ZERO in Temporary Baseline */
                     clean_data(CSD_data.Raws, sizeof(CSD_data.Raws),  MAX_SENSOR_VALUE);
                     /* Start timer */
-                     Timer_Start();
+                    Start_Free_Timer(Which_Timer_Free(TIMER_MAX_NUMBER,Timers_data), PERIOD, Timers_data);
+                        
                 }
                 
             }
@@ -161,7 +219,7 @@ void Flash_Scan(void)
     
     /* Scan Flah memory data and return status flag */
     FLASH_data.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, CSD_data.Baseline, MAX_SENSOR_VALUE, sizeof(U_cfg_t)); 
-    /* Do only if scanned Flash memory is "empty" */
+    /* Do only if scanned Flash data is invalid */
     if(FLASH_data.Baseline_Read_Status == false)
     {
         

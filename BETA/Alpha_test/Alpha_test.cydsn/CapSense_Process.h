@@ -67,6 +67,15 @@ typedef struct
     uint8_t  proximityData;
 }   proximity_data_t;
 
+/* Data-type for monitoring CSD states */
+typedef enum
+{
+    Capsense_StartScan,
+    Capsense_Scanning,
+    Capsense_FinishScan
+    
+}States_Capsense;
+
 /* Function that processes information and then
    returns the data */
 proximity_data_t* GetProximityData(void);

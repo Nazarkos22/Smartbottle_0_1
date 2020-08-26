@@ -16,7 +16,7 @@ int main(void)
 {
     
     /* Initialization of timer inetrrupts*/
-    Timer_Int_Init();
+    Timers_Interrupts_Init();
     /* Enable global interrupts. */
     __enable_irq(); 
     /* Initialization of CSD components */
