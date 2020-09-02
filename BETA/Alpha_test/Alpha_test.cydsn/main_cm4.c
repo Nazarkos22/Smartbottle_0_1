@@ -33,7 +33,8 @@ int main(void)
     for(;;)
     {
         CapSense_Processing(RAW_SCAN_TIMES);
-        ProcessBleEvents();     
+        ProcessBleEvents();
+        Switch_Statement();
     }
 }
 

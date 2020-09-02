@@ -105,5 +105,7 @@ bool make_sensors_data(uint32_t* data, uint8 len);
 /* Function checks which of sensors are activated and return Level(0-255u) */
 uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t treshold);
 
+void bleConnClbk(void);
+
  #endif
 /* [] END OF FILE */

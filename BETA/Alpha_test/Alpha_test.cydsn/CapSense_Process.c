@@ -12,6 +12,10 @@
 #include <string.h>
 
 
+void bleConnClbk(void)
+{
+    
+}
 /***********************************************************************************************
 Fucntoin: is_any_csd_data_empty
 Type: Bool

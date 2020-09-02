@@ -127,7 +127,7 @@ uint8_t Which_Timer_Free(uint8_t timer_number, Timer_parametr_t* timer_data)
             return (idx+1);
         }
     }
-    return NO_TIMER_FREE;
+    return No_timer_free;
 }
 
 void Start_Free_Timer(uint8_t free_timer_nmb, uint32_t period, Timer_parametr_t* timer_data )

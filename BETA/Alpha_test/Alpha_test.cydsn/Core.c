@@ -21,6 +21,8 @@ U_csd_data_t CSD_data;
 U_flash_data_t FLASH_data; 
 /* Initialisation of structure with timer flags */
 Timer_parametr_t Timers_data[TIMER_MAX_NUMBER];
+/* Initialisation of device statement data */
+Current_state_t CurrentState;
 
 
 /* Set some flags for start scan */
@@ -295,3 +297,69 @@ proximity_data_t* GetProximityData(void)
     return &currentProximityData;
     
 }
+
+/*  */
+void DoNothingClbk(void)
+{
+    
+}
+
+/* */
+void BLE_CONNECTED_FUNC(void (*eventClbk)())
+{
+    eventClbk();
+}
+/*  */
+void DEVICE_DO_NOTHING_FUNC(void (*eventClbk)())
+{
+     eventClbk();
+}
+/*  */
+void Switch_Statement(void)
+{
+    switch(CurrentState.Current_State)
+    {
+        case BLE_CONNECTED:
+            BLE_CONNECTED_FUNC(bleConnClbk);
+            break;
+        case BLE_CONNECTED_ERROR:
+            BLE_CONNECTED_ERROR_FUNC();
+            break;
+        case BLE_ADVERTISE:
+            BLE_ADVERTISE_FUNC();
+            break;
+        case BLE_ADVERTISE_ERROR:
+            BLE_ADVERTISE_ERROR_FUNC();
+            break;
+        case BLE_DISCONNECTED:
+            BLE_DISCONNECTED_FUNC();
+            break;
+        case BLE_DISCONNECTED_ERROR:
+            BLE_DISCONNECTED_ERROR_FUNC();
+            break;
+        case CSD_START_SCAN:
+            CSD_START_SCAN_FUNC();
+            break;
+        case CSD_START_SCAN_ERROR:
+            CSD_START_SCAN_ERROR_FUNC();
+            break;
+        case CSD_FINISH_SCAN:
+            CSD_FINISH_SCAN_FUNC();
+            break;
+        case CSD_FINISH_SCAN_ERROR:
+            CSD_FINISH_SCAN_ERROR_FUNC();
+            break;
+        case CSD_LEVEL_COUNTED:
+            CSD_LEVEL_COUNTED_FUNC();
+            break;
+        case CSD_LEVEL_COUNTED_ERROR:
+            CSD_LEVEL_COUNTED_ERROR_FUNC();
+            break;
+        case DEVICE_DO_NOTHING:
+            DEVICE_DO_NOTHING_FUNC(DoNothingClbk);
+            break;
+        default:
+            break;
+    }
+}
+
