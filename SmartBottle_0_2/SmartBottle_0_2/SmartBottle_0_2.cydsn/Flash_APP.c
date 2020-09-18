@@ -11,12 +11,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+/* Declaration Flash data structure */
 U_flash_data_t FLASH_Data;
+
 /* Core Callback */
-static void FlashCore_Clbk(void (*eventClbk)())
+static void Flash_Callback_to(void (*eventHandler)())
 {
-    eventClbk();
+    eventHandler();
 }
 
 /***********************************************************************************************
@@ -183,7 +184,7 @@ void Flash_Processing(void)
         /* Do only if scanned data is invalid */
         if(FLASH_Data.Baseline_Read_Status == false)
         {
-            FlashCore_Clbk(flash_CoreFlashNeedCsdScan);
+            Flash_Callback_to(flash_NeedCsdScan);
         }
         /* Set flag that flash memory was scanned */
         FLASH_Data.flash_is_scanned = true;
@@ -198,6 +199,7 @@ void Flash_Processing(void)
         eraze_flash_data(FLASH_ADDR, sizeof(U_cfg_t));
         /* Write on Flash memory Baseline and checksum */
         Cy_Flash_WriteRow(FLASH_ADDR, FLASH_Data.flash_data); 
+        FLASH_Data.is_data_redy_for_writing = false;
     }
     
 }

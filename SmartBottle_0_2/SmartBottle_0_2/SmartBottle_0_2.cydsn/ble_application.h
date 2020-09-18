@@ -68,9 +68,10 @@ bool IsBleReadyForLowPowerMode(void);
    event */
 void RestartBleAdvertisement (void);
 
-void bleConnCoreClbk(void);
+void ble_is_connected(void);
 
-void BLE_ConnCallback(void (*eventClbk)());
+
+
 
 #endif /* BLE_APPLICATION_H */
 /* [] END OF FILE */

@@ -21,9 +21,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-Current_state_t CurrentState;
-Middle_used_data_t Middle_data;
+/* Declaration of structure with State data */
+Current_state_t static CurrentState;
 
+/* Extern Csd and Flash data for exchanging */
+extern U_csd_data_t CSD_Data;
+extern U_flash_data_t FLASH_Data;
+
+
+/****************************************************************/
+/* Definition of Core Callbeck to call handlers from other apps */
+
+static void Core_Callback_to(void(*eventHandler)())
+{
+    eventHandler();
+}
+
+/***************************************************************/
+/***************************************************************/
+
+
+/* Switch current statement if this handler is called by flash app */
+void flash_NeedCsdScan(void)
+{
+    CurrentState.Current_State = FLASH_NEED_CSD_SCAN;
+}
 
 
 /*  */
@@ -32,29 +54,8 @@ void DoNothingClbk(void)
     
 }
 
-/* Initialisation CSD Callback */
-static void CoreCsd_Clbk(void (*eventClbk)())
-{
-    eventClbk();
-}
 
-/* Initialisation Flash Callback */
-static void CoreFlash_Clbk(void (*eventClbk)())
-{
-    eventClbk();
-}
 
-/* Initialisation BLE Callback */
-static void CoreBle_Clbk(void (*eventClbk)())
-{
-    eventClbk();
-}
-
-/* Initialisation Timer Callback */
-static void CoreTmr_Clbk(void (*eventClbk)())
-{
-    eventClbk();
-}
 /*  */
 void DEVICE_DO_NOTHING_FUNC(void (*eventClbk)())
 {
@@ -62,7 +63,7 @@ void DEVICE_DO_NOTHING_FUNC(void (*eventClbk)())
 }
 
 /* Callback from BLE when State is connected  */
-void bleConnCoreClbk(void)
+void ble_is_connected(void)
 {
     CurrentState.Current_State = BLE_CONNECTED;
 }
@@ -72,14 +73,14 @@ void Switch_Statement(void)
     switch(CurrentState.Current_State)
     {
         case BLE_CONNECTED:
-            CoreCsd_Clbk(core_CsdAllowScan);
-            CoreTmr_Clbk(core_TmrStart);
+            Core_Callback_to(core_CsdAllowScan);
+            Core_Callback_to(core_TmrStart);
             break;
         case BLE_CONNECTED_ERROR:
             BLE_CONNECTED_ERROR_FUNC(bleConnErrorClbk);
             break;
-        case BLE_ADVERTISE:
-            BLE_ADVERTISE_FUNC(bleAdvertClbk);
+        case FLASH_NEED_CSD_SCAN:
+            Core_Callback_to(csd_ScanForFlash);
             break;
         case BLE_ADVERTISE_ERROR:
             BLE_ADVERTISE_ERROR_FUNC(bleAdvertErrorClbk);

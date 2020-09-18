@@ -39,6 +39,10 @@ typedef struct
     uint32_t flash_data[FLASH_DATA]; 
     /* Array of Baseline data */
     uint32_t Baseline[MAX_SENSOR_VALUE];
+    /* Data for exchange with Csd */
+    uint32_t Exchange_data[EXCHANGE_DATA_NUMBER];
+    /* Checksum for validating exchanged data */
+    uint32_t Checksum;
     /* Set this flag when read flash */
     bool Baseline_Read_Status;
     /* Flag to check if flash is scanned */
@@ -47,6 +51,8 @@ typedef struct
     bool is_data_redy_for_writing;
     
 }   U_flash_data_t;
+
+
 
 
 /* Functoin to scan flash config */
@@ -65,8 +71,8 @@ void eraze_flash_data(uint32_t ADDR, size_t size);
 void make_data_for_flash(uint32_t* flash_data,uint32_t* baseline, uint8_t len);
 
 /* Declaration Callbacks */
-void core_FlashNeedScan(void);
-void flash_CoreFlashNeedCsdScan(void);
+
+void flash_NeedCsdScan(void);
 void flash_CoreStartScanClbk(void);
 void flash_CoreFinishScanClbk(void);
 void flash_CoreFlashGoodDataClbk(void);

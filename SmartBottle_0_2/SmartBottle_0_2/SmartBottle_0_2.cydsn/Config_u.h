@@ -18,6 +18,7 @@
 #define RAW_DELAY (10u)   
 #define BASELINE_SCAN_TIMES (20u)
 #define CHECKSUM_VARIABLE   (1u)
+#define EXCHANGE_DATA_NUMBER  (11u)
 
     
 /* Config data structure */    
@@ -42,6 +43,7 @@ typedef enum
 {
    BLE_CONNECTED,
    BLE_CONNECTED_ERROR,
+   FLASH_NEED_CSD_SCAN,
    BLE_ADVERTISE,
    BLE_ADVERTISE_ERROR,
    BLE_DISCONNECTED,

@@ -12,12 +12,11 @@
 #include <string.h>
 
 /* Initialization of structure with all sensor and baseline data */
-U_csd_data_t static CSD_Data; 
+U_csd_data_t CSD_Data; 
+/* Initialisation of CSD current state data */
+U_Csd_State_t CSD_State;
 
-void core_CsdAllowScan(void)
-{
-    CSD_Data.Allow_Start_Scan = true;
-}
+
 /***********************************************************************************************
 Fucntoin: is_any_csd_data_empty
 Type: Bool
@@ -476,10 +475,40 @@ proximity_data_t* GetProximityData(void)
     
 }
 
+
+/************************************************/
 /* Initialisation of Core Callback */
-static void CsdCore_Clbk(void (*eventClbk)())
+
+static void Csd_Callback_to(void (*eventHandler)())
 {
-    eventClbk();
+    eventHandler();
+}
+
+static uint8_t which_next_CsdState(uint8_t currstate)
+{
+    switch(currstate)
+    {
+        case 
+    }
+}
+
+static void CSD_ChangeState(void)
+{
+    CSD_State.CurrentState = CSD_State.NextState;
+}
+
+/************************************************/
+/************************************************/
+
+
+void csd_ScanForFlash(void)
+{
+    CSD_State.CurrentState = SCAN_FOR_FLASH;
+}
+
+void core_CsdAllowScan(void)
+{
+    CSD_State.CurrentState = CSD_ALLOW_SCAN;
 }
 
 void CSD_Process(void)
@@ -491,15 +520,32 @@ void CSD_Process(void)
         /* Reset permition flag to avoid Starting new scan untill previous has not finished */
         CSD_Data.Allow_Start_Scan = false;
         /* Core Callback that scanning process has started */
-        CsdCore_Clbk(csd_StartScan);  
+        Csd_Callback_to(csd_StartScan);  
     }
     /* Goes into only if scan is finished */
-    if(CapSense_NOT_BUSY == CapSense_IsBusy())
+    if(()&&(CapSense_NOT_BUSY == CapSense_IsBusy()))
     {
         /* Process all widgets */
         CapSense_ProcessAllWidgets();
         /* Core Callback that scanning process has finished */
-        CsdCore_Clbk(csd_FinishScan);
+        Csd_Callback_to(csd_FinishScan);
+    }
+}
+
+/*  */
+void Switch_CSD_State(void)
+{
+    switch(CSD_Data.CurrentState)
+    {
+        case SCAN_FOR_FLASH:
+            CSD_Data.Allow_Start_Scan = false;
+            /* Change state function */
+            break;
+        case CSD_ALLOW_SCAN:
+            CSD_Data.Allow_Start_Scan = true;
+            break;
+        default:
+            break;
     }
 }
 

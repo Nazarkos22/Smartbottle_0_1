@@ -76,9 +76,9 @@ uint8_t static proximityNotificationStatus  = CCCD_NOTIFY_DISABLED;
 /* This flag is used to restart advertisements in the main control loop */
 bool    static restartBleAdvertisement   = false;
 
-static void BleCore_Clbk( void (*eventClbk)())
+static void BLE_Callback_to( void (*eventHandler)())
 {
-    eventClbk();
+    eventHandler();
 }
 
 /*******************************************************************************
@@ -271,7 +271,7 @@ void StackEventHandler(uint32_t event, void *eventParameter)
             
             /* Update attribute handle on GATT Connection */
             connectionHandle = *(cy_stc_ble_conn_handle_t *) eventParameter;
-            //CSD_START_CLBK_FUNC();
+            BLE_Callback_to(ble_is_connected);
             break;
         
         /* This event is received when device is disconnected */

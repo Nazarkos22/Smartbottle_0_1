@@ -38,6 +38,10 @@ typedef struct
     uint32_t Diff[MAX_SENSOR_VALUE];
     /* Array of Baseline data */
     uint32_t Baseline[MAX_SENSOR_VALUE];
+    /* Data for exchange with Flash */
+    uint32_t Exchange_data[EXCHANGE_DATA_NUMBER];
+    /* Checksum for validating exchanged data */
+    uint32_t Checksum;
     /* Liquid level */
     uint8_t Level;
     /* Store number of scans */
@@ -54,8 +58,30 @@ typedef struct
     bool SetFlagsForStartScan_Status;
     /* Flag, which becomes true when BLE device is connected */
     bool Allow_Start_Scan;
-    
+  
 }   U_csd_data_t;
+
+typedef struct
+{
+    /* Current CSD State */
+    uint8_t CurrentState;
+    uint8_t NextState;
+    uint8_t PreviousState;
+}U_Csd_State_t;
+
+/*  */
+typedef enum
+{
+    SCAN_FOR_FLASH,
+    VALIDATE_DATA,
+    CSD_ALLOW_SCAN,
+    CSD_START_SCAN,
+    CSD_FINISH_SCAN,
+    LEVEL_START_COUNT,
+    LEVEL_FINISH_COUNT,
+    CSD_DO_NOTHING
+    
+}CSD_States_t;
    
     /* Data length of CapSense proximity */
 #define CAPSENSE_PROXIMITY_DATA_LEN    (uint8_t) (0x01u)
@@ -100,6 +126,8 @@ bool make_sensors_data(uint32_t* data, uint8 len);
 uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t treshold);
 /* Declaration callbacks */
 void core_CsdAllowScan(void);
+void csd_ScanForFlash(void);
+void csd_StartScan(void);
 void csd_CoreStartScan(void);
 void csd_CoreFinishScan(void);
 void csd_CoreStartLevelCount(void);
