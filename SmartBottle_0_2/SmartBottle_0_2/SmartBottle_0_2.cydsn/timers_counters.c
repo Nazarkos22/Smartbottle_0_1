@@ -14,13 +14,17 @@
 #include "Config_u.h"
 
 /*************************************************************/
+/* Declaration timers`data structure */
+Timer_parametr_t Timers_Data;
 
-/* Initialisation Core Callback */
-static void TmrCore_Clbk(void (*eventClbk)())
+/************************************************/
+/******//* Initialisation Core Callback *//******/
+static void Timer_Callback_to(void (*eventClbk)())
 {
     eventClbk();
 }
-
+/*************************************************/
+/*************************************************/
 
 /* Initialization of timer inetrrupts */
 void Tmr_Int_1_Init(void)
@@ -166,6 +170,8 @@ void Start_Free_Timer(uint8_t free_timer_nmb, uint32_t period, Timer_parametr_t*
     }
     
 }
+
+
     
 
 

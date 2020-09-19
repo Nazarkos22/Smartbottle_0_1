@@ -15,6 +15,36 @@
     {
         uint32_t Raws;
     }Middle_used_data_t;
+    
+    /* Statement data */
+typedef struct
+{
+    uint8_t Next_State;
+    uint8_t Current_State;
+    uint8_t Previous_State;
+    bool StateUpdated;
+    
+}Current_state_t;
+
+//typedef enum
+//{
+//   BLE_CONNECTED,
+//   BLE_CONNECTED_ERROR,
+//   FLASH_NEED_CSD_SCAN,
+//   BLE_ADVERTISE,
+//   BLE_ADVERTISE_ERROR,
+//   BLE_DISCONNECTED,
+//   BLE_DISCONNECTED_ERROR,
+//   CSD_START_SCAN,
+//   CSD_START_SCAN_ERROR,
+//   CSD_FINISH_SCAN,
+//   CSD_FINISH_SCAN_ERROR,
+//   CSD_LEVEL_COUNTED,
+//   CSD_LEVEL_COUNTED_ERROR,
+//   DEVICE_DO_NOTHING
+//}Current_state;
+
+
 /* Function to process al CSD block */
 void CapSense_Processing(uint8_t scan_times);
 

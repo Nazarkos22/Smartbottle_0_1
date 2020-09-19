@@ -46,13 +46,33 @@ typedef struct
     /* Set this flag when read flash */
     bool Baseline_Read_Status;
     /* Flag to check if flash is scanned */
-    bool flash_is_scanned;
+    bool flash_ready_for_scan;
     /* Flag to check is ready data to write on flash memory or not */
     bool is_data_redy_for_writing;
+    /* Flag to indicate timer interrupt */
+    bool get_tmr_interrupt;
+    /* Variable to count input timer interrupts */
+    uint32_t interrupt_counter;
     
 }   U_flash_data_t;
 
+typedef enum
+{
+    NEED_FLASH_SCAN,
+    FLASH_SEND_DATA,
+    FLASH_NEED_CSD_SCAN,
+    FLASH_RECEIVE_CSD_SCAN_DATA,
+    FLASH_READY_FOR_WRITING,
+    FLASH_DO_NOTHING
+    
+}U_Flash_State;
 
+typedef struct
+{
+    uint8_t Previous_State;
+    uint8_t Current_State;
+    uint8_t Next_State;
+}U_Flash_State_t;
 
 
 /* Functoin to scan flash config */
@@ -78,6 +98,7 @@ void flash_CoreFinishScanClbk(void);
 void flash_CoreFlashGoodDataClbk(void);
 void flash_CoreFlashBadDataClbk(void);
 void flash_CoreTmrStart(void);
+void flash_CoreTmrFinish(void);
 /*************************************/
 
 

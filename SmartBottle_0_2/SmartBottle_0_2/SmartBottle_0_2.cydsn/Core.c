@@ -40,6 +40,18 @@ static void Core_Callback_to(void(*eventHandler)())
 /***************************************************************/
 /***************************************************************/
 
+/* Handler is called by flash app to start timer */
+void flash_CoreTmrStart(void)
+{
+    Core_Callback_to(tmr_StartForFlash);
+}
+
+/* Handler is called by Timer app and indicates finish timer */
+void tmr_FinishForFlash(void)
+{
+    Core_Callback_to(flash_CoreTmrFinish);
+}
+
 
 /* Switch current statement if this handler is called by flash app */
 void flash_NeedCsdScan(void)

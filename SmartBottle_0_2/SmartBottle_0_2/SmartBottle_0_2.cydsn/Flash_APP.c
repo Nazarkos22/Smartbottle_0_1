@@ -11,14 +11,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Declaration Flash data structure */
+/* Declaration Flash data structures */
 U_flash_data_t FLASH_Data;
+U_Flash_State_t Flash_State;
 
-/* Core Callback */
-static void Flash_Callback_to(void (*eventHandler)())
-{
-    eventHandler();
-}
+
 
 /***********************************************************************************************
 Fucntoin: is_any_flash_data_empty
@@ -171,23 +168,65 @@ bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* baseline, uint8 len, size_t si
     /*Return function status*/
     return ret;
 }
+/****************************************************/
+/********//* Definition of Flash callback *//********/
+static void Flash_Callback_to(void (*eventHandler)())
+{
+    eventHandler();
+}
+/****************************************************/
+/****************************************************/
 
-
+/*  */
+void flash_CoreTmrFinish(void)
+{
+    
+}
+void Switch_Flash_State(uint8_t currstate)
+{
+    switch(currstate)
+    {
+        case NEED_FLASH_SCAN:
+            Flash_Callback_to();
+            break;
+        case FLASH_SEND_DATA:
+            Flash_Callback_to();
+            break;
+        case FLASH_NEED_CSD_SCAN:
+            Flash_Callback_to();
+            break;
+        case FLASH_RECEIVE_CSD_SCAN_DATA:
+            Flash_Callback_to();
+            break;
+        case FLASH_READY_FOR_WRITING:
+            Flash_Callback_to();
+            break;
+        case FLASH_DO_NOTHING:
+            Flash_Callback_to();
+            break;
+        default:
+            break;
+    }
+}
 
 void Flash_Processing(void)
 {
-    /* Do only when device have just turned ON */
-    if(FLASH_Data.flash_is_scanned != true)
+    /* Do only when device have just turned ON or device need scan */
+    if(FLASH_Data.flash_ready_for_scan == true)
     {
+        /* Callback to indicate start scan and asking for starting timer*/
+        Flash_Callback_to(flash_CoreTmrStart);
         /* Scan Flah memory data and return status flag */
-        FLASH_Data.Baseline_Read_Status = Read_Flash_Baseline(FLASH_ADDR, FLASH_Data.Baseline, MAX_SENSOR_VALUE, sizeof(U_cfg_t)); 
+        FLASH_Data.Baseline_Read_Status = Read_Flash_Baseline(
+            FLASH_ADDR, FLASH_Data.Baseline, MAX_SENSOR_VALUE, sizeof(U_cfg_t)
+        ); 
+        /* Callback to indicate finish scan */
+        Flash_Callback_to();
         /* Do only if scanned data is invalid */
         if(FLASH_Data.Baseline_Read_Status == false)
         {
             Flash_Callback_to(flash_NeedCsdScan);
         }
-        /* Set flag that flash memory was scanned */
-        FLASH_Data.flash_is_scanned = true;
     }
     
     /* Do only if when all flash data is ready for writing */
