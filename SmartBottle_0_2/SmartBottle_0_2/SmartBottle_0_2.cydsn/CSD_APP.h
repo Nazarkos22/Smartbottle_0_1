@@ -38,10 +38,6 @@ typedef struct
     uint32_t Diff[MAX_SENSOR_VALUE];
     /* Array of Baseline data */
     uint32_t Baseline[MAX_SENSOR_VALUE];
-    /* Data for exchange with Flash */
-    uint32_t Exchange_data[EXCHANGE_DATA_NUMBER];
-    /* Checksum for validating exchanged data */
-    uint32_t Checksum;
     /* Liquid level */
     uint8_t Level;
     /* Store number of scans */
@@ -60,6 +56,14 @@ typedef struct
     bool Allow_Start_Scan;
   
 }   U_csd_data_t;
+
+typedef struct
+{
+    /* Data for exchange with Csd */
+    uint32_t Exchange_data[EXCHANGE_DATA_NUMBER];
+    /* Checksum for validating exchanged data */
+    uint32_t Checksum;
+}U_Csd_Exchange_t;
 
 typedef struct
 {
@@ -133,6 +137,8 @@ void csd_CoreFinishScan(void);
 void csd_CoreStartLevelCount(void);
 void csd_CoreFinishLevelCount(void);
 void csd_CoreTmrStart(void);
+void csd_FlashFinishSendData(void);
+void csd_InvalidExchangeData(void);
 /***************************/
 
 

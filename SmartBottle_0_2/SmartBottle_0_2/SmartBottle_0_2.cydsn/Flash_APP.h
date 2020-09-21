@@ -39,10 +39,6 @@ typedef struct
     uint32_t flash_data[FLASH_DATA]; 
     /* Array of Baseline data */
     uint32_t Baseline[MAX_SENSOR_VALUE];
-    /* Data for exchange with Csd */
-    uint32_t Exchange_data[EXCHANGE_DATA_NUMBER];
-    /* Checksum for validating exchanged data */
-    uint32_t Checksum;
     /* Set this flag when read flash */
     bool Baseline_Read_Status;
     /* Flag to check if flash is scanned */
@@ -53,8 +49,20 @@ typedef struct
     bool get_tmr_interrupt;
     /* Variable to count input timer interrupts */
     uint32_t interrupt_counter;
+    /* Flag to indicate finish scan */
+    bool flash_finish_scan;
+    /* Flag to indicate finish write */
+    bool flash_finish_write;
     
 }   U_flash_data_t;
+
+typedef struct
+{
+    /* Data for exchange with Csd */
+    uint32_t Exchange_data[EXCHANGE_DATA_NUMBER];
+    /* Checksum for validating exchanged data */
+    uint32_t Checksum;
+}U_Flash_Exchange_t;
 
 typedef enum
 {
@@ -81,8 +89,7 @@ bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* data, uint8 len, size_t size);
 /* Function to check if any data equal NULL(true) or NOT(false) */ 
 bool is_any_flash_data_empty(uint32_t* data, uint8 len);
 
-/* Function to calculate checksum of data */
-uint32_t get_checksum(uint32_t* msg, uint8_t len);
+
 
 /* Function write on FLASH ZERO */
 void eraze_flash_data(uint32_t ADDR, size_t size);
@@ -92,13 +99,16 @@ void make_data_for_flash(uint32_t* flash_data,uint32_t* baseline, uint8_t len);
 
 /* Declaration Callbacks */
 
-void flash_NeedCsdScan(void);
+void flash_CallCsdScanForFlash(void);
+void flash_CsdFinishSendData(void);
 void flash_CoreStartScanClbk(void);
-void flash_CoreFinishScanClbk(void);
+void flash_SendExchangeData(void);
+void flash_ReadySendData(void);
 void flash_CoreFlashGoodDataClbk(void);
 void flash_CoreFlashBadDataClbk(void);
 void flash_CoreTmrStart(void);
-void flash_CoreTmrFinish(void);
+void flash_Tmr_FlashScanFinish(void);
+void flash_InvalidExchangeData(void);
 /*************************************/
 
 

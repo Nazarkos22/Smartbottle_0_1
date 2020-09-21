@@ -25,8 +25,8 @@
 Current_state_t static CurrentState;
 
 /* Extern Csd and Flash data for exchanging */
-extern U_csd_data_t CSD_Data;
-extern U_flash_data_t FLASH_Data;
+extern U_Csd_Exchange_t CSD_Exchange;
+extern U_Flash_Exchange_t Flash_Exchange;
 
 
 /****************************************************************/
@@ -40,6 +40,34 @@ static void Core_Callback_to(void(*eventHandler)())
 /***************************************************************/
 /***************************************************************/
 
+
+/*  */
+void csd_InvalidExchangeData(void)
+{
+   Core_Callback_to(flash_ReadySendData);
+}
+
+void flash_InvalidExchangeData(void)
+{
+    Core_Callback_to(csd_ReadySendData);
+}
+
+/*  */
+void flash_SendExchangeData(void)
+{
+    memcpy(CSD_Exchange.Exchange_data,Flash_Exchange.Exchange_data ,sizeof(Middle_used_data_t));
+    CSD_Exchange.Checksum = Flash_Exchange.Checksum;
+    /* Callback indicates finish sending data */
+    Core_Callback_to(csd_FlashFinishSendData);
+}
+
+void csd_SendExchangeData(void)
+{
+    memcpy(Flash_Exchange.Exchange_data, CSD_Exchange.Exchange_data,sizeof(Middle_used_data_t));
+    Flash_Exchange.Checksum = CSD_Exchange.Checksum;
+    /* Callback indicates finish sending data */
+    Core_Callback_to(flash_CsdFinishSendData);    
+}
 /* Handler is called by flash app to start timer */
 void flash_CoreTmrStart(void)
 {
@@ -47,16 +75,16 @@ void flash_CoreTmrStart(void)
 }
 
 /* Handler is called by Timer app and indicates finish timer */
-void tmr_FinishForFlash(void)
+void tmr_FinishForFlashScan(void)
 {
-    Core_Callback_to(flash_CoreTmrFinish);
+    Core_Callback_to(flash_Tmr_FlashScanFinish);
 }
 
 
 /* Switch current statement if this handler is called by flash app */
-void flash_NeedCsdScan(void)
+void flash_CallCsdScanForFlash(void)
 {
-    CurrentState.Current_State = FLASH_NEED_CSD_SCAN;
+    
 }
 
 

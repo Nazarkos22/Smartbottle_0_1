@@ -13,6 +13,7 @@
 
 /* Declaration Flash data structures */
 U_flash_data_t FLASH_Data;
+U_Flash_Exchange_t Flash_Exchange;
 U_Flash_State_t Flash_State;
 
 
@@ -54,11 +55,11 @@ Input: Poiner to array of data, lenth of array
 Execution: Function counts checksum of input data
 Return: Checksum
 ***********************************************************************************************/
-uint32_t get_checksum(uint32_t* msg, uint8_t len)
+uint32_t get_checksum(uint32_t* msg, uint8_t len, uint32_t variable)
 {
     
   uint8_t idx;
-  uint32_t checksum = CHECKSUM_VARIABLE;
+  uint32_t checksum = variable;
     
     for(idx = ZERO; idx < len; idx++)
     {
@@ -115,7 +116,7 @@ void make_data_for_flash(uint32_t* flash_data,uint32_t* baseline, uint8_t len)
         
     }
     
-    flash_data[len] = get_checksum(baseline, len);
+    flash_data[len] = get_checksum(baseline, len, FLASH_CHECKSUM_VARIABLE);
     
 }
 
@@ -142,7 +143,7 @@ bool Read_Flash_Baseline(uint32_t ADDR, uint32_t* baseline, uint8 len, size_t si
     {
         
         /*Do only if data is verified by checksum*/
-        if(get_checksum(buffer, len) == buffer[len]) 
+        if(get_checksum(buffer, len, FLASH_CHECKSUM_VARIABLE) == buffer[len]) 
         {   
             
             /*Status variable*/
@@ -177,9 +178,74 @@ static void Flash_Callback_to(void (*eventHandler)())
 /****************************************************/
 /****************************************************/
 
-/*  */
-void flash_CoreTmrFinish(void)
+/* Handler which indicates flash finish scan */
+static void flash_FlashFinishScan(void)
 {
+    FLASH_Data.flash_finish_scan = true;
+}
+
+
+static void flash_ValidExchangeData(void)
+{
+    memcpy(FLASH_Data.Baseline, Flash_Exchange.Exchange_data, sizeof(U_config_t));
+    Flash_State.Current_State = FLASH_READY_FOR_WRITING;
+}
+
+/*  */
+void flash_ReadySendData(void)
+{
+    Flash_State.Current_State = FLASH_SEND_DATA;
+}
+
+void flash_CsdFinishSendData(void)
+{
+    if((Flash_Exchange.Checksum == get_checksum(Flash_Exchange.Exchange_data,MAX_SENSOR_VALUE,CSD_CHECKSUM_VARIABLE))&&
+    (Flash_Exchange.Exchange_data[MAX_SENSOR_VALUE] == get_checksum(Flash_Exchange.Exchange_data,MAX_SENSOR_VALUE,CSD_CHECKSUM_VARIABLE)))
+    {
+        Flash_Callback_to(flash_ValidExchangeData);
+    }
+    else
+    {
+        Flash_Callback_to(flash_InvalidExchangeData);
+    }
+}
+
+/*  */
+static void flash_AllowScan(void)
+{
+    FLASH_Data.flash_ready_for_scan = true;
+}
+
+/*  */
+static void flash_NotScan(void)
+{
+    FLASH_Data.flash_ready_for_scan = false;
+}
+
+/*  */
+static void flash_AllowWriteData(void)
+{
+    FLASH_Data.is_data_redy_for_writing = true;
+}
+
+/*  */
+static void flash_NeedCsdScan(void)
+{
+    Flash_State.Current_State = FLASH_NEED_CSD_SCAN;
+}
+/*  */
+static void flash_PrepareExchangeData(void)
+{
+    Flash_Exchange.Checksum = get_checksum(FLASH_Data.Baseline, MAX_SENSOR_VALUE, FLASH_CHECKSUM_VARIABLE);
+    /* Copy Baseline data to exchange data */
+    memcpy(Flash_Exchange.Exchange_data, FLASH_Data.Baseline, sizeof(U_cfg_t));
+    /*  */
+    Flash_Exchange.Exchange_data[MAX_SENSOR_VALUE] = Flash_Exchange.Checksum;
+}
+/* Handler which indicates input timer interrupt */
+void flash_Tmr_FlashScanFinish(void)
+{
+    FLASH_Data.get_tmr_interrupt = true;
     
 }
 void Switch_Flash_State(uint8_t currstate)
@@ -187,33 +253,34 @@ void Switch_Flash_State(uint8_t currstate)
     switch(currstate)
     {
         case NEED_FLASH_SCAN:
-            Flash_Callback_to();
+            Flash_Callback_to(flash_AllowScan);
             break;
         case FLASH_SEND_DATA:
-            Flash_Callback_to();
+            Flash_Callback_to(flash_PrepareExchangeData);
+            Flash_Callback_to(flash_SendExchangeData);
             break;
         case FLASH_NEED_CSD_SCAN:
-            Flash_Callback_to();
-            break;
-        case FLASH_RECEIVE_CSD_SCAN_DATA:
-            Flash_Callback_to();
+            Flash_Callback_to(flash_CallCsdScanForFlash);
             break;
         case FLASH_READY_FOR_WRITING:
-            Flash_Callback_to();
+            Flash_Callback_to(flash_AllowWriteData);
             break;
         case FLASH_DO_NOTHING:
-            Flash_Callback_to();
+            Flash_Callback_to(flash_CoreTmrStart);
             break;
         default:
             break;
     }
 }
 
+
 void Flash_Processing(void)
 {
     /* Do only when device have just turned ON or device need scan */
     if(FLASH_Data.flash_ready_for_scan == true)
     {
+        /* Set flag */
+        FLASH_Data.flash_finish_scan = false;
         /* Callback to indicate start scan and asking for starting timer*/
         Flash_Callback_to(flash_CoreTmrStart);
         /* Scan Flah memory data and return status flag */
@@ -221,24 +288,33 @@ void Flash_Processing(void)
             FLASH_ADDR, FLASH_Data.Baseline, MAX_SENSOR_VALUE, sizeof(U_cfg_t)
         ); 
         /* Callback to indicate finish scan */
-        Flash_Callback_to();
+        Flash_Callback_to(flash_FlashFinishScan);
+        /* Callbac to avoid scanning in next iteration */
+        Flash_Callback_to(flash_NotScan);
         /* Do only if scanned data is invalid */
         if(FLASH_Data.Baseline_Read_Status == false)
         {
             Flash_Callback_to(flash_NeedCsdScan);
+        }
+        /* If scanned data is valid */
+        else if(FLASH_Data.Baseline_Read_Status == true)
+        {
+            /* Callback to start copy data to CSD app */
+            Flash_Callback_to(flash_ReadySendData);
         }
     }
     
     /* Do only if when all flash data is ready for writing */
     if(FLASH_Data.is_data_redy_for_writing == true)
     {
+        /* Reset flag */
+        FLASH_Data.is_data_redy_for_writing = false;
         /* Form array data with Baseline data and checksum */
         make_data_for_flash(FLASH_Data.flash_data, FLASH_Data.Baseline, MAX_SENSOR_VALUE);
         /* Eraze Flash memory size of Baseline data plus checksum */
         eraze_flash_data(FLASH_ADDR, sizeof(U_cfg_t));
         /* Write on Flash memory Baseline and checksum */
         Cy_Flash_WriteRow(FLASH_ADDR, FLASH_Data.flash_data); 
-        FLASH_Data.is_data_redy_for_writing = false;
     }
     
 }

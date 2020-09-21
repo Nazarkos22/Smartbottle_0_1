@@ -62,8 +62,10 @@ void Start_Free_Timer(uint8_t free_timer_nmb, uint32_t period, Timer_parametr_t*
 uint8_t Which_Timer_Free(uint8_t timer_number, Timer_parametr_t* timer_data);
 
 /* Declaration Timers Callbacks */
-void tmr_StartForFlash(void);
-void tmr_FinishForFlash(void);
+void tmr_StartForFlashScan(void);
+void tmr_FinishForFlashScan(void);
+void tmr_StartForFlashWrite(void);
+void tmr_FinishForFlashWrite(void);
 void tmr_StartForCapSense(void);
 void tmr_FinishForCapSense(void);
 void tmr_CoreTmrStoped(uint8_t timer_number);

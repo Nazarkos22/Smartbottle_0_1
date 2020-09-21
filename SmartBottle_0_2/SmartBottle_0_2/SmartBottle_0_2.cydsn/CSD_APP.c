@@ -13,6 +13,7 @@
 
 /* Initialization of structure with all sensor and baseline data */
 U_csd_data_t CSD_Data; 
+U_Csd_Exchange_t CSD_Exchange;
 /* Initialisation of CSD current state data */
 U_Csd_State_t CSD_State;
 
@@ -500,7 +501,17 @@ static void CSD_ChangeState(void)
 /************************************************/
 /************************************************/
 
+/*  */ 
+static void csd_ValidExchangeData(void)
+{
+    memcpy(CSD_Data.Baseline, CSD_Exchange.Exchange_data, sizeof(U_config_t));
+    /* Callback to indicate that level can be counted */
+}
 
+
+
+
+/*  */
 void csd_ScanForFlash(void)
 {
     CSD_State.CurrentState = SCAN_FOR_FLASH;
@@ -509,6 +520,19 @@ void csd_ScanForFlash(void)
 void core_CsdAllowScan(void)
 {
     CSD_State.CurrentState = CSD_ALLOW_SCAN;
+}
+
+void csd_FlashFinishSendData(void)
+{
+    if((CSD_Exchange.Checksum == get_checksum(CSD_Exchange.Exchange_data,MAX_SENSOR_VALUE, FLASH_CHECKSUM_VARIABLE))&&
+    (CSD_Exchange.Exchange_data[MAX_SENSOR_VALUE] == get_checksum(CSD_Exchange.Exchange_data,MAX_SENSOR_VALUE, FLASH_CHECKSUM_VARIABLE)))
+    {
+        Csd_Callback_to(csd_ValidExchangeData);
+    }
+    else
+    {
+        Csd_Callback_to(csd_InvalidExchangeData);
+    }
 }
 
 void CSD_Process(void)

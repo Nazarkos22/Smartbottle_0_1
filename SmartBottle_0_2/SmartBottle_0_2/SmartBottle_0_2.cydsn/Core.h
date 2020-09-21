@@ -13,7 +13,7 @@
     
     typedef struct 
     {
-        uint32_t Raws;
+        uint32_t Data[EXCHANGE_DATA_NUMBER];
     }Middle_used_data_t;
     
     /* Statement data */

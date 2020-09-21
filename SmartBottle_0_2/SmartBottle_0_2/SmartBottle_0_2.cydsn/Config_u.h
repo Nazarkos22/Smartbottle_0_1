@@ -17,7 +17,8 @@
 #define BASELINE_DELAY (1000u)
 #define RAW_DELAY (10u)   
 #define BASELINE_SCAN_TIMES (20u)
-#define CHECKSUM_VARIABLE   (1u)
+#define FLASH_CHECKSUM_VARIABLE   (1u)
+#define CSD_CHECKSUM_VARIABLE      (5u)
 #define EXCHANGE_DATA_NUMBER  (11u)
 
     
@@ -29,7 +30,8 @@ typedef struct
     
 }U_config_t;
 
-
+/* Function to calculate checksum of data */
+uint32_t get_checksum(uint32_t* msg, uint8_t len, uint32_t variable);
 
 
 
