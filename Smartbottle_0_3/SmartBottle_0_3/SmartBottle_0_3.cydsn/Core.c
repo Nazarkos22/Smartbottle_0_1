@@ -32,43 +32,54 @@ extern U_csd_data_t CSD_Data;
 
 
 /****************************************************************/
-/* Definition of Core Callbeck to call handlers from other apps */
+/* Definition of Core Callback to call handlers from other apps */
 
 static void Core_Callback_to(void(*eventHandler)())
 {
     eventHandler();
 }
+/****************************************************************/
 
+/* Change Core state to the next */
 static void core_ChangeState(void)
 {
     CurrentState.Current_State ++;
 }
 
+/* Change Core state to the previous */
 static void core_ReturnState(void)
 {
     CurrentState.Current_State --;
 }
 
+/* Handler of DO_NOTHING state */
 static void core_DoNothing(void)
 {
+    /* Call start timer for Core app with period 500ms */
     Start_Timer(CORE_APP, 500u);
-   Core_Callback_to(core_ChangeState); 
+    /* Call change state function */
+    Core_Callback_to(core_ChangeState); 
 }
 
+/* Handler of FINISH_DO_NOTHING state */
 static void core_FinishDoNothing(void)
 {
+    /* Do only, when timer finish count */
     if(CurrentState.Timer_Interrupt == true)
     {
+        /* Reset interrupt flag */
         CurrentState.Timer_Interrupt = false;
+        /* Call change state function */
         Core_Callback_to(core_ReturnState);  
     }
 }
 /***************************************************************/
 /***************************************************************/
 
-
+/* Function which is called, when called timer for Core app finish count */
 void core_TmrInterrupt(void)
 {
+    /* Set interrupt flag */
     CurrentState.Timer_Interrupt = true;
 }
 
@@ -81,11 +92,13 @@ void core_BleConnected(void)
     CurrentState.Current_State = BLE_CONNECTED;
 }
 
+/* Callback from BLE when State is Advertise  */
 void core_BleAdvertise(void)
 {
     CurrentState.Current_State = BLE_ADVERTISE;
 }
 
+/* Callback from BLE when State is Disconnected  */
 void core_BleDisconnected(void)
 {
     CurrentState.Current_State = BLE_DISCONNECTED;
@@ -97,32 +110,44 @@ void Switch_Statement(void)
     switch(CurrentState.Current_State)
     {
         case BLE_CONNECTED:
+            /* Call CSD state function */
             Core_Callback_to(csd_SwitchState);
+            /* Callback to led to update its status */
             Core_Callback_to(led_BleConnected);
+            /* Call timer state function */
             Core_Callback_to(Timer_Handler);
             break;
             
         case BLE_ADVERTISE:
+            /* Callback to led to update its status */
             Core_Callback_to(led_BleAdvertise);
+            /* Call timer state function */
             Core_Callback_to(Timer_Handler);
             break;
             
         case BLE_DISCONNECTED:
+            /* Callback to led to update its status */
             Core_Callback_to(led_BleDisonnected);
+            /* Call timer state function */
             Core_Callback_to(Timer_Handler);
             break;
             
         case DEVICE_DO_NOTHING:
+            /* Call DO_NOTHING handler */
             Core_Callback_to(core_DoNothing);
+            /* Call timer state function */
             Core_Callback_to(Timer_Handler);
             break;
             
         case DEVICE_FINISH_DO_NOTHING:
+            /* Call FINISH_DO_NOTHING handler */
             Core_Callback_to(core_FinishDoNothing);
+            /* Call timer state function */
             Core_Callback_to(Timer_Handler);
             break;
             
         default:
+            /* When current state is not initialized */
             CurrentState.Current_State = DEVICE_DO_NOTHING;
             break;
     }
@@ -168,8 +193,10 @@ void Flash_Scan(void)
     
 }
 
+/* Function which is called when CSD global error */
 void core_RestartSystem(void)
 {
+    /* Restart System */
     __NVIC_SystemReset() ;   
 }
 

@@ -68,10 +68,12 @@ bool IsBleReadyForLowPowerMode(void);
    event */
 void RestartBleAdvertisement (void);
 
+/*****************************************************************************/
+/* Core callbacks */
 void core_BleConnected(void);
 void core_BleAdvertise(void);
 void core_BleDisconnected(void);
-
+/******************************************************************************/
 
 
 

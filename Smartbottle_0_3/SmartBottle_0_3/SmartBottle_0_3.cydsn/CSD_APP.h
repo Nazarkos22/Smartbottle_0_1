@@ -67,17 +67,20 @@ typedef struct
     uint32_t Checksum;
 }U_Csd_Exchange_t;
 
+/* Csd state structure */
 typedef struct
 {
     /* Current CSD State */
     uint8_t CurrentState;
+    /* Count repeated state times */
     uint8_t StateFailsNumber;
+    /* Count DO_NOTHING state times */
     uint8_t DoNothingTimes;
 }U_Csd_State_t;
 
 
 
-/*  */
+/* CDS state enumeration */
 typedef enum
 {
     CSD_DO_NOTHING,
@@ -146,6 +149,7 @@ uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t tr
 void core_RestartSystem(void);
 /***************************/
 
+/* Declaration CSD state function */
 void csd_SwitchState(void);
 
 

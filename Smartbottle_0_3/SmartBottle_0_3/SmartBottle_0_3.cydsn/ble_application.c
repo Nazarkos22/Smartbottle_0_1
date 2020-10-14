@@ -76,10 +76,15 @@ uint8_t static proximityNotificationStatus  = CCCD_NOTIFY_DISABLED;
 /* This flag is used to restart advertisements in the main control loop */
 bool    static restartBleAdvertisement   = false;
 
+
+/****************************************************************************/
+/* Ble function to make callbacks */
 static void BLE_Callback_to( void (*eventHandler)())
 {
     eventHandler();
 }
+/******************************************************************************/
+
 
 /*******************************************************************************
 * Function Name: void UpdateCccdStatusInGattDb
@@ -337,7 +342,7 @@ void ProcessBleEvents(void)
 	if(Cy_BLE_GetConnectionState(connectionHandle) == 
         CY_BLE_CONN_STATE_CONNECTED)
 	{
-        
+        /* Core callback to indicate BLE state */
         BLE_Callback_to(core_BleConnected);
 
         
@@ -361,11 +366,13 @@ void ProcessBleEvents(void)
     /* BLE is advertising */
     else if (Cy_BLE_GetAdvertisementState() == CY_BLE_ADV_STATE_ADVERTISING)
     {
+        /* Core callback to indicate BLE state */
         BLE_Callback_to(core_BleAdvertise);
         
     }
     else
     {
+        /* Core callback to indicate BLE state */
         BLE_Callback_to(core_BleDisconnected);
        
         

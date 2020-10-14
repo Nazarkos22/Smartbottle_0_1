@@ -64,6 +64,8 @@ typedef struct
     uint32_t Checksum;
 }U_Flash_Exchange_t;
 
+
+/* Flash state enumeration */
 typedef enum
 {
     NEED_FLASH_SCAN,
@@ -75,6 +77,7 @@ typedef enum
     
 }U_Flash_State;
 
+/* Flash state structure */
 typedef struct
 {
     uint8_t Previous_State;
@@ -97,7 +100,7 @@ void eraze_flash_data(uint32_t ADDR, size_t size);
 /* Function to prepare data from sensors and checksum for write on FLASH memory */
 void make_data_for_flash(uint32_t* flash_data,uint32_t* baseline, uint8_t len);
 
-/* Declaration Callbacks */
+/* Declaration Callbacks */ /* NOT USED YET */
 
 void flash_CallCsdScanForFlash(void);
 void flash_CsdFinishSendData(void);

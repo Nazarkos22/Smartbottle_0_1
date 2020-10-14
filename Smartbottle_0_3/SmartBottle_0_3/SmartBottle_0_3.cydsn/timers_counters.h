@@ -17,7 +17,7 @@
 #define TIMER_MAX_NUMBER (5u)        /* Number of initialised timers */
 #define PERIOD           (150u)      /* Value, which is used to set up a timer`s period */ 
 
-/* Timer`s State */
+/* Timer`s Status */
 typedef enum  
 {
     Timer_busy, 
@@ -25,6 +25,7 @@ typedef enum
     No_timer_free = 11u
 }Status_Timer;
 
+/* Timer state enumeration */
 typedef enum
 {
     TMR_CHECK_1_TIMER,
@@ -49,6 +50,7 @@ typedef struct
     bool Interrupt;
 } Timer_parametr_t;
 
+/* Structure to indicate timer state */
 typedef struct
 {
     uint8_t Timer_State;
@@ -61,6 +63,8 @@ void Start_Timer(uint8_t block, uint16_t period);
 /* Declaration of main timer handler */
 void Timer_Handler(void);
 /************************************************/
+
+
 void core_TmrInterrupt(void);
 void csd_TmrInterrupt(void);
 

@@ -69,6 +69,7 @@ bool static disconnectLEDActive = false;
 /* Variable used to control status LEDs */
     status_led_indication_t static bleStatusIndication = NO_INDICATION;
 
+/* Handler which calling when Ble is in connected state */
 void led_BleConnected(void)
 {
     /* Update the status LEDs if they're not indicating the connection
@@ -80,6 +81,7 @@ void led_BleConnected(void)
     }
 }
 
+/* Handler which calling when Ble is in advertise state */
 void led_BleAdvertise(void)
 {
     /* Update the status LEDs if they're not indicating the advertisement
@@ -92,6 +94,7 @@ void led_BleAdvertise(void)
     }
 }
 
+/* Handler which calling when Ble is in disconnected state */
 void led_BleDisonnected(void)
 {
     /* If previously indication was a connected state, show disconnected 

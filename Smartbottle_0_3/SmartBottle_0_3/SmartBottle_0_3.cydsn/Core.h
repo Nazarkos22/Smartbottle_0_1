@@ -11,11 +11,6 @@
 #include "Config_u.h"
 
     
-    typedef struct 
-    {
-        uint32_t Data[EXCHANGE_DATA_NUMBER];
-    }Middle_used_data_t;
-    
     /* Statement data */
 typedef struct
 {
@@ -28,6 +23,8 @@ typedef struct
     
 }Current_state_t;
 
+
+/* Core state enumeration */
 typedef enum
 {
    BLE_CONNECTED,
@@ -39,8 +36,9 @@ typedef enum
 
 
 /* Function to process al CSD block */
-void CapSense_Processing(uint8_t scan_times);
+//void CapSense_Processing(uint8_t scan_times);
 
+/* Declaration of Timers initialization */
 void Timers_Interrupts_Init(void);
 
 /* Function to set some flags for start scan */
@@ -51,13 +49,6 @@ void Flash_Scan(void);
 
 /*  */
 void Switch_Statement(void);
-
-
-
-void DEVICE_DO_NOTHING_FUNC(void (*eventClbk)());
-
-void DoNothingClbk(void);
-
 
 
 /* [] END OF FILE */

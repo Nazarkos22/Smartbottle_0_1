@@ -31,7 +31,7 @@ typedef struct
 }U_config_t;
 
 
-
+/* Enumeration of timer apps */
 typedef enum
 {
     NO_APP,
