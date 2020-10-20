@@ -494,29 +494,6 @@ void csd_TmrInterrupt(void)
     CSD_Data.Timer_Interrupt = true;
 }
 
-/* Function change state with step two */
-static void csd_ChangeGoodState(void)
-{
-    /* Do only if current state is the last state */
-    if(CSD_State.CurrentState == CSD_CLEAN_RAWS)
-    {
-        CSD_State.CurrentState = CSD_DO_NOTHING;
-    }
-    /* Fix magic number */
-    CSD_State.CurrentState += 2;
-}
-
-/* Function change state with step one */
-static void csd_ChangeBadState(void)
-{
-    CSD_State.CurrentState ++;
-}
-
-/* Function change state with step minus one */
-static void csd_ReturnSate(void)
-{
-    CSD_State.CurrentState --;
-}
 
 /* Handler count number of repeated states */
 static void csd_StateFailedNumber(void)
@@ -531,7 +508,7 @@ static void csd_StateFailedReset(void)
 }
 
 /* Handler which try to avoid error if it is happend*/
-static void csd_Error(void)
+static void Csd_Error(uint8_t previous_state)
 {
     /* Do only if timer have sent interrupt */
     if(CSD_Data.Timer_Interrupt == true)
@@ -542,7 +519,7 @@ static void csd_Error(void)
         if(CSD_State.StateFailsNumber < 4)
         {
             /* Return previous state */
-            Csd_Callback_to(csd_ReturnSate);
+            CSD_State.CurrentState = previous_state;
         }
         /* If state have repeated four times or more */
         else 
@@ -562,7 +539,7 @@ static void csd_StartScan(void)
     /* Start Scan */
     CapSense_ScanAllWidgets();
     /* Change state */
-    Csd_Callback_to(csd_ChangeGoodState);         
+    CSD_State.CurrentState = CSD_CHECK_FINISH_SCAN;         
 }
 
 static void csd_CheckFinishScan(void)
@@ -573,7 +550,7 @@ static void csd_CheckFinishScan(void)
             /* Reset faile flag */
             Csd_Callback_to(csd_StateFailedReset);
             /* Change state */
-            Csd_Callback_to(csd_ChangeGoodState);
+            CSD_State.CurrentState = CSD_FINISH_SCAN;
         }
         /* If scan is not finished */
         else
@@ -583,16 +560,11 @@ static void csd_CheckFinishScan(void)
             /* Start timer for CSD app with period 150ms */
             Start_Timer(CSD_APP, 150u);
             /* Change state to error state */
-            Csd_Callback_to(csd_ChangeBadState);
+            CSD_State.CurrentState = CSD_CHECK_FINISH_SCAN_ERROR;
         }
 }
 
-/* Finish scan error handler */
-static void csd_CheckFinishScanError(void)
-{
-    /* Call error handler */
-    Csd_Callback_to(csd_Error);
-}
+
 
 /* Handler which is called when scan is finished */
 static void csd_FinishScan(void)
@@ -600,7 +572,7 @@ static void csd_FinishScan(void)
     /* Process all widgets */
     CapSense_ProcessAllWidgets();
     /* Change state */
-    Csd_Callback_to(csd_ChangeGoodState);
+    CSD_State.CurrentState = CSD_CREATE_RAW_DATA;
 }
 
 /* Create RAW data handler */
@@ -612,7 +584,7 @@ static void csd_CreateRawData(void)
         /* Reset fail flag */
         Csd_Callback_to(csd_StateFailedReset);
         /* Change state */
-        Csd_Callback_to(csd_ChangeGoodState);
+        CSD_State.CurrentState = CSD_MAKE_DIFF;
     }
     /* If RAW data is not valid */
     else
@@ -622,16 +594,11 @@ static void csd_CreateRawData(void)
         /* Start timer for CSD app and period 50 ms */
         Start_Timer(CSD_APP, 50u);
         /* Change state to error state */
-        Csd_Callback_to(csd_ChangeBadState);
+        CSD_State.CurrentState = CSD_CREATE_RAW_DATA_ERROR;
     }
 }
 
-/* Handler called if RAW data is invalid */
-static void csd_CreateRawDataError(void)
-{
-    /* Call error handler */
-    Csd_Callback_to(csd_Error);
-}
+
 
 /* Handler count differance betw RAW data and BASELINE data */
 static void csd_MakeDiff(void)
@@ -642,7 +609,7 @@ static void csd_MakeDiff(void)
         /* Reset fail flag */
         Csd_Callback_to(csd_StateFailedReset);
         /* Change state */
-        Csd_Callback_to(csd_ChangeGoodState);
+        CSD_State.CurrentState = CSD_COUNT_LEVEL;
     }
     /* If DIFF data is not valid */
      else
@@ -652,16 +619,11 @@ static void csd_MakeDiff(void)
         /* Start timer for CSD app and period 50 ms */
         Start_Timer(CSD_APP, 50u);
         /* Change state to error state */
-        Csd_Callback_to(csd_ChangeBadState);
+        CSD_State.CurrentState = CSD_MAKE_DIFF_ERROR;
     }
 }
 
-/* Handler is called when DIFF data is invalid */
-static void csd_MakeDiffError(void)
-{
-    /* Call error handler */
-    Csd_Callback_to(csd_Error);
-}
+
 
 /* Function count liquid level */
 static void csd_CountLevel(void)
@@ -669,7 +631,7 @@ static void csd_CountLevel(void)
     /* Count level */
     CSD_Data.Level = Find_liquid_Level(CSD_Data.Diff, MAX_SENSOR_VALUE, TRESHOLD);
     /* Change state */
-    Csd_Callback_to(csd_ChangeGoodState);
+    CSD_State.CurrentState = CSD_CLEAN_RAWS;
 }
 
 /* Handler is called to reset RAW data */
@@ -678,7 +640,7 @@ static void csd_CleanRaws(void)
     /* Write ZERO to RAW data */
     clean_data(CSD_Data.Raws, sizeof(CSD_Data.Raws),  MAX_SENSOR_VALUE);
     /* Change state */
-    Csd_Callback_to(csd_ChangeGoodState);
+    CSD_State.CurrentState = CSD_DO_NOTHING;
 }
 
 /* DO_NOTHING state handler */
@@ -687,7 +649,7 @@ static void csd_DoNothing(void)
     /* Start timer for CSD app and period 500 ms */
     Start_Timer(CSD_APP, 500u);
     /* Change state on FINISH_DO_NOTHING */
-    Csd_Callback_to(csd_ChangeBadState);
+    CSD_State.CurrentState = CSD_FINISH_DO_NOTHING;
 }
 
 /* FINISH_DO_NOTHING state handler */
@@ -707,7 +669,7 @@ static void csd_FinishDoNothing(void)
             if(CapSense_NOT_BUSY == CapSense_IsBusy())
             {
                 /* Set new state */
-                Csd_Callback_to(csd_ChangeGoodState);
+                CSD_State.CurrentState = CSD_START_SCAN;
             }
             /* If device still scanning */
             else
@@ -720,7 +682,7 @@ static void csd_FinishDoNothing(void)
         else
         {
             /* Return to DO_NOTHING state */
-            Csd_Callback_to(csd_ReturnSate);
+            CSD_State.CurrentState = CSD_DO_NOTHING;
         }
     }
 }
@@ -740,7 +702,7 @@ void csd_SwitchState(void)
             break;
             
         case CSD_CHECK_FINISH_SCAN_ERROR:   
-            Csd_Callback_to(csd_CheckFinishScanError);
+            Csd_Error(CSD_CHECK_FINISH_SCAN);
             break;
             
         case CSD_FINISH_SCAN:
@@ -752,7 +714,7 @@ void csd_SwitchState(void)
             break;
             
         case CSD_CREATE_RAW_DATA_ERROR:
-            Csd_Callback_to(csd_CreateRawDataError);
+            Csd_Error(CSD_CREATE_RAW_DATA);
             break;
             
         case CSD_MAKE_DIFF:
@@ -760,7 +722,7 @@ void csd_SwitchState(void)
             break;
             
         case CSD_MAKE_DIFF_ERROR:
-            Csd_Callback_to(csd_MakeDiffError);
+            Csd_Error(CSD_MAKE_DIFF);
             break;
             
         case CSD_COUNT_LEVEL:
