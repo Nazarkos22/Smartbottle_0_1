@@ -17,33 +17,36 @@
 #include "Flash_APP.h"
 #include "led.h"
 #include "ble_application.h"
-#include "timers_counters.h"
+#include "timer.h"
 #include "low_power.h"
 
 
 int main(void)
 {
-    /* Timers` elements initialization */
-    Timers_Interrupts_Init();
+
     /* Enable global interrupts. */
     __enable_irq(); 
+
     /* Initialization of CSD components */
      CapSense_Start();
-    /* Read or form Baseline */
-    Flash_Scan();
+    
     /* Initialization of BLE components */
     InitBle();
     /* Initialization of low power components */
     InitLowPower();
-
+    /* Timers` elements initialization */
+    Init_Global_Timer();
+    /* Read or form Baseline */
+    Flash_Scan();
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
     for(;;)
     {
-        Timer_Handler();
+       // csd_SwitchState();
+        
         ProcessBleEvents();
         Switch_Statement();
-        Timer_Handler();
+        
     }
 }
 

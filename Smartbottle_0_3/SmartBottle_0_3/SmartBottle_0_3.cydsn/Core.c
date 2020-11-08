@@ -18,7 +18,7 @@
 #include "Flash_APP.h"
 #include "led.h"
 #include "ble_application.h"
-#include "timers_counters.h"
+#include "timer.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -40,6 +40,13 @@ static void Core_Callback_to(void(*eventHandler)())
 }
 /****************************************************************/
 
+/* Function which is called, when called timer for Core app finish count */
+void core_TmrInterrupt(void)
+{
+    /* Set interrupt flag */
+    CurrentState.Timer_Interrupt = true;
+}
+
 /* Change Core state to the next */
 static void core_ChangeState(void)
 {
@@ -56,7 +63,7 @@ static void core_ReturnState(void)
 static void core_DoNothing(void)
 {
     /* Call start timer for Core app with period 500ms */
-    Start_Timer(CORE_APP, 500u);
+    timer_start(CORE_APP, 500u, core_TmrInterrupt);
     /* Call change state function */
     Core_Callback_to(core_ChangeState); 
 }
@@ -76,12 +83,7 @@ static void core_FinishDoNothing(void)
 /***************************************************************/
 /***************************************************************/
 
-/* Function which is called, when called timer for Core app finish count */
-void core_TmrInterrupt(void)
-{
-    /* Set interrupt flag */
-    CurrentState.Timer_Interrupt = true;
-}
+
 
 
 
@@ -114,36 +116,26 @@ void Switch_Statement(void)
             Core_Callback_to(csd_SwitchState);
             /* Callback to led to update its status */
             Core_Callback_to(led_BleConnected);
-            /* Call timer state function */
-            Core_Callback_to(Timer_Handler);
             break;
             
         case BLE_ADVERTISE:
             /* Callback to led to update its status */
             Core_Callback_to(led_BleAdvertise);
-            /* Call timer state function */
-            Core_Callback_to(Timer_Handler);
             break;
             
         case BLE_DISCONNECTED:
             /* Callback to led to update its status */
             Core_Callback_to(led_BleDisonnected);
-            /* Call timer state function */
-            Core_Callback_to(Timer_Handler);
             break;
             
         case DEVICE_DO_NOTHING:
             /* Call DO_NOTHING handler */
             Core_Callback_to(core_DoNothing);
-            /* Call timer state function */
-            Core_Callback_to(Timer_Handler);
             break;
             
         case DEVICE_FINISH_DO_NOTHING:
             /* Call FINISH_DO_NOTHING handler */
             Core_Callback_to(core_FinishDoNothing);
-            /* Call timer state function */
-            Core_Callback_to(Timer_Handler);
             break;
             
         default:

@@ -25,7 +25,7 @@
 #define MAX_LEVEL_VALUE (255u)
 #define LEVEL_CHANGE_VALUE (25u)
  
-#define DO_NOTHING_TIMES   (10u)
+#define DO_NOTHING_TIMES   (2u)
     
 
 #define TRESHOLD (1000u)

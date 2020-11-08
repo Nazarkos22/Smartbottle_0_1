@@ -41,6 +41,11 @@
         <Data key="Priority" value="Default" />
         <Data key="Vector" value="3" />
       </Group>
+      <Group key="CortexM4">
+        <Data key="Assigned" value="False" />
+        <Data key="Priority" value="Default" />
+        <Data key="Vector" value="-1" />
+      </Group>
     </Group>
   </Group>
   <Group key="M0S8Clock">
@@ -780,6 +785,38 @@
     <Group key="9452ee4b-2bf2-4f60-8a23-e449c8915f9b">
       <Group key="0">
         <Data key="Port Format" value="1,5" />
+      </Group>
+    </Group>
+    <Group key="2009095d-f21c-45c8-b6b9-f9e9c1f06ba4/0113321b-4a37-46f6-8407-2f8646c68756">
+      <Group key="0">
+        <Data key="Port Format" value="9,0" />
+      </Group>
+      <Group key="1">
+        <Data key="Port Format" value="9,1" />
+      </Group>
+      <Group key="2">
+        <Data key="Port Format" value="9,2" />
+      </Group>
+      <Group key="3">
+        <Data key="Port Format" value="9,3" />
+      </Group>
+      <Group key="4">
+        <Data key="Port Format" value="9,4" />
+      </Group>
+      <Group key="5">
+        <Data key="Port Format" value="9,5" />
+      </Group>
+      <Group key="6">
+        <Data key="Port Format" value="9,6" />
+      </Group>
+      <Group key="7">
+        <Data key="Port Format" value="9,7" />
+      </Group>
+      <Group key="8">
+        <Data key="Port Format" value="10,0" />
+      </Group>
+      <Group key="9">
+        <Data key="Port Format" value="10,1" />
       </Group>
     </Group>
     <Group key="2009095d-f21c-45c8-b6b9-f9e9c1f06ba4/e155f268-b320-4e19-9071-66bb52788381">

@@ -1,2 +1,11 @@
 
 *.kotli
+*.osav
+*codegentemp
+*CortexM0p
+*CortexM4
+*Export
+*gcc
+*Generated_Source
+*iar
+*mdk
