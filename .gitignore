@@ -9,3 +9,7 @@
 *Generated_Source
 *iar
 *mdk
+*.nazko
+*.old
+*.c
+Smartbottle_0_3/Device_Implementation/SmartBottle_0_3.cydsn/timers_counters.h
