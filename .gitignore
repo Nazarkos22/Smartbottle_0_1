@@ -11,5 +11,5 @@
 *mdk
 *.nazko
 *.old
-*.c
-Smartbottle_0_3/Device_Implementation/SmartBottle_0_3.cydsn/timers_counters.h
+Device_Implementation_3/Device_0_3.cydsn/system_psoc6_cm4.c
+Device_Implementation_3/Device_0_3.cydsn/system_psoc6_cm0plus.c
