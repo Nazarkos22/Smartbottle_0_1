@@ -356,11 +356,11 @@ void ProcessBleEvents(void)
             proxData = GetProximityData();
         
             /* Check if the proximity data is updated */
-            if(proxData->proximityDataUpdated == true)
-            {
+//            if(proxData->proximityDataUpdated == true)
+//            {
                 /* Send data over proximity notification */
                 SendCapSenseProximityNotification(proxData->proximityData);
-            }
+//            }
 		}
 	}
     /* BLE is advertising */

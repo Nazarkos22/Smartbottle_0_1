@@ -29,8 +29,15 @@ U_flash_data_t FLASH_Data;
 extern U_csd_data_t CSD_Data;
 
 
+void Flash_Init(void)
+{
+    memset(&FLASH_Data, ZERO, sizeof(FLASH_Data));
+}
 
-
+void CSD_Init(void)
+{
+    memset(&CSD_Data, ZERO, sizeof(CSD_Data));
+}
 /****************************************************************/
 /* Definition of Core Callback to call handlers from other apps */
 
@@ -113,7 +120,7 @@ void Switch_Statement(void)
     {
         case BLE_CONNECTED:
             /* Call CSD state function */
-            Core_Callback_to(csd_SwitchState);
+//            csd_SwitchState();
             /* Callback to led to update its status */
             Core_Callback_to(led_BleConnected);
             break;

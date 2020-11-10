@@ -28,7 +28,8 @@ int main(void)
     __enable_irq(); 
 
     /* Initialization of CSD components */
-     CapSense_Start();
+    CSD_Init();
+    CapSense_Start();
     
     /* Initialization of BLE components */
     InitBle();
@@ -36,14 +37,16 @@ int main(void)
     InitLowPower();
     /* Timers` elements initialization */
     Init_Global_Timer();
+    /* */
+    Flash_Init();
     /* Read or form Baseline */
     Flash_Scan();
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
     for(;;)
     {
-       // csd_SwitchState();
-        
+       
+        csd_SwitchState();
         ProcessBleEvents();
         Switch_Statement();
         

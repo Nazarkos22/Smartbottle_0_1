@@ -49,7 +49,8 @@ void Flash_Scan(void);
 
 /*  */
 void Switch_Statement(void);
-
+void CSD_Init(void);
+void Flash_Init(void);
 
 /* [] END OF FILE */
  #endif

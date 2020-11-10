@@ -28,9 +28,45 @@
 #define DO_NOTHING_TIMES   (2u)
     
 
-#define TRESHOLD (1000u)
+#define TRESHOLD (2000u)
 
     
+
+
+//typedef struct
+//{
+//    /* Data for exchange with Csd */
+//    uint32_t Exchange_data[EXCHANGE_DATA_NUMBER];
+//    /* Checksum for validating exchanged data */
+//    uint32_t Checksum;
+//}U_Csd_Exchange_t;
+
+
+
+
+
+/* CDS state enumeration */
+typedef enum
+{
+    CSD_DO_NOTHING = 0,
+    CSD_FINISH_DO_NOTHING,
+    CSD_START_SCAN,
+    CSD_START_SCAN_ERROR,
+    CSD_CHECK_FINISH_SCAN,
+    CSD_CHECK_FINISH_SCAN_ERROR,
+    CSD_FINISH_SCAN,
+    CSD_FINISH_SCAN_ERROR,
+    CSD_CREATE_RAW_DATA,
+    CSD_CREATE_RAW_DATA_ERROR,
+    CSD_MAKE_DIFF,
+    CSD_MAKE_DIFF_ERROR,
+    CSD_COUNT_LEVEL,
+    CSD_COUNT_LEVEL_ERROR,
+    CSD_CLEAN_RAWS,
+    CSD_STATE_PAUSE
+    
+}CSD_States_t;
+
 /* Structure of all CapSense data */
 typedef struct
 {
@@ -59,47 +95,16 @@ typedef struct
     bool Timer_Interrupt;
 }   U_csd_data_t;
 
-typedef struct
-{
-    /* Data for exchange with Csd */
-    uint32_t Exchange_data[EXCHANGE_DATA_NUMBER];
-    /* Checksum for validating exchanged data */
-    uint32_t Checksum;
-}U_Csd_Exchange_t;
-
 /* Csd state structure */
 typedef struct
 {
     /* Current CSD State */
-    uint8_t CurrentState;
+    CSD_States_t CurrentState;
     /* Count repeated state times */
     uint8_t StateFailsNumber;
     /* Count DO_NOTHING state times */
     uint8_t DoNothingTimes;
 }U_Csd_State_t;
-
-
-
-/* CDS state enumeration */
-typedef enum
-{
-    CSD_DO_NOTHING,
-    CSD_FINISH_DO_NOTHING,
-    CSD_START_SCAN = 3,
-    CSD_START_SCAN_ERROR,
-    CSD_CHECK_FINISH_SCAN,
-    CSD_CHECK_FINISH_SCAN_ERROR,
-    CSD_FINISH_SCAN,
-    CSD_FINISH_SCAN_ERROR,
-    CSD_CREATE_RAW_DATA,
-    CSD_CREATE_RAW_DATA_ERROR,
-    CSD_MAKE_DIFF,
-    CSD_MAKE_DIFF_ERROR,
-    CSD_COUNT_LEVEL,
-    CSD_COUNT_LEVEL_ERROR,
-    CSD_CLEAN_RAWS
-    
-}CSD_States_t;
    
     /* Data length of CapSense proximity */
 #define CAPSENSE_PROXIMITY_DATA_LEN    (uint8_t) (0x01u)
