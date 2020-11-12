@@ -45,8 +45,8 @@ int main(void)
 
     for(;;)
     {
-       
-        csd_SwitchState();
+        /* Use for debug only */
+        //csd_SwitchState();
         ProcessBleEvents();
         Switch_Statement();
         

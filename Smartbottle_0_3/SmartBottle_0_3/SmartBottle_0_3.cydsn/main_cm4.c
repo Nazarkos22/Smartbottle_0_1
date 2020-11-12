@@ -30,7 +30,7 @@ int main(void)
     /* Initialization of CSD components */
     CSD_Init();
     CapSense_Start();
-    
+    TX_Start();
     /* Initialization of BLE components */
     InitBle();
     /* Initialization of low power components */

@@ -795,7 +795,7 @@
         <Data key="Port Format" value="9,1" />
       </Group>
       <Group key="2">
-        <Data key="Port Format" value="9,2" />
+        <Data key="Port Format" value="10,2" />
       </Group>
       <Group key="3">
         <Data key="Port Format" value="9,3" />

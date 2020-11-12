@@ -1,6 +1,6 @@
 /***************************************************************************//**
 * \file cy_ble_config.h
-* \version 2.50
+* \version 2.60
 *
 * \brief
 *  The user BLE configuration file. Allows redefining the configuration #define(s)

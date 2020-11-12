@@ -18,7 +18,8 @@ U_csd_data_t CSD_Data;
 /* Initialisation of CSD current state data */
 U_Csd_State_t CSD_State;
 
-
+uint8 header[] = {0x0Du, 0x0Au};
+uint8 tail[] = {0x00u, 0xFFu, 0xFFu};
 
 /***********************************************************************************************
 Fucntoin: is_any_csd_data_empty
@@ -685,6 +686,12 @@ void csd_SwitchState(void)
             csd_StateFailedReset();
             /* Process all widgets */
             CapSense_ProcessAllWidgets();
+            /* Send packet header */
+             TX_PutArrayBlocking((uint8 *)(&header), sizeof(header));
+             /* Send packet with CapSense data */
+             TX_PutArrayBlocking((uint8 *)(&CapSense_dsRam), sizeof(CapSense_dsRam));
+             /* Send packet tail */
+             TX_PutArrayBlocking((uint8 *)(&tail), sizeof(tail));
             /* Change state */
             CSD_State.CurrentState = CSD_STATE_PAUSE;
             /* Start timeout */

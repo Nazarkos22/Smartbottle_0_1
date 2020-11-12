@@ -157,113 +157,113 @@ uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t tr
     /* Returned variable */
     uint8_t Level = ZERO;
     
-//    if(Diff[FIRST_lvl] > treshold)
-//    {
-//        
-//        Level = 26u;
-//        
-//        if(Diff[SECOND_lvl] > treshold)
-//        {
-//            
-//            Level = 51u;
-//            
-//            if(Diff[THIRD_lvl] > treshold)
-//            {
-//                
-//                Level = 77u;
-//                
-//                if(Diff[FOURTH_lvl] > treshold)
-//                {
-//                    
-//                    Level = 102u;
-//                    
-//                    if(Diff[FIFTH_lvl] > treshold)
-//                    {
-//                        
-//                        Level = 128u;
-//                        
-//                        if(Diff[SIXTH_lvl] > treshold)
-//                        {
-//                            
-//                            Level = 153u;
-//                            
-//                            if(Diff[SEVENTH_lvl] > treshold)
-//                            {
-//                                
-//                                Level = 179u;
-//                                
-//                                if(Diff[EIGHTH_lvl] > treshold)
-//                                {
-//                                    
-//                                    Level = 204u;
-//                                    
-//                                    if(Diff[NINETH_lvl] > treshold)
-//                                    {
-//                                        
-//                                        Level = 230u;
-//                                        
-//                                        if(Diff[TENTH_lvl] > treshold)
-//                                        {
-//                                            
-//                                            Level = 255u;
-//                                            
-//                                        }
-//                                        
-//                                    }
-//                                    
-//                                }
-//                                
-//                            }
-//                            
-//                        }
-//                        
-//                    }
-//                    
-//                }
-//                
-//            }
-//            
-//        }
-//        
-//    }
+    if(Diff[FIRST_lvl] > treshold)
+    {
+        
+        Level = 26u;
+        
+        if(Diff[SECOND_lvl] > treshold)
+        {
+            
+            Level = 51u;
+            
+            if(Diff[THIRD_lvl] > treshold)
+            {
+                
+                Level = 77u;
+                
+                if(Diff[FOURTH_lvl] > treshold)
+                {
+                    
+                    Level = 102u;
+                    
+                    if(Diff[FIFTH_lvl] > treshold)
+                    {
+                        
+                        Level = 128u;
+                        
+                        if(Diff[SIXTH_lvl] > treshold)
+                        {
+                            
+                            Level = 153u;
+                            
+                            if(Diff[SEVENTH_lvl] > treshold)
+                            {
+                                
+                                Level = 179u;
+                                
+                                if(Diff[EIGHTH_lvl] > treshold)
+                                {
+                                    
+                                    Level = 204u;
+                                    
+                                    if(Diff[NINETH_lvl] > treshold)
+                                    {
+                                        
+                                        Level = 230u;
+                                        
+                                        if(Diff[TENTH_lvl] > treshold)
+                                        {
+                                            
+                                            Level = 255u;
+                                            
+                                        }
+                                        
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
     /* Another variant of algorithm **************/
     
-    uint8 idx; //loop variable
-    
-    for(idx = ZERO; idx < amount_of_sensors; idx++)
-    {
-    
-        if (Diff[idx] > treshold)
-        {
-    
-            if(idx == TENTH_lvl)
-            {
-    
-                Level = MAX_LEVEL_VALUE;  
-    
-            }
-    
-            continue;
-    
-        }
-    
-        else
-        {
-    
-            Level = idx*LEVEL_CHANGE_VALUE;
-    
-            break;
-    
-        }
-    
-        if((idx + ONE) == (amount_of_sensors))
-        {
-    
-            Level = MAX_LEVEL_VALUE; 
-    
-        }
-    
-    }
+//    uint8 idx; //loop variable
+//    
+//    for(idx = ZERO; idx < amount_of_sensors; idx++)
+//    {
+//    
+//        if (Diff[idx] > treshold)
+//        {
+//    
+//            if(idx == TENTH_lvl)
+//            {
+//    
+//                Level = MAX_LEVEL_VALUE;  
+//    
+//            }
+//    
+//            continue;
+//    
+//        }
+//    
+//        else
+//        {
+//    
+//            Level = idx*LEVEL_CHANGE_VALUE;
+//    
+//            break;
+//    
+//        }
+//    
+//        if((idx + ONE) == (amount_of_sensors))
+//        {
+//    
+//            Level = MAX_LEVEL_VALUE; 
+//    
+//        }
+//    
+//    }
     /**********************************************/
     return Level;
     
@@ -353,19 +353,17 @@ Execution: Assign average  RAW data from each sensor, to array of Baseline data
 Return: ---------
 ***********************************************************************************************/
 
-bool Create_RAW_data(uint32_t* raw_data, uint8_t len, uint8_t scan_times)
+bool Create_RAW_data(uint32_t* raw_data, uint8_t len)
 {   
     
     /*function return variable*/   
      bool Status = false;
-    /*Raw success variable*/
-     bool result = false;
+    
     /*create data array*/
     uint32_t* ptr = (uint32_t*)malloc(sizeof(raw_data));  
-    /*copy current sensor Raw data to ptr and return result*/
-    result = make_sensors_data(ptr, len);
     
-    if(result == true)/*do only if any ptr data is not empty*/
+    /*copy current sensor Raw data to ptr and return result*/  
+    if(true == make_sensors_data(ptr, len))/*do only if any ptr data is not empty*/
     {    
         
         /*loop variable*/
@@ -374,7 +372,7 @@ bool Create_RAW_data(uint32_t* raw_data, uint8_t len, uint8_t scan_times)
         for(idx = ZERO; idx < len; idx++)
         {
             
-           raw_data[idx] += (ptr[idx]/scan_times); 
+           raw_data[idx] = ptr[idx]; 
         
         }
         Status = true;
@@ -656,7 +654,7 @@ void csd_SwitchState(void)
             break;
             
         case CSD_CREATE_RAW_DATA:
-            if(true == Create_RAW_data(CSD_Data.Raws, MAX_SENSOR_VALUE, 1u))
+            if(true == Create_RAW_data(CSD_Data.Raws, MAX_SENSOR_VALUE))
             {
                 /* Reset faile flag */
                 csd_StateFailedReset();
@@ -755,7 +753,7 @@ void csd_SwitchState(void)
                     if(CapSense_NOT_BUSY == CapSense_IsBusy())
                     {
                         /* Set new state */
-                        CSD_State.CurrentState = CSD_START_SCAN;
+                        csd_StartScan();
                         CSD_State.DoNothingTimes = ZERO;
                         break;
                     }
@@ -763,7 +761,7 @@ void csd_SwitchState(void)
                     else
                     {
                         /* Call restart system */
-                        Csd_Callback_to(core_RestartSystem);
+                        core_RestartSystem();
                         break;
                     } 
                 }

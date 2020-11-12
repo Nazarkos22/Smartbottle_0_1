@@ -28,7 +28,7 @@
 #define DO_NOTHING_TIMES   (2u)
     
 
-#define TRESHOLD (500u)
+#define TRESHOLD (2000u)
 
     
 
@@ -79,18 +79,6 @@ typedef struct
     uint32_t Baseline[MAX_SENSOR_VALUE];
     /* Liquid level */
     uint8_t Level;
-    /* Store number of scans */
-    uint8_t counter;
-    /* Set this flag when cycle of scans is done */
-    bool ReadyForNewScan_flag;
-    /* Set this flag when Level calculated */
-    bool HaveScanResult;
-    /* (NOT DONE YET!) Set this flag when BLE starts advertisment */
-    bool StartAdvert;
-    /* Register change of StartAdvert flag */
-    bool SetFlagsForStartScan_Status;
-    /* Flag, which becomes true when BLE device is connected */
-    bool Allow_Start_Scan;
     /* Set this flag when timer send inerrupt*/
     bool Timer_Interrupt;
 }   U_csd_data_t;
@@ -130,7 +118,7 @@ bool  IsCapSenseReadyForLowPowerMode(void);
 bool clean_data(uint32_t* data, size_t size, uint8 len);
 
 /* Function to process sensor data after scanning */
-bool Create_RAW_data(uint32_t* raw_data, uint8_t len, uint8_t scan_times);
+bool Create_RAW_data(uint32_t* raw_data, uint8_t len);
 
 /* Function to create baseline of sensor data by calculating average of some 
  * amount of scans before write on flash */
