@@ -594,44 +594,7 @@ static void csd_DoNothing(void)
     CSD_State.CurrentState = CSD_DO_NOTHING;
 }
 
-///* FINISH_DO_NOTHING state handler */
-//static void csd_FinishDoNothing(void)
-//{
-//    /* Do only if timer have sent interrupt */
-//    if(CSD_Data.Timer_Interrupt == true)
-//    {
-//        /* Count DO_NOTHING state times */
-//        CSD_State.DoNothingTimes ++;
-//        /* Reset timer interrupt */
-//        CSD_Data.Timer_Interrupt = false;
-//        /* Do only if CSD app do nothing too long */
-//        if(CSD_State.DoNothingTimes > DO_NOTHING_TIMES)
-//        {
-//            /* Do only if device is not scanning */
-//            if(CapSense_NOT_BUSY == CapSense_IsBusy())
-//            {
-//                /* Set new state */
-//                CSD_State.CurrentState = CSD_START_SCAN;
-//                CSD_State.DoNothingTimes = ZERO;
-//                break;
-//            }
-//            /* If device still scanning */
-//            else
-//            {
-//                /* Call restart system */
-//                Csd_Callback_to(core_RestartSystem);
-//                break;
-//            } 
-//        }
-//        /* If CSD app do nothing too short */
-//        else
-//        {
-//            /* Return to DO_NOTHING state */
-//            CSD_State.CurrentState = CSD_DO_NOTHING;
-//            break;
-//        }
-//    }
-//}
+
 
 
 /* Main State Csd function */

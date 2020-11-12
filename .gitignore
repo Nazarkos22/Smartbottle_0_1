@@ -13,3 +13,5 @@
 *.old
 Device_Implementation_3/Device_0_3.cydsn/system_psoc6_cm4.c
 Device_Implementation_3/Device_0_3.cydsn/system_psoc6_cm0plus.c
+Device_Implementation_3/SmartBottle_0_3.cydsn/system_psoc6_cm0plus.c
+Device_Implementation_3/SmartBottle_0_3.cydsn/system_psoc6_cm4.c

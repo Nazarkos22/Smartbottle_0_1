@@ -774,17 +774,17 @@
   <Group key="Pin2">
     <Group key="6e43b58d-b2c9-4020-a122-a40bd8b25039">
       <Group key="0">
-        <Data key="Port Format" value="0,1" />
+        <Data key="Port Format" value="9,5" />
       </Group>
     </Group>
     <Group key="62f3fdc6-85e4-4465-8494-e4f3806cd924">
       <Group key="0">
-        <Data key="Port Format" value="12,7" />
+        <Data key="Port Format" value="9,6" />
       </Group>
     </Group>
     <Group key="9452ee4b-2bf2-4f60-8a23-e449c8915f9b">
       <Group key="0">
-        <Data key="Port Format" value="0,0" />
+        <Data key="Port Format" value="9,2" />
       </Group>
     </Group>
     <Group key="2009095d-f21c-45c8-b6b9-f9e9c1f06ba4/4db2e9d3-9f70-4f4e-a919-7eefada41863">

@@ -28,7 +28,7 @@
 #define DO_NOTHING_TIMES   (2u)
     
 
-#define TRESHOLD (2000u)
+#define TRESHOLD (500u)
 
     
 

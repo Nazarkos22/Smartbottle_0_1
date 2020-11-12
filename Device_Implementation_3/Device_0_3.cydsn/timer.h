@@ -101,7 +101,7 @@ typedef struct
 bool is_tmr_busy(uint8_t timer_id);
 bool timer_start(uint8_t timer_id, uint32_t timer_period_ms, tmr_cbk cbk);
 void reset_all_timers(void);
-void init_global_timer(void);
+void Init_Global_Timer(void);
 void timer_stop(uint8_t timer_id);
 uint32_t timer_get_time(uint8_t timer_id);
 
