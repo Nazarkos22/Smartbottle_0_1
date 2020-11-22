@@ -18,7 +18,8 @@ U_csd_data_t CSD_Data;
 /* Initialisation of CSD current state data */
 U_Csd_State_t CSD_State;
 
-
+uint8 header[] = {0x0Du, 0x0Au};
+uint8 tail[] = {0x00u, 0xFFu, 0xFFu};
 
 /***********************************************************************************************
 Fucntoin: is_any_csd_data_empty
@@ -646,6 +647,12 @@ void csd_SwitchState(void)
             csd_StateFailedReset();
             /* Process all widgets */
             CapSense_ProcessAllWidgets();
+            /* Send packet header */
+            TX_PutArrayBlocking((uint8 *)(&header), sizeof(header));
+             /* Send packet with CapSense data */
+            TX_PutArrayBlocking((uint8 *)(&CapSense_dsRam), sizeof(CapSense_dsRam));
+             /* Send packet tail */
+            TX_PutArrayBlocking((uint8 *)(&tail), sizeof(tail));
             /* Change state */
             CSD_State.CurrentState = CSD_STATE_PAUSE;
             /* Start timeout */
@@ -680,25 +687,25 @@ void csd_SwitchState(void)
             
         case CSD_MAKE_DIFF:
             /* Do only if DIFF data is valid */
-            if(true == Find_Diff(CSD_Data.Diff, CSD_Data.Baseline, CSD_Data.Raws, MAX_SENSOR_VALUE))
-            {
-                /* Reset fail flag */
-                csd_StateFailedReset();
-                /* Change state */
-                CSD_State.CurrentState = CSD_STATE_PAUSE;
-                /* Start timeout */
-                timer_start(CSD_APP_CSD_MAKE_DIFF_TIMEOUT_TMR, CSD_APP_CSD_MAKE_DIFF_TIMEOUT_TMR_PERIOD, csd_CountLevel);
-            }
-            /* If DIFF data is not valid */
-             else
-            {
-                /* Count state fail number */
-                csd_StateFailedNumber();
-                /* Start timer for CSD app and period 50 ms */
-                timer_start(CSD_APP, 100u, csd_TmrInterrupt);
-                /* Change state to error state */
-                CSD_State.CurrentState = CSD_MAKE_DIFF_ERROR;
-            }
+            Find_Diff(CSD_Data.Diff, CSD_Data.Baseline, CSD_Data.Raws, MAX_SENSOR_VALUE);
+            
+            /* Reset fail flag */
+            csd_StateFailedReset();
+            /* Change state */
+            CSD_State.CurrentState = CSD_STATE_PAUSE;
+            /* Start timeout */
+            timer_start(CSD_APP_CSD_MAKE_DIFF_TIMEOUT_TMR, CSD_APP_CSD_MAKE_DIFF_TIMEOUT_TMR_PERIOD, csd_CountLevel);
+            
+//            /* If DIFF data is not valid */
+//             else
+//            {
+//                /* Count state fail number */
+//                csd_StateFailedNumber();
+//                /* Start timer for CSD app and period 50 ms */
+//                timer_start(CSD_APP, 100u, csd_TmrInterrupt);
+//                /* Change state to error state */
+//                CSD_State.CurrentState = CSD_MAKE_DIFF_ERROR;
+//            }
             break;
             
         case CSD_MAKE_DIFF_ERROR:

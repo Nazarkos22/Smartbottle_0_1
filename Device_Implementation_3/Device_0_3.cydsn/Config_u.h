@@ -17,8 +17,8 @@
 #define BASELINE_DELAY (1000u)
 #define RAW_DELAY (10u)   
 #define BASELINE_SCAN_TIMES (20u)
-#define FLASH_CHECKSUM_VARIABLE   (1u)
-#define CSD_CHECKSUM_VARIABLE      (2u)
+#define FLASH_CHECKSUM_VARIABLE   (5u)
+#define CSD_CHECKSUM_VARIABLE      (3u)
 #define EXCHANGE_DATA_NUMBER  (11u)
 
     

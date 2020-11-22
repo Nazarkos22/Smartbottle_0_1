@@ -30,6 +30,7 @@ int main(void)
     /* Initialization of CSD components */
     CSD_Init();
     CapSense_Start();
+    TX_Start();
     
     /* Initialization of BLE components */
     InitBle();
@@ -46,7 +47,7 @@ int main(void)
     for(;;)
     {
         /* Use for debug only */
-        //csd_SwitchState();
+//        csd_SwitchState();
         ProcessBleEvents();
         Switch_Statement();
         
