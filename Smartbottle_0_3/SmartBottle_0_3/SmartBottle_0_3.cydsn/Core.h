@@ -51,6 +51,7 @@ void Flash_Scan(void);
 void Switch_Statement(void);
 void CSD_Init(void);
 void Flash_Init(void);
+void core_callibrate_system(void);
 
 /* [] END OF FILE */
  #endif

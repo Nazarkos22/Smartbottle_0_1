@@ -49,6 +49,8 @@
 #include "ble_application.h"
 #include "led.h"
 #include "CSD_APP.h"
+#include "Config_u.h"
+#include "Core.h"
 #include "project.h"
 /* Indexes of a two-byte CCCD array */
 #define CCCD_INDEX_0            (uint8_t) (0x00u)
@@ -220,21 +222,24 @@ void HandleDisconnectEventforProximity(void)
 *  void
 *
 *******************************************************************************/
-void HandleWriteRequestforProximity(cy_stc_ble_gatts_write_cmd_req_param_t
-    *writeRequest)
+void HandleWriteRequest(uint8_t *writeRequest)
 {
-    /* Check the validity and then extract the write value sent by the Client 
-       for CapSense Proximity CCCD */
-    if ((writeRequest->handleValPair.value.val[PROXIMITY_CCCD_INDEX] 
-            == CCCD_NOTIFY_DISABLED)||
-        (writeRequest->handleValPair.value.val[PROXIMITY_CCCD_INDEX]
-            == CCCD_NOTIFY_ENABLED))
+    ble_cmd_t cmd = (ble_cmd_t) writeRequest[BLE_CMD_IDX];
+    
+    switch(cmd)
     {
-        proximityNotificationStatus = writeRequest->
-                                    handleValPair.value.val[PROXIMITY_CCCD_INDEX] ;
-        
-        /* Update the corresponding CCCD value in GATT DB */
-        UpdateCccdStatusInGattDb(PROXIMITY_CCCD_HANDLE, proximityNotificationStatus);
+        case BLE_CMD_NTF_RCVD:
+            break;
+        case BLE_CMD_CALLIBRATE_SYSTEM:
+            core_callibrate_system();
+            break;
+        case BLE_CMD_RESET_SYSTEM:
+            core_RestartSystem();
+            break;
+        case BLE_CMD_SEND_CSD_DATA:
+            break;
+        default:
+            break;
     }
 }
 
@@ -299,10 +304,10 @@ void StackEventHandler(uint32_t event, void *eventParameter)
                write command on the custom  characteristic. Check if command
                fits the custom attributes and update the flag for sending 
                notifications by the service */
-            if (PROXIMITY_CCCD_HANDLE
+            if (CY_BLE_SMARTBOTTLE_DATA_LONG_CHAR_HANDLE
                 == writeReqParameter->handleValPair.attrHandle)
             {
-                HandleWriteRequestforProximity(writeReqParameter);
+                HandleWriteRequest(writeReqParameter->handleValPair.value.val);
             }
             
             /* Send the response to the write request received. */
@@ -356,11 +361,11 @@ void ProcessBleEvents(void)
             proxData = GetProximityData();
         
             /* Check if the proximity data is updated */
-//            if(proxData->proximityDataUpdated == true)
-//            {
+            if(proxData->proximityDataUpdated == true)
+            {
                 /* Send data over proximity notification */
                 SendCapSenseProximityNotification(proxData->proximityData);
-//            }
+            }
 		}
 	}
     /* BLE is advertising */

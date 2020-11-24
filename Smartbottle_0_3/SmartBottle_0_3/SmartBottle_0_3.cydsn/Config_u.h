@@ -41,6 +41,13 @@ typedef enum
     FLASH_APP
 }app_block_t;
 
+typedef enum
+{
+    BLE_CMD_NTF_RCVD,
+    BLE_CMD_CALLIBRATE_SYSTEM,
+    BLE_CMD_RESET_SYSTEM,
+    BLE_CMD_SEND_CSD_DATA,
+}ble_cmd_t;
 /* Function to calculate checksum of data */
 uint32_t get_checksum(uint32_t* msg, uint8_t len, uint32_t variable);
 

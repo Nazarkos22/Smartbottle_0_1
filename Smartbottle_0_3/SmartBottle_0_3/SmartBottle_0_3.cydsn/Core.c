@@ -47,6 +47,10 @@ static void Core_Callback_to(void(*eventHandler)())
 }
 /****************************************************************/
 
+void core_callibrate_system(void)
+{
+    
+}
 /* Function which is called, when called timer for Core app finish count */
 void core_TmrInterrupt(void)
 {

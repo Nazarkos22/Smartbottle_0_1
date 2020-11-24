@@ -49,6 +49,9 @@
 /* Include guard */
 #ifndef BLE_APPLICATION_H
 #define BLE_APPLICATION_H
+    
+#define BLE_CMD_IDX                  (0u)    
+#define BLE_DATA_IDX                 (1u)
 
 /* Header file includes */
 #include <project.h>

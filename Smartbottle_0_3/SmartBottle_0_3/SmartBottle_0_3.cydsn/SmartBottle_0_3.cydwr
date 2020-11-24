@@ -6,6 +6,7 @@
   <Data key="DataVersionKey" value="2" />
   <Group key="DWRInstGuidMapping">
     <Group key="Clock">
+      <Data key="6ee9754d-62f0-4ccf-aee6-702fb238601d/b68e5b9d-7828-482d-a282-930f990e3b3e" value="TX_SCBCLK" />
       <Data key="7ee4df22-22b8-4c8d-a928-5a00b3d3b749" value="Clock_2" />
       <Data key="13ebd616-cb51-45b5-8d20-52659988cd0a" value="Clock" />
       <Data key="2009095d-f21c-45c8-b6b9-f9e9c1f06ba4/8273f0d6-caef-4cc7-ad3c-09656b78e2cb" value="CapSense_ModClk" />
@@ -75,6 +76,29 @@
       </Group>
     </Group>
     <Group key="LocalClks">
+      <Group key="6ee9754d-62f0-4ccf-aee6-702fb238601d/b68e5b9d-7828-482d-a282-930f990e3b3e">
+        <Data key="check_tolerance" value="True" />
+        <Data key="derive_type" value="AUTO" />
+        <Data key="desired_freq" value="1.3824" />
+        <Data key="desired_unit" value="6" />
+        <Data key="divider" value="18" />
+        <Data key="enabled" value="True" />
+        <Data key="fract_divider_denominator" value="0" />
+        <Data key="fract_divider_numerator" value="0" />
+        <Data key="minus_tolerance" value="5" />
+        <Data key="name" value="TX_SCBCLK" />
+        <Data key="netlist_name" value="\TX:SCBCLK\" />
+        <Data key="ph_align_clock_id" value="" />
+        <Data key="ph_align_clock_name" value="" />
+        <Data key="plus_tolerance" value="5" />
+        <Data key="scope" value="LOCAL" />
+        <Data key="sourceClk_minus_acuracy_name" value="2.4" />
+        <Data key="sourceClk_plus_acuracy_name" value="2.4" />
+        <Data key="src_clk_id" value="2FB4EC85-8328-4C5A-9ED9-8B63060178EB" />
+        <Data key="src_clk_name" value="Clk_Peri" />
+        <Data key="start_on_reset" value="True" />
+        <Data key="uses_fract_divider" value="False" />
+      </Group>
       <Group key="7ee4df22-22b8-4c8d-a928-5a00b3d3b749">
         <Data key="check_tolerance" value="False" />
         <Data key="derive_type" value="NAMED_FREQ" />
@@ -102,8 +126,8 @@
         <Data key="check_tolerance" value="False" />
         <Data key="derive_type" value="NAMED_FREQ" />
         <Data key="desired_freq" value="1" />
-        <Data key="desired_unit" value="3" />
-        <Data key="divider" value="25000" />
+        <Data key="desired_unit" value="6" />
+        <Data key="divider" value="25" />
         <Data key="enabled" value="True" />
         <Data key="fract_divider_denominator" value="0" />
         <Data key="fract_divider_numerator" value="0" />
@@ -650,25 +674,25 @@
         <Data key="start_on_reset" value="False" />
       </Group>
       <Group key="ADA77A51-2EDA-49E0-9358-E7A5F2860024">
-        <Data key="accuracy_display_unit" value="1" />
-        <Data key="AccuracyMinus" value="0" />
-        <Data key="AccuracyPlus" value="0" />
+        <Data key="accuracy_display_unit" value="0" />
+        <Data key="AccuracyMinus" value="0.005" />
+        <Data key="AccuracyPlus" value="0.005" />
         <Data key="check_tolerance" value="False" />
         <Data key="derive_type" value="BUILTIN" />
-        <Data key="desired_freq" value="32" />
+        <Data key="desired_freq" value="8" />
         <Data key="desired_unit" value="6" />
-        <Data key="divider" value="0" />
+        <Data key="divider" value="4" />
         <Data key="Divider" value="4" />
         <Data key="ECO Frequency" value="32 MHz" />
-        <Data key="enabled" value="False" />
+        <Data key="enabled" value="True" />
         <Data key="Load cap (pF)" value="9.9" />
         <Data key="minus_tolerance" value="0" />
         <Data key="name" value="AltHF" />
         <Data key="netlist_name" value="AltHF" />
         <Data key="plus_tolerance" value="0" />
         <Data key="scope" value="BUILTIN" />
-        <Data key="sourceClk_minus_acuracy_name" value="0" />
-        <Data key="sourceClk_plus_acuracy_name" value="0" />
+        <Data key="sourceClk_minus_acuracy_name" value="0.005" />
+        <Data key="sourceClk_plus_acuracy_name" value="0.005" />
         <Data key="src_clk_id" value="" />
         <Data key="src_clk_name" value="" />
         <Data key="start_on_reset" value="False" />
