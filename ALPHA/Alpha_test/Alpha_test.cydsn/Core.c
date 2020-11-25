@@ -65,5 +65,3 @@ void Flash_Processing(void)
        //Cy_SysResetCM4();   //Reset(does not work yet)
     }
 }
-
-/* [] END OF FILE */
