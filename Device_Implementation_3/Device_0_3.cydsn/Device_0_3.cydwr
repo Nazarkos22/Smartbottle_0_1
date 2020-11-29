@@ -28,6 +28,8 @@
       <Data key="6e43b58d-b2c9-4020-a122-a40bd8b25039" value="Pin_LED_Red" />
       <Data key="58a92848-7e15-4488-897b-6d65c885fb0d/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f" value="TX_tx" />
       <Data key="62f3fdc6-85e4-4465-8494-e4f3806cd924" value="Advertise" />
+      <Data key="504e018e-18af-4ed6-ad9d-ac103e2a0264/2aab8a93-e7dd-4bd4-8210-42652cd079c5" value="EZI2C_sda" />
+      <Data key="504e018e-18af-4ed6-ad9d-ac103e2a0264/69c3b5e8-b094-4d65-b96b-9f4f3a9a8641" value="EZI2C_scl" />
       <Data key="9452ee4b-2bf2-4f60-8a23-e449c8915f9b" value="Pin_LED_Orange" />
       <Data key="2009095d-f21c-45c8-b6b9-f9e9c1f06ba4/4db2e9d3-9f70-4f4e-a919-7eefada41863" value="CapSense_Cmod" />
       <Data key="2009095d-f21c-45c8-b6b9-f9e9c1f06ba4/0113321b-4a37-46f6-8407-2f8646c68756" value="CapSense_Sns" />
@@ -786,6 +788,16 @@
     <Group key="62f3fdc6-85e4-4465-8494-e4f3806cd924">
       <Group key="0">
         <Data key="Port Format" value="9,6" />
+      </Group>
+    </Group>
+    <Group key="504e018e-18af-4ed6-ad9d-ac103e2a0264/2aab8a93-e7dd-4bd4-8210-42652cd079c5">
+      <Group key="0">
+        <Data key="Port Format" value="6,5" />
+      </Group>
+    </Group>
+    <Group key="504e018e-18af-4ed6-ad9d-ac103e2a0264/69c3b5e8-b094-4d65-b96b-9f4f3a9a8641">
+      <Group key="0">
+        <Data key="Port Format" value="6,4" />
       </Group>
     </Group>
     <Group key="9452ee4b-2bf2-4f60-8a23-e449c8915f9b">

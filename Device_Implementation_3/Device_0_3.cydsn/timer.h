@@ -87,6 +87,8 @@
 #define CSD_APP_CSD_DO_NOTHING_TIMEOUT_TMR                  (7u)
 #define CSD_APP_CSD_DO_NOTHING_TIMEOUT_TMR_PERIOD           (1000u)
     
+#define CALLIBRATE_CSD_TMR_ID                               (20u)
+#define CALLIBRATE_CSD_TMR_PERIOD                           (30000u)
 typedef void (*tmr_cbk)(void);    
     
 typedef struct

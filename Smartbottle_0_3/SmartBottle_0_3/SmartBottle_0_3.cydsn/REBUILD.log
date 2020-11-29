@@ -1,4 +1,4 @@
---------------- Rebuild Started: 11/24/2020 04:49:17 Project: SmartBottle_0_3, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Rebuild Started: 11/26/2020 12:13:55 Project: SmartBottle_0_3, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 Deleting file ".\CortexM0p\ARM_GCC_541\Debug\startup_psoc6_01_cm0plus.o"
 Deleting file ".\CortexM0p\ARM_GCC_541\Debug\main_cm0p.o"
 Deleting file ".\CortexM0p\ARM_GCC_541\Debug\system_psoc6_cm0plus.o"
@@ -88,7 +88,7 @@ Deleting file ".\CortexM0p\ARM_GCC_541\Debug\cy_ble_wpts.o"
 Deleting file ".\CortexM0p\ARM_GCC_541\Debug\cy_ble_wss.o"
 Deleting file ".\CortexM0p\ARM_GCC_541\Debug\cy_ble_clk.o"
 Deleting file ".\CortexM0p\ARM_GCC_541\Debug\Global_Timer.o"
-Deleting file ".\CortexM0p\ARM_GCC_541\Debug\TX.o"
+Deleting file ".\CortexM0p\ARM_GCC_541\Debug\EZI2C_1.o"
 Deleting file ".\CortexM0p\ARM_GCC_541\Debug\SmartBottle_0_3.hex"
 Deleting file ".\CortexM0p\ARM_GCC_541\Debug\SmartBottle_0_3.elf"
 Deleting file ".\CortexM0p\ARM_GCC_541\Debug\SmartBottle_0_3.map"
@@ -192,7 +192,7 @@ Deleting file ".\CortexM4\ARM_GCC_541\Debug\cy_ble_wpts.o"
 Deleting file ".\CortexM4\ARM_GCC_541\Debug\cy_ble_wss.o"
 Deleting file ".\CortexM4\ARM_GCC_541\Debug\cy_ble_clk.o"
 Deleting file ".\CortexM4\ARM_GCC_541\Debug\Global_Timer.o"
-Deleting file ".\CortexM4\ARM_GCC_541\Debug\TX.o"
+Deleting file ".\CortexM4\ARM_GCC_541\Debug\EZI2C_1.o"
 Deleting file ".\CortexM4\ARM_GCC_541\Debug\SmartBottle_0_3.hex"
 Deleting file ".\CortexM4\ARM_GCC_541\Debug\SmartBottle_0_3.elf"
 Deleting file ".\CortexM4\ARM_GCC_541\Debug\SmartBottle_0_3.map"
@@ -446,5 +446,5 @@ Checksum calculated and stored in ELF section .cymeta
 Application checksum calculated and stored in ELF section .cychecksum
 Checksum calculated and stored in ELF section .cymeta
 "C:\Program Files (x86)\Cypress\PDL\3.1.3\tools\win\elf\cymcuelftool.exe" -A C:\Users\nazko\OneDrive\Documents\GitHub\Smartbottle_0_1\Smartbottle_0_3\SmartBottle_0_3\SmartBottle_0_3.cydsn\CortexM4\ARM_GCC_541\Debug\SmartBottle_0_3.elf
-code:195865	sram:20224
---------------- Rebuild Succeeded: 11/24/2020 04:53:11 ---------------
+code:198065	sram:20280
+--------------- Rebuild Succeeded: 11/26/2020 12:19:29 ---------------

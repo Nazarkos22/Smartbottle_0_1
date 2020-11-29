@@ -30,8 +30,8 @@ int main(void)
     /* Initialization of CSD components */
     CSD_Init();
     CapSense_Start();
-    TX_Start();
-    
+    EZI2C_Start(); /* Start EZI2C Component */
+    EZI2C_SetBuffer1((uint8_t *)&CapSense_dsRam, sizeof(CapSense_dsRam),sizeof(CapSense_dsRam));
     /* Initialization of BLE components */
     InitBle();
     /* Initialization of low power components */
@@ -47,7 +47,7 @@ int main(void)
     for(;;)
     {
         /* Use for debug only */
-//        csd_SwitchState();
+        csd_SwitchState();
         ProcessBleEvents();
         Switch_Statement();
         

@@ -120,7 +120,7 @@ void Switch_Statement(void)
     {
         case BLE_CONNECTED:
             /* Call CSD state function */
-            csd_SwitchState();
+//            csd_SwitchState();
             /* Callback to led to update its status */
             Core_Callback_to(led_BleConnected);
             break;
@@ -152,6 +152,19 @@ void Switch_Statement(void)
     }
 }
 
+void write_bsln_on_flash(void)
+{
+     /* Form baseline by scanning some amount of times with delay */
+        Create_RAW_data(CSD_Data.Baseline, MAX_SENSOR_VALUE); 
+        /* Form array data with Baseline data and checksum */
+        make_data_for_flash(FLASH_Data.flash_data, CSD_Data.Baseline, MAX_SENSOR_VALUE);
+        /* Eraze Flash memory size of Baseline data plus checksum */
+        eraze_flash_data(FLASH_ADDR, sizeof(U_cfg_t));
+        /* Write on Flash memory Baseline and checksum */
+        Cy_Flash_WriteRow(FLASH_ADDR, FLASH_Data.flash_data); 
+        /* RESET function*/
+        __NVIC_SystemReset() ;
+}
 /***************************************************************************
 Function: void Flash_Processing(void)
 Execution: 1. Check Flash Memory with some address, is it "empty" or not
@@ -177,16 +190,8 @@ void Flash_Scan(void)
     if(FLASH_Data.Baseline_Read_Status == false)
     {
         
-        /* Form baseline by scanning some amount of times with delay */
-        Create_Baseline_data(CSD_Data.Baseline, MAX_SENSOR_VALUE, BASELINE_SCAN_TIMES); 
-        /* Form array data with Baseline data and checksum */
-        make_data_for_flash(FLASH_Data.flash_data, CSD_Data.Baseline, MAX_SENSOR_VALUE);
-        /* Eraze Flash memory size of Baseline data plus checksum */
-        eraze_flash_data(FLASH_ADDR, sizeof(U_cfg_t));
-        /* Write on Flash memory Baseline and checksum */
-        Cy_Flash_WriteRow(FLASH_ADDR, FLASH_Data.flash_data); 
-        /* RESET function*/
-        __NVIC_SystemReset() ;   
+        timer_start(CALLIBRATE_CSD_TMR_ID, CALLIBRATE_CSD_TMR_PERIOD, write_bsln_on_flash);
+          
         
     }
     

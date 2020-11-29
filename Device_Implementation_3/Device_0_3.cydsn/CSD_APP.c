@@ -18,8 +18,7 @@ U_csd_data_t CSD_Data;
 /* Initialisation of CSD current state data */
 U_Csd_State_t CSD_State;
 
-uint8 header[] = {0x0Du, 0x0Au};
-uint8 tail[] = {0x00u, 0xFFu, 0xFFu};
+
 
 /***********************************************************************************************
 Fucntoin: is_any_csd_data_empty
@@ -85,16 +84,16 @@ bool make_sensors_data(uint32_t* data, uint8 len)
     
     bool Status = false;
     
-    data[FIRST_lvl] = CapSense_BUTTON0_SNS0_RAW0_VALUE;
-    data[SECOND_lvl] = CapSense_BUTTON1_SNS0_RAW0_VALUE;
-    data[THIRD_lvl] = CapSense_BUTTON2_SNS0_RAW0_VALUE;
-    data[FOURTH_lvl] = CapSense_BUTTON3_SNS0_RAW0_VALUE;
-    data[FIFTH_lvl] = CapSense_BUTTON4_SNS0_RAW0_VALUE;
-    data[SIXTH_lvl] = CapSense_BUTTON5_SNS0_RAW0_VALUE;
-    data[SEVENTH_lvl] = CapSense_BUTTON6_SNS0_RAW0_VALUE;
-    data[EIGHTH_lvl] = CapSense_BUTTON7_SNS0_RAW0_VALUE;
-    data[NINETH_lvl] = CapSense_BUTTON8_SNS0_RAW0_VALUE;
-    data[TENTH_lvl] = CapSense_BUTTON9_SNS0_RAW0_VALUE;
+    data[FIRST_lvl] = CapSense_dsRam.snsList.button0[0u].bsln[0u];
+    data[SECOND_lvl] = CapSense_dsRam.snsList.button1[0u].bsln[0u];
+    data[THIRD_lvl] = CapSense_dsRam.snsList.button2[0u].bsln[0u];
+    data[FOURTH_lvl] = CapSense_dsRam.snsList.button3[0u].bsln[0u];
+    data[FIFTH_lvl] = CapSense_dsRam.snsList.button4[0u].bsln[0u];
+    data[SIXTH_lvl] = CapSense_dsRam.snsList.button5[0u].bsln[0u];
+    data[SEVENTH_lvl] = CapSense_dsRam.snsList.button6[0u].bsln[0u];
+    data[EIGHTH_lvl] = CapSense_dsRam.snsList.button7[0u].bsln[0u];
+    data[NINETH_lvl] = CapSense_dsRam.snsList.button8[0u].bsln[0u];
+    data[TENTH_lvl] = CapSense_dsRam.snsList.button9[0u].bsln[0u];
     
     if(is_any_csd_data_empty(data, len) == false)
     {
@@ -152,58 +151,58 @@ Input: Poiner to array of Differance data, amount of sensors, treshold;
 Execution: Find activated sensors and as a result find liquid level
 Return: Liquid Level
 ***********************************************************************************************/
-uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t treshold)
+uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors)
 {
     
     /* Returned variable */
     uint8_t Level = ZERO;
     
-    if(Diff[FIRST_lvl] > treshold)
+    if(Diff[FIRST_lvl] > LEVEL_1_TH)
     {
         
         Level = 26u;
         
-        if(Diff[SECOND_lvl] > treshold)
+        if(Diff[SECOND_lvl] > LEVEL_2_TH)
         {
             
             Level = 51u;
             
-            if(Diff[THIRD_lvl] > treshold)
+            if(Diff[THIRD_lvl] > LEVEL_3_TH)
             {
                 
                 Level = 77u;
                 
-                if(Diff[FOURTH_lvl] > treshold)
+                if(Diff[FOURTH_lvl] > LEVEL_4_TH)
                 {
                     
                     Level = 102u;
                     
-                    if(Diff[FIFTH_lvl] > treshold)
+                    if(Diff[FIFTH_lvl] > LEVEL_5_TH)
                     {
                         
                         Level = 128u;
                         
-                        if(Diff[SIXTH_lvl] > treshold)
+                        if(Diff[SIXTH_lvl] > LEVEL_6_TH)
                         {
                             
                             Level = 153u;
                             
-                            if(Diff[SEVENTH_lvl] > treshold)
+                            if(Diff[SEVENTH_lvl] > LEVEL_7_TH)
                             {
                                 
                                 Level = 179u;
                                 
-                                if(Diff[EIGHTH_lvl] > treshold)
+                                if(Diff[EIGHTH_lvl] > LEVEL_8_TH)
                                 {
                                     
                                     Level = 204u;
                                     
-                                    if(Diff[NINETH_lvl] > treshold)
+                                    if(Diff[NINETH_lvl] > LEVEL_9_TH)
                                     {
                                         
                                         Level = 230u;
                                         
-                                        if(Diff[TENTH_lvl] > treshold)
+                                        if(Diff[TENTH_lvl] > LEVEL_10_TH)
                                         {
                                             
                                             Level = 255u;
@@ -609,9 +608,10 @@ void csd_SwitchState(void)
             /* Start Scan */
             CapSense_ScanAllWidgets();
             /* Change state */
-            CSD_State.CurrentState = CSD_STATE_PAUSE;  
+            CSD_State.CurrentState = CSD_STATE_PAUSE;
+            csd_CheckFinishScan();
             /* Start timeout */
-            timer_start(CSD_APP_CSD_START_SCAN_TIMEOUT_TMR, CSD_APP_CSD_START_SCAN_TIMEOUT_TMR_PERIOD, csd_CheckFinishScan);
+            //timer_start(CSD_APP_CSD_START_SCAN_TIMEOUT_TMR, CSD_APP_CSD_START_SCAN_TIMEOUT_TMR_PERIOD, csd_CheckFinishScan);
             break;
             
         case CSD_CHECK_FINISH_SCAN:
@@ -622,20 +622,21 @@ void csd_SwitchState(void)
                 csd_StateFailedReset();
                 /* Change state */
                 CSD_State.CurrentState = CSD_STATE_PAUSE;
+                csd_FinishScan();
                 /* Start timeout */
-                timer_start(CSD_APP_CSD_CHECK_FINISH_SCAN_TIMEOUT_TMR, CSD_APP_CSD_CHECK_FINISH_SCAN_TIMEOUT_TMR_PERIOD, csd_FinishScan);
+                //timer_start(CSD_APP_CSD_CHECK_FINISH_SCAN_TIMEOUT_TMR, CSD_APP_CSD_CHECK_FINISH_SCAN_TIMEOUT_TMR_PERIOD, csd_FinishScan);
                 
             }
             /* If scan is not finished */
-            else
-            {
-                /* Count fail number */
-                Csd_Callback_to(csd_StateFailedNumber);
-                /* Start timer for CSD app with period 250ms */
-                timer_start(CSD_APP, 250u, csd_TmrInterrupt);
-                /* Change state to error state */
-                CSD_State.CurrentState = CSD_CHECK_FINISH_SCAN_ERROR;
-            }
+//            else
+//            {
+//                /* Count fail number */
+//                Csd_Callback_to(csd_StateFailedNumber);
+//                /* Start timer for CSD app with period 250ms */
+//                timer_start(CSD_APP, 250u, csd_TmrInterrupt);
+//                /* Change state to error state */
+//                CSD_State.CurrentState = CSD_CHECK_FINISH_SCAN_ERROR;
+//            }
             break;
             
         case CSD_CHECK_FINISH_SCAN_ERROR:   
@@ -647,16 +648,18 @@ void csd_SwitchState(void)
             csd_StateFailedReset();
             /* Process all widgets */
             CapSense_ProcessAllWidgets();
-            /* Send packet header */
-            TX_PutArrayBlocking((uint8 *)(&header), sizeof(header));
-             /* Send packet with CapSense data */
-            TX_PutArrayBlocking((uint8 *)(&CapSense_dsRam), sizeof(CapSense_dsRam));
-             /* Send packet tail */
-            TX_PutArrayBlocking((uint8 *)(&tail), sizeof(tail));
+            CapSense_RunTuner(); /* To sync with Tuner application */
+//            /* Send packet header */
+//            TX_PutArrayBlocking((uint8 *)(&header), sizeof(header));
+//             /* Send packet with CapSense data */
+//            TX_PutArrayBlocking((uint8 *)(&CapSense_dsRam), sizeof(CapSense_dsRam));
+//             /* Send packet tail */
+//            TX_PutArrayBlocking((uint8 *)(&tail), sizeof(tail));
             /* Change state */
             CSD_State.CurrentState = CSD_STATE_PAUSE;
+            csd_CreateRawData();
             /* Start timeout */
-            timer_start(CSD_APP_CSD_FINISH_SCAN_TIMEOUT_TMR, CSD_APP_CSD_CHECK_FINISH_SCAN_TIMEOUT_TMR_PERIOD, csd_CreateRawData);
+//            timer_start(CSD_APP_CSD_FINISH_SCAN_TIMEOUT_TMR, CSD_APP_CSD_CHECK_FINISH_SCAN_TIMEOUT_TMR_PERIOD, csd_CreateRawData);
             
             break;
             
@@ -667,18 +670,19 @@ void csd_SwitchState(void)
                 csd_StateFailedReset();
                 /* Change state */
                 CSD_State.CurrentState = CSD_STATE_PAUSE;
+                csd_MakeDiff();
                 /* Start timeout */
-                timer_start(CSD_APP_CSD_CREATE_RAW_DATA_TIMEOUT_TMR, CSD_APP_CSD_CREATE_RAW_DATA_TIMEOUT_TMR_PERIOD, csd_MakeDiff);
+//                timer_start(CSD_APP_CSD_CREATE_RAW_DATA_TIMEOUT_TMR, CSD_APP_CSD_CREATE_RAW_DATA_TIMEOUT_TMR_PERIOD, csd_MakeDiff);
             }
-            else
-            {
-                /* Count fail number */
-                csd_StateFailedNumber();
-                /* Start timer for CSD app with period 250ms */
-                timer_start(CSD_APP, 100u, csd_TmrInterrupt);
-                /* Change state to error state */
-                CSD_State.CurrentState = CSD_CREATE_RAW_DATA_ERROR;
-            }
+//            else
+//            {
+//                /* Count fail number */
+//                csd_StateFailedNumber();
+//                /* Start timer for CSD app with period 250ms */
+//                timer_start(CSD_APP, 100u, csd_TmrInterrupt);
+//                /* Change state to error state */
+//                CSD_State.CurrentState = CSD_CREATE_RAW_DATA_ERROR;
+//            }
             break;
             
         case CSD_CREATE_RAW_DATA_ERROR:
@@ -693,8 +697,9 @@ void csd_SwitchState(void)
             csd_StateFailedReset();
             /* Change state */
             CSD_State.CurrentState = CSD_STATE_PAUSE;
+            csd_CountLevel();
             /* Start timeout */
-            timer_start(CSD_APP_CSD_MAKE_DIFF_TIMEOUT_TMR, CSD_APP_CSD_MAKE_DIFF_TIMEOUT_TMR_PERIOD, csd_CountLevel);
+//            timer_start(CSD_APP_CSD_MAKE_DIFF_TIMEOUT_TMR, CSD_APP_CSD_MAKE_DIFF_TIMEOUT_TMR_PERIOD, csd_CountLevel);
             
 //            /* If DIFF data is not valid */
 //             else
@@ -716,11 +721,12 @@ void csd_SwitchState(void)
             /* Reset fail flag */
             csd_StateFailedReset();
             /* Count level */
-            CSD_Data.Level = Find_liquid_Level(CSD_Data.Diff, MAX_SENSOR_VALUE, TRESHOLD);
+            CSD_Data.Level = Find_liquid_Level(CSD_Data.Diff, MAX_SENSOR_VALUE);
             /* Change state */
             CSD_State.CurrentState = CSD_STATE_PAUSE;
+            csd_CleanRaws();
             /* Start timeout */
-            timer_start(CSD_APP_CSD_COUNT_LEVEL_TIMEOUT_TMR, CSD_APP_CSD_COUNT_LEVEL_TIMEOUT_TMR_PERIOD, csd_CleanRaws);
+//            timer_start(CSD_APP_CSD_COUNT_LEVEL_TIMEOUT_TMR, CSD_APP_CSD_COUNT_LEVEL_TIMEOUT_TMR_PERIOD, csd_CleanRaws);
             break;
             
         case CSD_CLEAN_RAWS:
@@ -730,8 +736,9 @@ void csd_SwitchState(void)
             clean_data(CSD_Data.Raws, sizeof(CSD_Data.Raws),  MAX_SENSOR_VALUE);
             /* Change state */
             CSD_State.CurrentState = CSD_STATE_PAUSE;
+            csd_DoNothing();
             /* Start timeout */
-            timer_start(CSD_APP_CSD_CLEAN_RAWS_TIMEOUT_TMR, CSD_APP_CSD_CLEAN_RAWS_TIMEOUT_TMR_PERIOD, csd_DoNothing);
+//            timer_start(CSD_APP_CSD_CLEAN_RAWS_TIMEOUT_TMR, CSD_APP_CSD_CLEAN_RAWS_TIMEOUT_TMR_PERIOD, csd_DoNothing);
             
             break;
             
@@ -739,7 +746,7 @@ void csd_SwitchState(void)
             /* Reset fail flag */
             csd_StateFailedReset();
             /* Start timer for CSD app and period 50 ms */
-            timer_start(CSD_APP, 50u, csd_TmrInterrupt);
+            timer_start(CSD_APP, 10u, csd_TmrInterrupt);
             /* Change state on FINISH_DO_NOTHING */
             CSD_State.CurrentState = CSD_FINISH_DO_NOTHING;
             

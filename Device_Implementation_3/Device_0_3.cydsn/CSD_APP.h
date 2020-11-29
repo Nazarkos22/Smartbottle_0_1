@@ -24,11 +24,20 @@
     
 #define MAX_LEVEL_VALUE (255u)
 #define LEVEL_CHANGE_VALUE (25u)
- 
+#define LEVEL_1_TH         23u
+#define LEVEL_2_TH          44u
+#define LEVEL_3_TH          44u
+#define LEVEL_4_TH          41u
+#define LEVEL_5_TH          44u
+#define LEVEL_6_TH          48u
+#define LEVEL_7_TH          50u
+#define LEVEL_8_TH          57u
+#define LEVEL_9_TH          62u
+#define LEVEL_10_TH         60u
 #define DO_NOTHING_TIMES   (2u)
     
 
-#define TRESHOLD (350u)
+#define TRESHOLD (33u)
 
     
 
@@ -134,7 +143,7 @@ bool is_any_csd_data_empty(uint32_t* data, uint8 len);
 bool make_sensors_data(uint32_t* data, uint8 len);
 
 /* Function checks which of sensors are activated and return Level(0-255u) */
-uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors, uint16_t treshold);
+uint8_t Find_liquid_Level(uint32_t* Diff, uint8_t amount_of_sensors);
 
 
 /* Declaration callbacks */

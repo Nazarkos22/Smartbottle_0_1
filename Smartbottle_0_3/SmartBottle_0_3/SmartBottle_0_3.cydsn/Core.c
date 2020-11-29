@@ -124,7 +124,7 @@ void Switch_Statement(void)
     {
         case BLE_CONNECTED:
             /* Call CSD state function */
-            csd_SwitchState();
+            //csd_SwitchState();
             /* Callback to led to update its status */
             Core_Callback_to(led_BleConnected);
             break;

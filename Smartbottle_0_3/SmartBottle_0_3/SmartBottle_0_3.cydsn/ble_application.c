@@ -238,6 +238,8 @@ void HandleWriteRequest(uint8_t *writeRequest)
             break;
         case BLE_CMD_SEND_CSD_DATA:
             break;
+//        case BLE_CMD_UPDT_BASELINE:
+//            break;
         default:
             break;
     }
